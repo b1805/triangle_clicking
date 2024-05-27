@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Triangle Clicking</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: lightyellow;
+    }
+    .triangle {
+      cursor: pointer;
+    }
+    .selected {
+      fill: blue;
+    }
+  </style>
+</head>
+<body onload="initialize()">
+  <div>
+    <h2>Triangle Clicking</h2>
+    <div>
+      <button id="startAnimButton" onclick="startAnimation()">Start Animation</button>
+      <button id="stopAnimButton" onclick="stopAnimation()">Stop Animation</button>
+      <button id="createShapeButton" onclick="createShape()">Create Shape</button>
+    </div>
+    <br/>
+    <canvas id="canvas" width="1000" height="800" style="border: 1px solid black;"></canvas>
+  </div>
+  <div>
+    <h2 id="recordingHeader">Recording</h2>
+    <div>
+      <button id="startRecButton" onclick="startRecording()">Start Recording</button>
+      <button id="stopRecButton" onclick="stopRecording()">Stop Recording</button>
+      <button id="startAllButton" onclick="startAnimationAndRecording()">Start Animation and Recording</button>
+    </div>
+    <div>
+      <p id="status">Status: Recording not started</p>
+      <video id="recording" width="160" height="120" controls autoplay loop></video>
+      <br/>
+      <span>After the recording is complete:</span>
+      <a id="downloadButton" href="#" download="Recording.webm">Download</a>
+    </div>
+  </div>
+  <script src="whammy.js"></script>
+  <script src="classes.js"></script>
+  <script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+    const BACKGROUND_COLOR = '#0c090d';
+    const WALL_COLOR = '#39FF14';
+    const MAG_COLOR = '#FFA500';
+    const ORIGIN_COLOR = MAG_COLOR;
+    const PHOTON_HEAD_COLOR = '#E1FF00';
+    const PHOTON_TAIL_COLOR = '#00FFB3';
+
+    var triangles = [];
+    var selectedTriangles = [];
+    var boundaries = [];
+    var photons = [];
+    var renderInterval;
+
+    var video = new Whammy.Video(33);
+    var currentlyRecording = false;
+    var recording = document.getElementById('recording');
+    var downloadButton = document.getElementById('downloadButton');
+    var statusElement = document.getElementById('status');
+    var startRecButton = document.getElementById('startRecButton');
+    var numCapturedFrames = 0;
+
+    var COORDS = [];
+
+    function initialize() {
+      createTriangleGrid();
+      canvas.addEventListener('click', selectTriangle);
+    }
+
+    function createTriangleGrid() {
+      const triangleSize = 50;
+      for (let y = 0; y < canvas.height; y += triangleSize) {
+        for (let x = 0; x < canvas.width; x += triangleSize) {
+        let triangle1 = new Path2D();
+        triangle1.moveTo(x, y);
+        triangle1.lineTo(x + triangleSize, y);
+        triangle1.lineTo(x, y + triangleSize);
+        triangle1.closePath();
+        let triangleObj1 = { path: triangle1, selected: false, point1: { x: x, y: y }, point2: { x: x + triangleSize, y: y }, point3: { x: x, y: y + triangleSize } };
+        triangles.push(triangleObj1);
+
+        let triangle2 = new Path2D();
+        triangle2.moveTo(x + triangleSize, y);
+        triangle2.lineTo(x + triangleSize, y + triangleSize);
+        triangle2.lineTo(x, y + triangleSize);
+        triangle2.closePath();
+        let triangleObj2 = { path: triangle2, selected: false, point1: { x: x + triangleSize, y: y }, point2: { x: x + triangleSize, y: y + triangleSize }, point3: { x: x, y: y + triangleSize } };
+        triangles.push(triangleObj2);
+        }
+      }
+      drawTriangles();
+    }
+
+
+    function drawTriangles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = BACKGROUND_COLOR;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = WALL_COLOR;
+      triangles.forEach(triangle => {
+        if (triangle.selected) {
+          ctx.fillStyle = 'blue';
+          ctx.fill(triangle.path);
+        }
+        ctx.stroke(triangle.path);
+      });
+    }
+
+    function selectTriangle(event) {
+      const x = event.offsetX;
+      const y = event.offsetY;
+      triangles.forEach(triangle => {
+        if (ctx.isPointInPath(triangle.path, x, y)) {
+          triangle.selected = !triangle.selected;
+          if (triangle.selected) {
+            selectedTriangles.push(triangle);
+          } else {
+            const index = selectedTriangles.indexOf(triangle);
+            if (index > -1) {
+              selectedTriangles.splice(index, 1);
+            }
+          }
+        }
+      });
+      drawTriangles();
+    }
+
+    function createShape() {
+      // Clear the COORDS list
+      COORDS = [];
+        
+      // Iterate through selected triangles
+      selectedTriangles.forEach(triangle => {
+        // Extract coordinates of triangle's vertices
+        let point1 = triangle.point1;
+        let point2 = triangle.point2;
+        let point3 = triangle.point3;
+            
+        // Add vertices' coordinates to COORDS list
+        COORDS.push([point1.x, point1.y]);
+        COORDS.push([point2.x, point2.y]);
+        COORDS.push([point3.x, point3.y]);
+      });
+
+      // Log the COORDS list
+      console.log("Shape Coordinates:", COORDS);
+    }
+
+    function startAnimation() {
+      clearInterval(renderInterval);
+      loadBoundaries();
+      createPhotons();
+      renderInterval = setInterval(updateScreen, 33);
+    }
+
+    function stopAnimation() {
+      clearInterval(renderInterval);
+    }
+
+    function createPhotons() {
+      photons = [];
+      const origin = { x: 500, y: 400 };
+      const photonRadius = 30;
+      for (let i = 0; i < 360; i++) {
+        const angle = (i / 360) * 2 * Math.PI;
+        photons.push(new Photon(
+          origin.x + photonRadius * Math.cos(angle),
+          origin.y + photonRadius * Math.sin(angle),
+          angle,
+          0.151,
+          0.151,
+          PHOTON_HEAD_COLOR,
+          PHOTON_TAIL_COLOR
+        ));
+      }
+    }
+
+    function updateScreen() {
+      updatePositions();
+      drawTriangles();
+      drawPhotons();
+      if (currentlyRecording) {
+        video.add(ctx);
+        numCapturedFrames++;
+        if (numCapturedFrames % 33 === 0) {
+          const secs = numCapturedFrames / 33;
+          displayStatus(`Recording: captured ${secs} second(s) of film so far...`);
+        }
+      }
+    }
+
+    function loadBoundaries() {
+      boundaries = new Array();
+      for (var i = 0; i < COORDS.length; ++i) {
+        nxtIdx = (i + 1) % COORDS.length;
+        boundaries.push(new LineSegment(
+          COORDS[i][0],
+          COORDS[i][1],
+          COORDS[nxtIdx][0],
+          COORDS[nxtIdx][1]
+        ));
+      }
+    }
+
+    function updatePositions() {
+      // Delete photons that hit corners.
+      for (var i = photons.length - 1; i >= 0; --i) {
+        for (var point = 0; point < COORDS.length; ++point) {
+          if (photons[i].checkPointCollision(
+                COORDS[point][0], COORDS[point][1])) {
+            photons[i].deactivate();
+            break;
+          }
+        }
+      }
+      // Bounce photons off edges.
+      for (var i = 0; i < photons.length; ++i) {
+        for (var edge = 0; edge < boundaries.length; ++edge) {
+          if (edge !== photons[i].lastBounce &&
+              photons[i].checkLineCollision(boundaries[edge])) {
+            photons[i].lastBounce = edge;
+            photons[i].bounceOffSegment(boundaries[edge]);
+            hasBounced = true;
+            break;
+          }
+        }
+      }
+      // Move the photons.
+      for (var i = 0; i < photons.length; ++i) {
+        photons[i].updatePosition();
+      }
+    }
+
+    function drawPhotons() {
+      photons.forEach(photon => {
+        const len = photon.contactPoints.length;
+        for (let i = 0; i < len - 1; i++) {
+          drawLine(
+            photon.contactPoints[i][0],
+            photon.contactPoints[i][1],
+            photon.contactPoints[i + 1][0],
+            photon.contactPoints[i + 1][1],
+            photon.tailColor
+          );
+        }
+        drawLine(
+          photon.contactPoints[len - 1][0],
+          photon.contactPoints[len - 1][1],
+          photon.x,
+          photon.y,
+          photon.tailColor
+        );
+        drawCircle(photon.x, photon.y, 1.3, photon.headColor);
+      });
+    }
+
+    function drawCircle(x, y, radius, color) {
+      ctx.beginPath();
+      ctx.fillStyle = color; 
+      ctx.arc(x, y, radius, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    function drawLine(x1, y1, x2, y2, color, width = 0.5) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    function startRecording() {
+      if (currentlyRecording) {
+        return;
+      }
+      if (!confirm('This feature only works on Firefox right now. Proceed?')) {
+        return;
+      }
+      currentlyRecording = true;
+    }
+
+    function stopRecording() {
+      if (!currentlyRecording) {
+        return;
+      }
+      currentlyRecording = false;
+      video.compile(false, function (output) {
+        recording.src = URL.createObjectURL(output);
+        downloadButton.href = recording.src;
+        displayStatus('Recording complete.');
+      });
+    }
+
+    function displayStatus(text) {
+      statusElement.innerText = `Status: ${text}`;
+    }
+
+    function startAnimationAndRecording() {
+      startAnimation();
+      startRecording();
+    }
+  </script>
+</body>
+</html>
