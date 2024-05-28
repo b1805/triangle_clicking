@@ -12,7 +12,7 @@
       cursor: pointer;
     }
     .selected {
-      fill: blue;
+      fill: black;
     }
   </style>
 </head>
@@ -48,12 +48,13 @@
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-    const BACKGROUND_COLOR = '#0c090d';
+    const BACKGROUND_COLOR = '#FFFFFF';
     const WALL_COLOR = '#39FF14';
     const MAG_COLOR = '#FFA500';
     const ORIGIN_COLOR = MAG_COLOR;
     const PHOTON_HEAD_COLOR = '#E1FF00';
     const PHOTON_TAIL_COLOR = '#00FFB3';
+    const LIGHT_SOURCE_COLOR = 'red';
 
     var triangles = [];
     var selectedTriangles = [];
@@ -70,36 +71,37 @@
     var numCapturedFrames = 0;
 
     var COORDS = [];
+    var lightSource = { x: 500, y: 400 };
 
     function initialize() {
       createTriangleGrid();
       canvas.addEventListener('click', selectTriangle);
+      canvas.addEventListener('contextmenu', setLightSource);
     }
 
     function createTriangleGrid() {
       const triangleSize = 50;
       for (let y = 0; y < canvas.height; y += triangleSize) {
         for (let x = 0; x < canvas.width; x += triangleSize) {
-        let triangle1 = new Path2D();
-        triangle1.moveTo(x, y);
-        triangle1.lineTo(x + triangleSize, y);
-        triangle1.lineTo(x, y + triangleSize);
-        triangle1.closePath();
-        let triangleObj1 = { path: triangle1, selected: false, point1: { x: x, y: y }, point2: { x: x + triangleSize, y: y }, point3: { x: x, y: y + triangleSize } };
-        triangles.push(triangleObj1);
+          let triangle1 = new Path2D();
+          triangle1.moveTo(x, y);
+          triangle1.lineTo(x + triangleSize, y);
+          triangle1.lineTo(x, y + triangleSize);
+          triangle1.closePath();
+          let triangleObj1 = { path: triangle1, selected: false, point1: { x: x, y: y }, point2: { x: x + triangleSize, y: y }, point3: { x: x, y: y + triangleSize } };
+          triangles.push(triangleObj1);
 
-        let triangle2 = new Path2D();
-        triangle2.moveTo(x + triangleSize, y);
-        triangle2.lineTo(x + triangleSize, y + triangleSize);
-        triangle2.lineTo(x, y + triangleSize);
-        triangle2.closePath();
-        let triangleObj2 = { path: triangle2, selected: false, point1: { x: x + triangleSize, y: y }, point2: { x: x + triangleSize, y: y + triangleSize }, point3: { x: x, y: y + triangleSize } };
-        triangles.push(triangleObj2);
+          let triangle2 = new Path2D();
+          triangle2.moveTo(x + triangleSize, y);
+          triangle2.lineTo(x + triangleSize, y + triangleSize);
+          triangle2.lineTo(x, y + triangleSize);
+          triangle2.closePath();
+          let triangleObj2 = { path: triangle2, selected: false, point1: { x: x + triangleSize, y: y }, point2: { x: x + triangleSize, y: y + triangleSize }, point3: { x: x, y: y + triangleSize } };
+          triangles.push(triangleObj2);
         }
       }
       drawTriangles();
     }
-
 
     function drawTriangles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -109,14 +111,21 @@
       ctx.strokeStyle = WALL_COLOR;
       triangles.forEach(triangle => {
         if (triangle.selected) {
-          ctx.fillStyle = 'blue';
+          ctx.fillStyle = 'black';
           ctx.fill(triangle.path);
         }
         ctx.stroke(triangle.path);
       });
+
+      drawLightSource();
+    }
+
+    function drawLightSource() {
+      drawCircle(lightSource.x, lightSource.y, 5, LIGHT_SOURCE_COLOR);
     }
 
     function selectTriangle(event) {
+      if (event.button === 2) return;  // Ignore right-clicks
       const x = event.offsetX;
       const y = event.offsetY;
       triangles.forEach(triangle => {
@@ -132,6 +141,15 @@
           }
         }
       });
+      drawTriangles();
+    }
+
+    function setLightSource(event) {
+      event.preventDefault();
+      const x = event.offsetX;
+      const y = event.offsetY;
+      lightSource = { x: x, y: y };
+      createPhotons();
       drawTriangles();
     }
 
@@ -169,13 +187,12 @@
 
     function createPhotons() {
       photons = [];
-      const origin = { x: 500, y: 400 };
       const photonRadius = 30;
       for (let i = 0; i < 360; i++) {
         const angle = (i / 360) * 2 * Math.PI;
         photons.push(new Photon(
-          origin.x + photonRadius * Math.cos(angle),
-          origin.y + photonRadius * Math.sin(angle),
+          lightSource.x + photonRadius * Math.cos(angle),
+          lightSource.y + photonRadius * Math.sin(angle),
           angle,
           0.151,
           0.151,
