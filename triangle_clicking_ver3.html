@@ -177,23 +177,66 @@
     function createShape() {
       // Clear the COORDS list
       COORDS = [];
+      
+      // Object to track edges and their occurrences
+      let edgeCount = {};
+
+      // Helper function to add an edge to the edgeCount object
+      function addEdge(point1, point2) {
+        let edgeKey = `${point1.x},${point1.y}-${point2.x},${point2.y}`;
+        let reverseEdgeKey = `${point2.x},${point2.y}-${point1.x},${point1.y}`;
         
-      // Iterate through selected triangles
+        if (edgeCount[reverseEdgeKey]) {
+          edgeCount[reverseEdgeKey]++;
+        } else if (edgeCount[edgeKey]) {
+          edgeCount[edgeKey]++;
+        } else {
+          edgeCount[edgeKey] = 1;
+        }
+      }
+
+      // Iterate through selected triangles and track edges
       selectedTriangles.forEach(triangle => {
-        // Extract coordinates of triangle's vertices
-        let point1 = triangle.point1;
-        let point2 = triangle.point2;
-        let point3 = triangle.point3;
-            
-        // Add vertices' coordinates to COORDS list
-        COORDS.push([point1.x, point1.y]);
-        COORDS.push([point2.x, point2.y]);
-        COORDS.push([point3.x, point3.y]);
+        addEdge(triangle.point1, triangle.point2);
+        addEdge(triangle.point2, triangle.point3);
+        addEdge(triangle.point3, triangle.point1);
+      });
+
+      // Function to get boundary edges
+      function getBoundaryEdges() {
+        let boundaryEdges = [];
+        for (let edge in edgeCount) {
+          if (edgeCount[edge] === 1) { // Edge is part of the boundary if it appears only once
+            boundaryEdges.push(edge);
+          }
+        }
+        return boundaryEdges;
+      }
+
+      // Extract boundary points from boundary edges
+      let boundaryEdges = getBoundaryEdges();
+      let boundaryPoints = new Set();
+      
+      boundaryEdges.forEach(edge => {
+        let points = edge.split('-');
+        let point1 = points[0].split(',').map(Number);
+        let point2 = points[1].split(',').map(Number);
+        
+        boundaryPoints.add(`${point1[0]},${point1[1]}`);
+        boundaryPoints.add(`${point2[0]},${point2[1]}`);
+      });
+
+      // Convert boundaryPoints set to COORDS array
+      boundaryPoints.forEach(point => {
+        let [x, y] = point.split(',').map(Number);
+        COORDS.push([x, y]);
       });
 
       // Log the COORDS list
       console.log("Shape Coordinates:", COORDS);
     }
+
+
 
     function startAnimation() {
       clearInterval(renderInterval);
@@ -208,7 +251,7 @@
 
     function createPhotons() {
       photons = [];
-      const photonRadius = 30;
+      const photonRadius = 5;
       for (let i = 0; i < 360; i++) {
         const angle = (i / 360) * 2 * Math.PI;
         photons.push(new Photon(
