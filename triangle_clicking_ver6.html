@@ -27,112 +27,20 @@ SOFTWARE. -->
   <title>Triangle Clicking</title>
   <style>
     body {
-        font-family: Arial, Helvetica, sans-serif;
-        background-color: #f0f2f5;
-        margin: 0;
-        padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: lightyellow;
     }
-
-    .container {
-        max-width: 1000px;
-        margin: 20px auto;
-        background-color: #ffffff;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    .triangle {
+      cursor: pointer;
     }
-
-    h2 {
-        font-size: 20px;
-        font-family: cursive;
-        margin-bottom: 10px;
-        color: #1877f2;
-    }
-
-    h3 {
-        font-size: 25px;
-        font-family: cursive;
-        text-align: center;
-        color: red;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-        color: #333;
-    }
-
-    input[type="number"],
-    select,
-    input[type="color"] {
-        padding: 8px;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        width: calc(100% - 18px);
-    }
-
-    button {
-        padding: 10px 20px;
-        background-color: #1877f2;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    button:hover {
-        background-color: #115293;
-    }
-
-    canvas {
-        display: block;
-        margin-top: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        width: 100%;
-        height: auto;
-    }
-
-    .flex-container {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .flex-item {
-        flex: 1;
-        margin-right: 10px;
-    }
-
-    input[type="color"] {
-        width: 40px;
-        height: 40px;
-        border: none;
-        border-radius: 50%;
-        padding: 0;
-        margin-right: 10px;
-        cursor: pointer;
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    #startAnimButton, #stopAnimButton, #startRecButton, #stopRecButton, #startAllButton {
-        background-color: #42b72a;
-        margin-top: 10px;
-    }
-
-    #startAnimButton:hover, #stopAnimButton:hover, #startRecButton:hover, #stopRecButton:hover, #startAllButton:hover {
-        background-color: #339a1e;
+    .selected {
+      fill: black;
     }
   </style>
 </head>
 <body onload="initialize()">
-  <div class="container">
-    <div class="flex-container">
+  <div>
     <h2>Triangle Clicking</h2>
-    </div>
     <div>
       <button id="startAnimButton" onclick="startAnimation()">Start Animation</button>
       <button id="stopAnimButton" onclick="stopAnimation()">Stop Animation</button>
@@ -141,24 +49,6 @@ SOFTWARE. -->
     <br/>
     <canvas id="canvas" width="1000" height="800" style="border: 1px solid black;"></canvas>
   </div>
-  <div class="container">
-    <div class="flex-container">
-    <h2 id="recordingHeader">Recording</h2>
-    </div>
-    <div>
-      <button id="startRecButton" onclick="startRecording()">Start Recording</button>
-      <button id="stopRecButton" onclick="stopRecording()">Stop Recording</button>
-      <button id="startAllButton" onclick="startAnimationAndRecording()">Start Animation and Recording</button>
-    </div>
-    <div>
-      <p id="status">Status: Recording not started</p>
-      <video id="recording" width="160" height="120" controls autoplay loop></video>
-      <br/>
-      <span>After the recording is complete:</span>
-      <a id="downloadButton" href="#" download="Recording.webm">Download</a>
-    </div>
-  </div>
-  <script src="whammy.js"></script>
   <script src="classes.js"></script>
   <script>
     var canvas = document.getElementById('canvas');
@@ -177,14 +67,6 @@ SOFTWARE. -->
     var boundaries = [];
     var photons = [];
     var renderInterval;
-
-    var video = new Whammy.Video(33);
-    var currentlyRecording = false;
-    var recording = document.getElementById('recording');
-    var downloadButton = document.getElementById('downloadButton');
-    var statusElement = document.getElementById('status');
-    var startRecButton = document.getElementById('startRecButton');
-    var numCapturedFrames = 0;
 
     var COORDS = [];
     var lightSource = { x: 500, y: 400 };
@@ -289,138 +171,123 @@ SOFTWARE. -->
       createPhotons();
       drawTriangles();
     }
+    // This function removes line segments that appear twice, since those are internal
+    function pruneRepeatedBounds() {
+      let existingBounds = new Array();
+      let internalBounds = new Array();
+      boundaries.forEach(lineSeg => {
+        let i = 0;
+        for(; i < existingBounds.length; i++) {
+          if(lineSeg.equals(existingBounds[i])) {
+            internalBounds.push(lineSeg);
+            break;
+          }
+        }
+        existingBounds.push(lineSeg);
+      });
+      console.log("Exisiting Bounds:", existingBounds);
+      console.log("Internal Bounds:", internalBounds);
+      let goodBounds = new Array();
+      boundaries.forEach(lineSeg => {
+        let a = false;
+        let i = 0;
+        for(; i < internalBounds.length; i++) {
+          if(internalBounds[i].equals(lineSeg)) {
+            a = true;
+          }
+        }
+        if(!a) {
+          goodBounds.push(lineSeg);
+        }
+      })
+      boundaries = goodBounds;
+    }
+
+    function mergeLineSegments() {
+      // Merge line segments if possible
+      console.log("running mergeLineSegments()");
+      let mergedBoundaries = [];
+      let done = true;
+      for (let i = 0; i < boundaries.length; i++) {
+        let merged = false;
+        for (let j = 0; j < mergedBoundaries.length; j++) {
+          let mergedLine = mergedBoundaries[j].merge(boundaries[i]);
+          if (mergedLine != false) {
+            mergedBoundaries[j] = mergedLine;
+            merged = true;
+            done = false;
+          }
+        }
+        if (!merged) {
+          mergedBoundaries.push(boundaries[i]);
+        }
+      }
+      boundaries = mergedBoundaries;
+      return done;
+    }
 
     function createShape() {
       // Clear the COORDS list
       COORDS = [];
-
-      // Object to track edges and their counts
-      let edgeCount = {};
-
-      // Helper function to add an edge to the edgeCount object
-      function addEdge(point1, point2) {
-        let edgeKey = `${point1.x},${point1.y}-${point2.x},${point2.y}`;
-        let reverseEdgeKey = `${point2.x},${point2.y}-${point1.x},${point1.y}`;
-        
-        if (edgeCount[reverseEdgeKey]) {
-          edgeCount[reverseEdgeKey]++;
-        } else if (edgeCount[edgeKey]) {
-          edgeCount[edgeKey]++;
-        } else {
-          edgeCount[edgeKey] = 1;
-        }
-      }
-
-      // Iterate through selected triangles and track edges
+      boundaries = new Array();
+     
+      // Iterate through selected triangles
       selectedTriangles.forEach(triangle => {
-        addEdge(triangle.point1, triangle.point2);
-        addEdge(triangle.point2, triangle.point3);
-        addEdge(triangle.point3, triangle.point1);
+        // Extract coordinates of triangle's vertices
+        let point1 = triangle.point1;
+        let point2 = triangle.point2;
+        let point3 = triangle.point3;
+            
+        // Add vertices' coordinates to COORDS list
+        boundaries.push(new LineSegment(
+          point1.x,
+          point1.y,
+          point2.x,
+          point2.y,
+        ));
+        boundaries.push(new LineSegment(
+          point2.x,
+          point2.y,
+          point3.x,
+          point3.y,
+        ));
+        boundaries.push(new LineSegment(
+          point3.x,
+          point3.y,
+          point1.x,
+          point1.y,
+        ));
+        //COORDS.push([point1.x, point1.y]);
+        //COORDS.push([point2.x, point2.y]);
+        //COORDS.push([point3.x, point3.y]);
       });
 
-      // Function to get boundary edges
-      function getBoundaryEdges() {
-        let boundaryEdges = [];
-        for (let edge in edgeCount) {
-          if (edgeCount[edge] === 1) { // Edge is part of the boundary if it appears only once
-            boundaryEdges.push(edge);
-          }
-        }
-        return boundaryEdges;
+      pruneRepeatedBounds();
+
+      let fullyMerged = false;
+      // I assert this is O(n^2 * log n)
+      while(!fullyMerged) {
+        // We just keep merging until we can't
+        fullyMerged = mergeLineSegments();
       }
+      
+      boundaries.forEach(lineSeg => {
+        COORDS.push([lineSeg.x1, lineSeg.y1]);
+        COORDS.push([lineSeg.x2, lineSeg.y2]);
+      })
 
-      // Extract boundary points from boundary edges
-      let boundaryEdges = getBoundaryEdges();
-      let boundaryPoints = new Set();
-      let edgeMap = new Map();
+      const setCOORDS = new Set(COORDS.map(JSON.stringify));
+      COORDS = Array.from(setCOORDS).map(JSON.parse);
 
-      boundaryEdges.forEach(edge => {
-        let points = edge.split('-');
-        let point1 = points[0].split(',').map(Number);
-        let point2 = points[1].split(',').map(Number);
-        
-        boundaryPoints.add(`${point1[0]},${point1[1]}`);
-        boundaryPoints.add(`${point2[0]},${point2[1]}`);
-        
-        let point1Str = `${point1[0]},${point1[1]}`;
-        let point2Str = `${point2[0]},${point2[1]}`;
-        
-        if (!edgeMap.has(point1Str)) {
-          edgeMap.set(point1Str, []);
-        }
-        if (!edgeMap.has(point2Str)) {
-          edgeMap.set(point2Str, []);
-        }
-        
-        edgeMap.get(point1Str).push(point2Str);
-        edgeMap.get(point2Str).push(point1Str);
-      });
-
-      // Function to sort points to form a continuous boundary
-      function sortPointsToFormBoundary(startPoint, edgeMap) {
-        let boundary = [startPoint];
-        let currentPoint = startPoint;
-
-        while (true) {
-          let nextPoints = edgeMap.get(currentPoint);
-          if (nextPoints.length === 0) break;
-          let nextPoint = nextPoints[0];
-          edgeMap.get(currentPoint).splice(0, 1);
-          edgeMap.get(nextPoint).splice(edgeMap.get(nextPoint).indexOf(currentPoint), 1);
-          boundary.push(nextPoint);
-          currentPoint = nextPoint;
-          if (currentPoint === startPoint) break;
-        }
-
-        return boundary;
-      }
-
-      // Convert the boundaryPoints set to a sorted array
-      let sortedBoundaryPoints = sortPointsToFormBoundary([...boundaryPoints][0], edgeMap);
-
-      // Convert sortedBoundaryPoints to COORDS array
-      sortedBoundaryPoints.forEach(point => {
-        let [x, y] = point.split(',').map(Number);
-        COORDS.push([x, y]);
-      });
-
-      // Log the COORDS list
-      console.log("Shape Coordinates:", COORDS);
-    }
-
-    // Function to sort points to form a continuous boundary
-    function sortPointsToFormBoundary(points) {
-      if (points.length === 0) return [];
-
-      let startPoint = points[0];
-      let boundary = [startPoint];
-      points.splice(0, 1);
-
-      while (points.length > 0) {
-        let lastPoint = boundary[boundary.length - 1];
-        let nextPointIndex = -1;
-        for (let i = 0; i < points.length; i++) {
-          if (points[i].x === lastPoint.x && points[i].y === lastPoint.y) continue;
-          nextPointIndex = i;
-          break;
-        }
-
-        if (nextPointIndex !== -1) {
-          boundary.push(points[nextPointIndex]);
-          points.splice(nextPointIndex, 1);
-        } else {
-          break;
-        }
-      }
-
-      return boundary;
+      // Log the COORDS and Boundaries list
+      console.log("COORDS Array:", COORDS);
+      console.log("Boundaries Array:", boundaries);
     }
 
     function startAnimation() {
       clearInterval(renderInterval);
-      loadBoundaries();
       createPhotons();
-      renderInterval = setInterval(updateScreen, 33);
+      renderInterval = setInterval(updateScreen, 0);
     }
 
     function stopAnimation() {
@@ -448,27 +315,6 @@ SOFTWARE. -->
       updatePositions();
       drawTriangles();
       drawPhotons();
-      if (currentlyRecording) {
-        video.add(ctx);
-        numCapturedFrames++;
-        if (numCapturedFrames % 33 === 0) {
-          const secs = numCapturedFrames / 33;
-          displayStatus(`Recording: captured ${secs} second(s) of film so far...`);
-        }
-      }
-    }
-
-    function loadBoundaries() {
-      boundaries = new Array();
-      for (var i = 0; i < COORDS.length; ++i) {
-        nxtIdx = (i + 1) % COORDS.length;
-        boundaries.push(new LineSegment(
-          COORDS[i][0],
-          COORDS[i][1],
-          COORDS[nxtIdx][0],
-          COORDS[nxtIdx][1]
-        ));
-      }
     }
 
     function updatePositions() {
@@ -539,36 +385,6 @@ SOFTWARE. -->
       ctx.stroke();
     }
 
-    function startRecording() {
-      if (currentlyRecording) {
-        return;
-      }
-      if (!confirm('This feature only works on Firefox right now. Proceed?')) {
-        return;
-      }
-      currentlyRecording = true;
-    }
-
-    function stopRecording() {
-      if (!currentlyRecording) {
-        return;
-      }
-      currentlyRecording = false;
-      video.compile(false, function (output) {
-        recording.src = URL.createObjectURL(output);
-        downloadButton.href = recording.src;
-        displayStatus('Recording complete.');
-      });
-    }
-
-    function displayStatus(text) {
-      statusElement.innerText = `Status: ${text}`;
-    }
-
-    function startAnimationAndRecording() {
-      startAnimation();
-      startRecording();
-    }
   </script>
 </body>
 </html>
