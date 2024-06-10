@@ -57,6 +57,29 @@ class LineSegment {
     this.normal = this.normal.mult(this.normal.norm);
     this.lastBounce = -1; // ID of the last reflected wall.
   }
+  equals(line2) {
+    let one = this.x1 == line2.x1 && this.x2 == line2.x2 && this.y1 == line2.y1 && this.y2 == line2.y2;
+    let two = this.x1 == line2.x2 && this.x2 == line2.x1 && this.y1 == line2.y2 && this.y2 == line2.y1;
+    return (one || two);
+  }
+  merge(line2) {
+    if(this.equals(line2) || (this.dy * line2.dx != line2.dy * this.dx)) {
+      return false
+    };
+    if (this.x1 == line2.x1 && this.y1 == line2.y1) {
+      return new LineSegment(line2.x2, line2.y2, this.x2, this.y2)
+    }
+    else if (this.x2 == line2.x2 && this.y2 == line2.y2){
+      return new LineSegment(line2.x1, line2.y1, this.x1, this.y1)
+    }
+    else if (this.x1 == line2.x2 && this.y1 == line2.y2){
+      return new LineSegment(line2.x1, line2.y1, this.x2, this.y2)
+    }
+    else if (this.x2 == line2.x1 && this.y2 == line2.y1){
+      return new LineSegment(line2.x2, line2.y2, this.x1, this.y1)
+    }
+    return false
+  }
 }
 
 // Represents a square region in 2D space.
