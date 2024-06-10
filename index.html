@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Triangle Clicking</title>
-  <style>
+<meta charset="utf-8">
+<title>Triangle Clicking</title>
+<style>
     body {
       font-family: Arial, Helvetica, sans-serif;
       background-color: #f0f2f5;
@@ -14,11 +14,35 @@
     .selected {
       fill: black;
     }
+    .container {
+      max-width: 5000px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .flex-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .flex-item {
+      flex: 1;
+      margin-right: 10px;
+    }
+
     h2 {
       font-size: 20px;
       font-family: cursive;
       margin-bottom: 10px;
       color: #1877f2;
+    }
+    h3 {
+      font-size: 25px;
+      font-family: cursive;
+      text-align: center;
+      color: red;
     }
     button {
       padding: 10px 20px;
@@ -33,39 +57,109 @@
       button:hover {
           background-color: #115293;
       }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
       #startAnimButton, #stopAnimButton, #startRecButton, #stopRecButton, #startAllButton {
         background-color: #42b72a;
         margin-top: 10px;
         }
 
-        #startAnimButton:hover, #stopAnimButton:hover, #startRecButton:hover, #stopRecButton:hover, #startAllButton:hover {
-            background-color: #339a1e;
+      #startAnimButton:hover, #stopAnimButton:hover, #startRecButton:hover, #stopRecButton:hover, #startAllButton:hover {
+        background-color: #339a1e;
         }
-  </style>
+
+</style>
 </head>
 <body onload="initialize()">
-  <div>
-    <h2>Triangle Clicking</h2>
-    <div>
-      <button id="startAnimButton" onclick="startAnimation()">Start Animation</button>
-      <button id="stopAnimButton" onclick="stopAnimation()">Stop Animation</button>
-      <button id="createShapeButton" onclick="createShape()">Create Shape</button>
+  <div class="container">
+    <div class="flex-container">
+      <h3>Triangle Clicking</h3>
     </div>
-    <br/>
-    <canvas id="canvas" width="1000" height="800" style="border: 1px solid black;"></canvas>
   </div>
-  <script src="classes.js"></script>
-  <script>
+  <div class="container">
+    <div class="flex-container">
+        <div class="flex-item">
+            <h2>Controls</h2>
+            <div>
+              <label for="numRaysInput">Number of Light Rays (1 to 36000)
+              <input type="number" id="numRaysInput" min="1" max="36000" value="360">
+              <button onclick="changeNumRays()">Apply</button></label>
+            </div>
+            <div>
+                <label for="speedInput">Speed
+                <select id="speedInput">
+                    <option value="33">Slow</option>
+                    <option value="16">Medium</option>
+                    <option value="0">Fast</option>
+                </select>
+                <button onclick="changeSpeed()">Apply</button></label>
+            </div>
+            <div>
+              <h2>Photon Counter</h2>
+              <p>Active Photons: <span id="activePhotonCount">0</span></p>
+            </div>
+            <p> </p>
+            <h2>Animation</h2>
+            <button id="createShapeButton" onclick="createShape()">Create Shape</button>
+            <button id="startAnimButton" onclick="startAnimation()">Start Animation</button>
+            <button id="stopAnimButton" onclick="stopAnimation()">Stop Animation</button>
+        </div>
+        <div class="flex-item">
+            <h2>Colours</h2>
+            <div>
+                <label for="wallColorInput">Wall Colour
+                <input type="color" id="wallColorInput" value="#FFA914"></label>
+            </div>
+            <div>
+                <label for="photonHeadColorInput">Photon Head Colour
+                <input type="color" id="photonHeadColorInput" value="#E1FF00"></label>
+            </div>
+            <div>
+                <label for="photonTailColorInput">Photon Tail Colour
+                <input type="color" id="photonTailColorInput" value="#00FFB3"></label>
+            </div>
+            <div>
+                <label for="magnifierColorInput">Light Source Colour
+                <input type="color" id="magnifierColorInput" value="#FF0000"></label>
+            </div>
+            <p> </p>
+            <button onclick="applyColors()">Apply Colours</button>
+            <p> </p>
+        </div>
+    </div>
+</div>
+<br/>
+<canvas id="canvas" width="1000" height="800" style="border: 1px solid black;"></canvas>
+</div>
+<script src="classes.js"></script>
+<script>
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d', { willReadFrequently: true });
 
     const BACKGROUND_COLOR = '#FFFFFF';
-    const WALL_COLOR = '#39FF14';
-    const MAG_COLOR = '#FFA500';
-    const ORIGIN_COLOR = MAG_COLOR;
-    const PHOTON_HEAD_COLOR = '#E1FF00';
-    const PHOTON_TAIL_COLOR = '#00FFB3';
-    const LIGHT_SOURCE_COLOR = 'red';
+    let WALL_COLOR = '#FFA914';
+    let MAG_COLOR = '#FFA500';
+    let ORIGIN_COLOR = MAG_COLOR;
+    let PHOTON_HEAD_COLOR = '#E1FF00';
+    let PHOTON_TAIL_COLOR = '#00FFB3';
+    let LIGHT_SOURCE_COLOR = 'red';
+
+    let NUMBER_LIGHT_RAYS = 360;
+    let RENDER_INTERVAL_TIME = 33;
+
+    function applyColors() {
+      WALL_COLOR = document.getElementById("wallColorInput").value;
+      PHOTON_HEAD_COLOR = document.getElementById("photonHeadColorInput").value;
+      PHOTON_TAIL_COLOR = document.getElementById("photonTailColorInput").value;
+      MAG_COLOR = document.getElementById("magnifierColorInput").value;
+      ORIGIN_COLOR = document.getElementById("magnifierColorInput").value;
+      LIGHT_SOURCE_COLOR = document.getElementById("magnifierColorInput").value;
+      updateScreen(); // Update canvas with new colors
+    }
 
     var triangles = [];
     var selectedTriangles = [];
@@ -80,6 +174,16 @@
       createTriangleGrid();
       canvas.addEventListener('click', selectTriangle);
       canvas.addEventListener('contextmenu', setLightSource);
+    }
+
+    // Function to change number of light rays
+    function changeNumRays() {
+      NUMBER_LIGHT_RAYS = parseInt(document.getElementById("numRaysInput").value);
+    }
+
+    // Function to change rendering speed
+    function changeSpeed() {
+      RENDER_INTERVAL_TIME = parseInt(document.getElementById("speedInput").value);
     }
 
     function createTriangleGrid() {
@@ -292,7 +396,7 @@
     function startAnimation() {
       clearInterval(renderInterval);
       createPhotons();
-      renderInterval = setInterval(updateScreen, 0);
+      renderInterval = setInterval(updateScreen, RENDER_INTERVAL_TIME);
     }
 
     function stopAnimation() {
@@ -302,14 +406,14 @@
     function createPhotons() {
       photons = [];
       const photonRadius = 5;
-      for (let i = 0; i < 360; i++) {
-        const angle = (i / 360) * 2 * Math.PI;
+      for (let i = 0; i < NUMBER_LIGHT_RAYS; i++) {
+        const angle = (i / NUMBER_LIGHT_RAYS) * 2 * Math.PI;
         photons.push(new Photon(
           lightSource.x + photonRadius * Math.cos(angle),
           lightSource.y + photonRadius * Math.sin(angle),
           angle,
-          0.151,
-          0.151,
+          0.125,
+          0.125,
           PHOTON_HEAD_COLOR,
           PHOTON_TAIL_COLOR
         ));
@@ -320,6 +424,11 @@
       updatePositions();
       drawTriangles();
       drawPhotons();
+    }
+
+    function updatePhotonCount() {
+      const activePhotonCount = photons.filter(photon => photon.active).length;
+      document.getElementById('activePhotonCount').innerText = activePhotonCount;
     }
 
     function updatePositions() {
@@ -349,6 +458,8 @@
       for (var i = 0; i < photons.length; ++i) {
         photons[i].updatePosition();
       }
+      // Update the active photon count.
+      updatePhotonCount()
     }
 
     function drawPhotons() {
@@ -390,6 +501,6 @@
       ctx.stroke();
     }
 
-  </script>
+</script>
 </body>
 </html>
