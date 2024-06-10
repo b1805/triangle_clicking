@@ -1,3 +1,25 @@
+<!-- MIT License
+
+Copyright (c) 2024 Bhavya Jain, Austin Lu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,11 +151,25 @@
             <p> </p>
             <button onclick="applyColors()">Apply Colours</button>
             <p> </p>
+            <div>
+                <label for="lightSourceXInput">Light Source X Coordinates:</label>
+                <input type="number" id="lightSourceXInput" min="1" max="36000" value="500">
+            </div>
+            <div>
+                <label for="lightSourceYInput">Light Source Y Coordinates:</label>
+                <input type="number" id="lightSourceYInput" min="1" max="36000" value="400">
+            </div>
+            <p> </p>
+            <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button></label>
         </div>
     </div>
 </div>
 <br/>
-<canvas id="canvas" width="1000" height="800" style="border: 1px solid black;"></canvas>
+<canvas id="canvas" width="1000" height="800" onmousemove="printCoord(event)" style="border: 1px solid black;" ></canvas>
+<div id="mouse_coords">
+  <input id="x_coord" value="X">
+  <input id="y_coord" value="Y">
+</div>
 </div>
 <script src="classes.js"></script>
 <script>
@@ -151,6 +187,15 @@
     let NUMBER_LIGHT_RAYS = 360;
     let RENDER_INTERVAL_TIME = 33;
 
+    var triangles = [];
+    var selectedTriangles = [];
+    var boundaries = [];
+    var photons = [];
+    var renderInterval;
+
+    var COORDS = [];
+    let lightSource = { x: 500, y: 400 };
+
     function applyColors() {
       WALL_COLOR = document.getElementById("wallColorInput").value;
       PHOTON_HEAD_COLOR = document.getElementById("photonHeadColorInput").value;
@@ -161,14 +206,22 @@
       updateScreen(); // Update canvas with new colors
     }
 
-    var triangles = [];
-    var selectedTriangles = [];
-    var boundaries = [];
-    var photons = [];
-    var renderInterval;
+    function printCoord (mouseEvent) {
+      const x_coord = document.getElementById("x_coord");
+      const y_coord = document.getElementById("y_coord");
+      const mouse_coords = document.getElementById("mouse_coords");
+      x_coord.value = "X: " + Math.floor(mouseEvent.clientX - canvas.getBoundingClientRect().x);
+      y_coord.value = "Y: " + Math.max(Math.floor(mouseEvent.clientY - canvas.getBoundingClientRect().y),0);
+      mouse_coords.style.position = "relative";
+      mouse_coords.style.left = mouseEvent.clientX + 'px';
+      mouse_coords.style.bottom = (1000 - mouseEvent.clientY) + 'px';
+    }
 
-    var COORDS = [];
-    var lightSource = { x: 500, y: 400 };
+    function changeLightSourceCoordinates() {
+      lightSource["x"] = parseInt(document.getElementById("lightSourceXInput").value);
+      lightSource["y"] = parseInt(document.getElementById("lightSourceYInput").value);
+      updateScreen(); // Update canvas with new coordinates
+    }
 
     function initialize() {
       createTriangleGrid();
@@ -314,7 +367,6 @@
 
     function mergeLineSegments() {
       // Merge line segments if possible
-      console.log("running mergeLineSegments()");
       let mergedBoundaries = [];
       let done = true;
       for (let i = 0; i < boundaries.length; i++) {
