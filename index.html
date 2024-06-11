@@ -171,6 +171,24 @@ SOFTWARE. -->
   <input id="y_coord" value="Y">
 </div>
 </div>
+<div class="container">
+  <div class="flex-container">
+  <h2 id="recordingHeader">Recording</h2>
+  </div>
+  <div>
+    <button id="startRecButton" onclick="startRecording()">Start Recording</button>
+    <button id="stopRecButton" onclick="stopRecording()">Stop Recording</button>
+    <button id="startAllButton" onclick="startAnimationAndRecording()">Start Animation and Recording</button>
+  </div>
+  <div>
+    <p id="status">Status: Recording not started</p>
+    <video id="recording" width="160" height="120" controls autoplay loop></video>
+    <br/>
+    <span>After the recording is complete:</span>
+    <a id="downloadButton" href="#" download="Recording.webm">Download</a>
+  </div>
+</div>
+<script src="whammy.js"></script>
 <script src="classes.js"></script>
 <script>
     var canvas = document.getElementById('canvas');
@@ -193,8 +211,22 @@ SOFTWARE. -->
     var photons = [];
     var renderInterval;
 
+    var video = new Whammy.Video(33);
+    var currentlyRecording = false;
+    var recording = document.getElementById('recording');
+    var downloadButton = document.getElementById('downloadButton');
+    var statusElement = document.getElementById('status');
+    var startRecButton = document.getElementById('startRecButton');
+    var numCapturedFrames = 0;
+
     var COORDS = [];
     let lightSource = { x: 500, y: 400 };
+
+    function initialize() {
+      createTriangleGrid();
+      canvas.addEventListener('click', selectTriangle);
+      canvas.addEventListener('contextmenu', setLightSource);
+    }
 
     function applyColors() {
       WALL_COLOR = document.getElementById("wallColorInput").value;
@@ -221,12 +253,6 @@ SOFTWARE. -->
       lightSource["x"] = parseInt(document.getElementById("lightSourceXInput").value);
       lightSource["y"] = parseInt(document.getElementById("lightSourceYInput").value);
       updateScreen(); // Update canvas with new coordinates
-    }
-
-    function initialize() {
-      createTriangleGrid();
-      canvas.addEventListener('click', selectTriangle);
-      canvas.addEventListener('contextmenu', setLightSource);
     }
 
     // Function to change number of light rays
@@ -476,6 +502,14 @@ SOFTWARE. -->
       updatePositions();
       drawTriangles();
       drawPhotons();
+      if (currentlyRecording) {
+        video.add(ctx);
+        numCapturedFrames++;
+        if (numCapturedFrames % 33 === 0) {
+          const secs = numCapturedFrames / 33;
+          displayStatus(`Recording: captured ${secs} second(s) of film so far...`);
+        }
+      }
     }
 
     function updatePhotonCount() {
@@ -551,6 +585,39 @@ SOFTWARE. -->
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
       ctx.stroke();
+    }
+
+    // Recording:
+
+    function startRecording() {
+      if (currentlyRecording) {
+        return;
+      }
+      if (!confirm('This feature only works on Firefox right now. Proceed?')) {
+        return;
+      }
+      currentlyRecording = true;
+    }
+
+    function stopRecording() {
+      if (!currentlyRecording) {
+        return;
+      }
+      currentlyRecording = false;
+      video.compile(false, function (output) {
+        recording.src = URL.createObjectURL(output);
+        downloadButton.href = recording.src;
+        displayStatus('Recording complete.');
+      });
+    }
+
+    function displayStatus(text) {
+      statusElement.innerText = `Status: ${text}`;
+    }
+
+    function startAnimationAndRecording() {
+      startAnimation();
+      startRecording();
     }
 
 </script>
