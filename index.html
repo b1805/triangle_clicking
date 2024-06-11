@@ -394,22 +394,28 @@ SOFTWARE. -->
     function mergeLineSegments() {
       // Merge line segments if possible
       let mergedBoundaries = [];
-      let done = true;
-      for (let i = 0; i < boundaries.length; i++) {
-        let merged = false;
-        for (let j = 0; j < mergedBoundaries.length; j++) {
-          let mergedLine = mergedBoundaries[j].merge(boundaries[i]);
-          if (mergedLine != false) {
-            mergedBoundaries[j] = mergedLine;
-            merged = true;
-            done = false;
+      let done = false;
+      while (!done) {
+        done = true;
+        let newBoundaries = [];
+        for (let i = 0; i < boundaries.length; i++) {
+          let merged = false;
+          for (let j = i + 1; j < boundaries.length; j++) {
+            let mergedLine = boundaries[i].merge(boundaries[j]);
+            if (mergedLine !== false) {
+              newBoundaries.push(mergedLine);
+              boundaries.splice(j, 1);  // Remove the merged segment
+              merged = true;
+              done = false;
+              break;  // Stop checking this boundary, move to the next one
+            }
+          }
+          if (!merged) {
+            newBoundaries.push(boundaries[i]);
           }
         }
-        if (!merged) {
-          mergedBoundaries.push(boundaries[i]);
-        }
+        boundaries = newBoundaries;
       }
-      boundaries = mergedBoundaries;
       return done;
     }
 
