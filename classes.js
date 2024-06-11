@@ -2,8 +2,14 @@ class Vector {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.mag = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
     this.norm = Math.hypot(x, y);
     this.angle = Math.atan(y / x);
+  }
+
+  // Returns the cross product with another vector.
+  cross(other) {
+      return this.x * other.y - other.x * this.y;
   }
 
   // Returns the dot product with another vector.
@@ -58,6 +64,9 @@ class LineSegment {
     this.lastBounce = -1; // ID of the last reflected wall.
   }
   equals(line2) {
+    if(line2 == null) {
+      return false;
+    }
     let one = this.x1 == line2.x1 && this.x2 == line2.x2 && this.y1 == line2.y1 && this.y2 == line2.y2;
     let two = this.x1 == line2.x2 && this.x2 == line2.x1 && this.y1 == line2.y2 && this.y2 == line2.y1;
     return (one || two);
@@ -116,16 +125,18 @@ class Square {
 //                      must be from a line segment for a collision to occur.
 //
 class Photon {
-  constructor(x, y, dir, speed, collisionRadius, headColor, tailColor) {
+  constructor(x, y, dir, speed, headColor, tailColor) {
     this.x = x;
     this.y = y;
     this.vecDir = new Vector(speed * Math.cos(dir), speed * Math.sin(dir));
+    this.vecDirRemaining = this.vecDir;
     this.speed = speed;
-    this.collisionRadius = collisionRadius;
+    //this.collisionRadius = collisionRadius;
     this.headColor = headColor;
     this.tailColor = tailColor;
     this.contactPoints = new Array();
     this.contactPoints.push([this.x, this.y]);
+    this.lastLineCollided = null;
     this.magEntry = null;
     this.lastMagPoint = null;
     this.active = true;
@@ -137,8 +148,11 @@ class Photon {
 
   updatePosition() {
     if (this.active) {
-      this.x += this.vecDir.x;
-      this.y += this.vecDir.y;
+      this.x += this.vecDirRemaining.x;
+      this.y += this.vecDirRemaining.y;
+      // Reset the velocity vector
+      this.vecDirRemaining = this.vecDir;
+      this.lastLineCollided = null;
     }
   }
 
@@ -174,15 +188,72 @@ class Photon {
     return false;
   }
 
+  checkCollision(line) {
+    if(!this.active) {
+      return null;
+    }
+    if(line != null) { // Not the first collision this frame
+      if(line.equals(this.lastLineCollided)) { // It is impossible to collide with the same line segment twice in a row
+        return null;
+      }
+    }
+    const eps = 0.00001;
+    const a = new Vector(line.x1, line.y1); // Position Vector of line segment
+    const b = new Vector(line.dx, line.dy); // Direction Vector of line segment (a + b is the other endpoint)
+    const p = new Vector(this.x, this.y); // Position Vector of photon
+    const v = this.vecDirRemaining; // Direction Vector of photon
+
+    const vCROSSb = v.cross(b); 
+    if(vCROSSb == 0) {
+        return null;
+    }
+    const aSUBp = a.sub(p);
+    const s = aSUBp.cross(b) / vCROSSb;  
+    const t = aSUBp.cross(v) / vCROSSb;  
+    if(s < 0 - eps || s > 1 + eps) {
+        return null;
+    }
+    if(t <= 0 - eps || t >= 1 + eps) {
+        return null;
+    }
+    let oc = false;
+    if((0 - eps < t && t < eps + 0) || (1 - eps < t && t < eps + 1)) {
+        oc = true;
+    }
+    return {
+        l : line,
+        intersection : p.add(v.mult(s)),
+        photonScalar : s,
+        lineScalar : t,
+        onCorner : oc
+    }
+
+  }
+
   // Recalculates the direction of the photon based on the normal vector to a
   // line segment.
-  bounceOffSegment(line) {
+  bounceOffSegment(collision) {
     if (!this.active) {
+      this.x = collision.intersection.x;
+      this.y = collision.intersection.y;
       return;
     }
-    var normalProj = this.vecDir.projOnto(line.normal);
-    var parallelProj = this.vecDir.sub(normalProj);
-    this.vecDir = parallelProj.sub(normalProj);
+    const line = collision.l;
+    this.lastLineCollided = line;
+    // Distance from photon to line segment
+    const preReflectionVector = new Vector(collision.intersection.x - this.x, collision.intersection.y - this.y);
+    //console.log("preReflectionVector.mag =", preReflectionVector.mag);
+    this.x = collision.intersection.x;
+    this.y = collision.intersection.y;
+    // Calculate the reflection vector after having reached the line segment
+    this.vecDirRemaining = this.vecDirRemaining.sub(preReflectionVector);
+    const normalProj = this.vecDirRemaining.projOnto(line.normal);
+    const parallelProj = this.vecDirRemaining.sub(normalProj);
+    this.vecDirRemaining = parallelProj.sub(normalProj);
+    // Also reflect the reference velocity vector
+    const normalProjRef = this.vecDir.projOnto(line.normal);
+    const parallelProjRef = this.vecDir.sub(normalProjRef);
+    this.vecDir = parallelProjRef.sub(normalProjRef);
     this.contactPoints.push([this.x, this.y]);
   }
 }

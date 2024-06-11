@@ -490,8 +490,7 @@ SOFTWARE. -->
           lightSource.x + photonRadius * Math.cos(angle),
           lightSource.y + photonRadius * Math.sin(angle),
           angle,
-          0.125,
-          0.125,
+          10,
           PHOTON_HEAD_COLOR,
           PHOTON_TAIL_COLOR
         ));
@@ -499,7 +498,7 @@ SOFTWARE. -->
     }
 
     function updateScreen() {
-      updatePositions();
+      rayTracedUpdatePositions();
       drawTriangles();
       drawPhotons();
       if (currentlyRecording) {
@@ -517,6 +516,40 @@ SOFTWARE. -->
       document.getElementById('activePhotonCount').innerText = activePhotonCount;
     }
 
+    function getClosestCollision(photon) {
+        let closestCollision = null;
+        for(let edge = 0; edge < boundaries.length; ++edge) {
+          const result = photon.checkCollision(boundaries[edge]);
+          if(result == null) {
+            continue;
+          }
+          if(closestCollision == null || result.photonScalar < closestCollision.photonScalar) {
+            closestCollision = result;
+          }
+        }
+        return closestCollision;
+    }
+    function rayTracedUpdatePositions() {
+      for(let i = 0; i < photons.length; ++i) {
+        while(photons[i].vecDirRemaining.mag > 0.0001) {
+          //console.log("photons["+i+"].vecDirRemaining.mag =", photons[i].vecDirRemaining.mag);
+          let closestCollision = getClosestCollision(photons[i]);
+          if(closestCollision == null) { // No bounce
+            break;
+          }
+          if(closestCollision.onCorner == true) {
+            photons[i].deactivate(); // Deactivate photon that hits a corner
+          } 
+          photons[i].bounceOffSegment(closestCollision); // Bounce off edge
+        }
+      }
+      // Move the photons.
+      for (var i = 0; i < photons.length; ++i) {
+        photons[i].updatePosition();
+      }
+      // Update the active photon count.
+      updatePhotonCount()
+    }
     function updatePositions() {
       // Delete photons that hit corners.
       for (var i = photons.length - 1; i >= 0; --i) {
