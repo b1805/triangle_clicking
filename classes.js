@@ -189,6 +189,8 @@ class Photon {
   }
 
   checkCollision(line) {
+    console.log("checking for intersection with ");
+    console.log(line);
     if(!this.active) {
       return null;
     }
