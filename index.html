@@ -94,6 +94,16 @@ SOFTWARE. -->
         background-color: #339a1e;
         }
 
+      #createShapeButton {
+        background-color: rgb(253, 60, 60);
+        margin-top: 10px;
+        }
+      
+      #createShapeButton:hover {
+        background-color: darkred;
+        margin-top: 10px;
+        }
+
 </style>
 </head>
 <body onload="initialize()">
@@ -113,11 +123,7 @@ SOFTWARE. -->
             </div>
             <div>
                 <label for="speedInput">Speed
-                <select id="speedInput">
-                    <option value="33">Slow</option>
-                    <option value="16">Medium</option>
-                    <option value="0">Fast</option>
-                </select>
+                  <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
                 <button onclick="changeSpeed()">Apply</button></label>
             </div>
             <div>
@@ -152,12 +158,12 @@ SOFTWARE. -->
             <button onclick="applyColors()">Apply Colours</button>
             <p> </p>
             <div>
-                <label for="lightSourceXInput">Light Source X Coordinates:</label>
-                <input type="number" id="lightSourceXInput" min="1" max="36000" value="500">
+                <label for="lightSourceXInput">Light Source X Coordinates:
+                <input type="number" id="lightSourceXInput" min="1" max="36000" value="500"></label>
             </div>
             <div>
-                <label for="lightSourceYInput">Light Source Y Coordinates:</label>
-                <input type="number" id="lightSourceYInput" min="1" max="36000" value="400">
+                <label for="lightSourceYInput">Light Source Y Coordinates:
+                <input type="number" id="lightSourceYInput" min="1" max="36000" value="400"></label>
             </div>
             <p> </p>
             <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button></label>
@@ -203,7 +209,8 @@ SOFTWARE. -->
     let LIGHT_SOURCE_COLOR = 'red';
 
     let NUMBER_LIGHT_RAYS = 360;
-    let RENDER_INTERVAL_TIME = 33;
+    const RENDER_INTERVAL_TIME = 33;
+    let SPEED_TIMES_TEN = 5
 
     var triangles = [];
     var selectedTriangles = [];
@@ -262,7 +269,8 @@ SOFTWARE. -->
 
     // Function to change rendering speed
     function changeSpeed() {
-      RENDER_INTERVAL_TIME = parseInt(document.getElementById("speedInput").value);
+      SPEED_TIMES_TEN = parseInt(document.getElementById("speedInput").value);
+      console.log(SPEED_TIMES_TEN)
     }
 
     function createTriangleGrid() {
@@ -496,7 +504,7 @@ SOFTWARE. -->
           lightSource.x + photonRadius * Math.cos(angle),
           lightSource.y + photonRadius * Math.sin(angle),
           angle,
-          10,
+          (SPEED_TIMES_TEN/10),
           PHOTON_HEAD_COLOR,
           PHOTON_TAIL_COLOR
         ));
