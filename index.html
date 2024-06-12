@@ -25,91 +25,8 @@ SOFTWARE. -->
 <head>
 <meta charset="utf-8">
 <title>Triangle Clicking</title>
-<style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f0f2f5;
-    }
-    .triangle {
-      cursor: pointer;
-    }
-    .selected {
-      fill: black;
-    }
-    .container {
-      max-width: 5000px;
-      margin: 20px auto;
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .flex-container {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .flex-item {
-      flex: 1;
-      margin-right: 10px;
-    }
-
-    h2 {
-      font-size: 20px;
-      font-family: cursive;
-      margin-bottom: 10px;
-      color: #1877f2;
-    }
-    h3 {
-      font-size: 25px;
-      font-family: cursive;
-      text-align: center;
-      color: red;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #1877f2;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      }
-
-      button:hover {
-          background-color: #115293;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-        color: #333;
-      }
-      #startAnimButton, #stopAnimButton, #startRecButton, #stopRecButton, #startAllButton {
-        background-color: #42b72a;
-        margin-top: 10px;
-        }
-
-      #startAnimButton:hover, #stopAnimButton:hover, #startRecButton:hover, #stopRecButton:hover, #startAllButton:hover {
-        background-color: #339a1e;
-        }
-
-      #createShapeButton, #advancedSpeedButton {
-        background-color: rgb(253, 60, 60);
-        margin-top: 10px;
-        }
-      
-      #createShapeButton:hover, #advancedSpeedButton:hover {
-        background-color: darkred;
-        margin-top: 10px;
-        }
-      input[type=checkbox] {
-        width:20px; 
-        height:20px;
-      }
-
-</style>
 </head>
+<link rel="stylesheet" href="style.css">
 <body onload="initialize()">
   <div class="container">
     <div class="flex-container">
@@ -185,8 +102,8 @@ SOFTWARE. -->
 <br/>
 <canvas id="canvas" width="1000" height="800" onmousemove="printCoord(event)" style="border: 1px solid black;" ></canvas>
 <div id="mouse_coords">
-    <p id="x_coord">Y</p>
-    <p id="y_coord">X</p>
+    <span id="x_coord">Y</span>
+    <span id="y_coord">X</span>
 </div>
 </div>
 <div class="container">
@@ -265,7 +182,7 @@ SOFTWARE. -->
       y_coord.innerHTML = "Y: " + Math.max(Math.floor(mouseEvent.clientY - canvas.getBoundingClientRect().y),0);
       mouse_coords.style.position = "fixed";
       mouse_coords.style.left = mouseEvent.clientX + 'px';
-      mouse_coords.style.bottom = (830 - mouseEvent.clientY) + 'px';
+      mouse_coords.style.bottom = (810 - mouseEvent.clientY) + 'px';
     }
 
     function changeMouseCoordsVisibility() {
