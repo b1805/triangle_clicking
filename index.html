@@ -94,12 +94,12 @@ SOFTWARE. -->
         background-color: #339a1e;
         }
 
-      #createShapeButton {
+      #createShapeButton, #advancedSpeedButton {
         background-color: rgb(253, 60, 60);
         margin-top: 10px;
         }
       
-      #createShapeButton:hover {
+      #createShapeButton:hover, #advancedSpeedButton:hover {
         background-color: darkred;
         margin-top: 10px;
         }
@@ -125,6 +125,10 @@ SOFTWARE. -->
                 <label for="speedInput">Speed
                   <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
                 <button onclick="changeSpeed()">Apply</button></label>
+            </div>
+            <div>
+              <h2>Advanced Instantaneous Speed</h2>
+              <button id = "advancedSpeedButton" onclick="changeSpeed2()">Apply Instantaneous Speed!</button>
             </div>
             <div>
               <h2>Photon Counter</h2>
@@ -270,7 +274,13 @@ SOFTWARE. -->
     // Function to change rendering speed
     function changeSpeed() {
       SPEED_TIMES_TEN = parseInt(document.getElementById("speedInput").value);
-      console.log(SPEED_TIMES_TEN)
+      //console.log(SPEED_TIMES_TEN)
+    }
+
+    // Advanced Function to change rendering speed to 100000
+    function changeSpeed2() {
+      SPEED_TIMES_TEN = 100000;
+      //console.log(SPEED_TIMES_TEN)
     }
 
     function createTriangleGrid() {
