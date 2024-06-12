@@ -152,7 +152,6 @@ class Photon {
       this.y += this.vecDirRemaining.y;
       // Reset the velocity vector
       this.vecDirRemaining = this.vecDir;
-      this.lastLineCollided = null;
     }
   }
 
