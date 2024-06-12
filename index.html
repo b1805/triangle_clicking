@@ -177,12 +177,14 @@ SOFTWARE. -->
     function printCoord (mouseEvent) {
       const x_coord = document.getElementById("x_coord");
       const y_coord = document.getElementById("y_coord");
+      console.log("Mouse X:", mouseEvent.clientX);
+      console.log("Mouse Y:", mouseEvent.clientY);
       const mouse_coords = document.getElementById("mouse_coords");
       x_coord.innerHTML = "X: " + Math.floor(mouseEvent.clientX - canvas.getBoundingClientRect().x);
       y_coord.innerHTML = "Y: " + Math.max(Math.floor(mouseEvent.clientY - canvas.getBoundingClientRect().y),0);
       mouse_coords.style.position = "fixed";
       mouse_coords.style.left = mouseEvent.clientX + 'px';
-      mouse_coords.style.bottom = (810 - mouseEvent.clientY) + 'px';
+      mouse_coords.style.bottom = (window.innerHeight + 10 - mouseEvent.clientY) + 'px';
     }
 
     function changeMouseCoordsVisibility() {
