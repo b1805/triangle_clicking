@@ -177,8 +177,8 @@ SOFTWARE. -->
 <br/>
 <canvas id="canvas" width="1000" height="800" onmousemove="printCoord(event)" style="border: 1px solid black;" ></canvas>
 <div id="mouse_coords">
-  <input id="x_coord" value="X">
-  <input id="y_coord" value="Y">
+    <p id="x_coord">Y</p>
+    <p id="y_coord">X</p>
 </div>
 </div>
 <div class="container">
@@ -253,11 +253,11 @@ SOFTWARE. -->
       const x_coord = document.getElementById("x_coord");
       const y_coord = document.getElementById("y_coord");
       const mouse_coords = document.getElementById("mouse_coords");
-      x_coord.value = "X: " + Math.floor(mouseEvent.clientX - canvas.getBoundingClientRect().x);
-      y_coord.value = "Y: " + Math.max(Math.floor(mouseEvent.clientY - canvas.getBoundingClientRect().y),0);
-      mouse_coords.style.position = "relative";
+      x_coord.innerHTML = "X: " + Math.floor(mouseEvent.clientX - canvas.getBoundingClientRect().x);
+      y_coord.innerHTML = "Y: " + Math.max(Math.floor(mouseEvent.clientY - canvas.getBoundingClientRect().y),0);
+      mouse_coords.style.position = "fixed";
       mouse_coords.style.left = mouseEvent.clientX + 'px';
-      mouse_coords.style.bottom = (1000 - mouseEvent.clientY) + 'px';
+      mouse_coords.style.bottom = (800 - mouseEvent.clientY) + 'px';
     }
 
     function changeLightSourceCoordinates() {
