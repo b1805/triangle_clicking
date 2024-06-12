@@ -208,6 +208,8 @@ SOFTWARE. -->
     // Function to change number of light rays
     function changeNumRays() {
       NUMBER_LIGHT_RAYS = parseInt(document.getElementById("numRaysInput").value);
+      //y=(0.7/log250(x))-0.35
+      //y=(450-x)/300
     }
 
     // Function to change rendering speed
@@ -583,6 +585,7 @@ SOFTWARE. -->
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
       ctx.stroke();
+      ctx.lineWidth = 0.5;
     }
 
     // Recording:
