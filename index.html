@@ -171,6 +171,10 @@ SOFTWARE. -->
             </div>
             <p> </p>
             <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button></label>
+          <div>
+            <label for="showMouseCoordsCheckBox">Show Mouse Coords</label>
+            <input type="checkbox" id="mouseVisibilityCheckBox" value="true" onclick="changeMouseCoordsVisibility()">
+          </div>
         </div>
     </div>
 </div>
@@ -257,7 +261,17 @@ SOFTWARE. -->
       y_coord.innerHTML = "Y: " + Math.max(Math.floor(mouseEvent.clientY - canvas.getBoundingClientRect().y),0);
       mouse_coords.style.position = "fixed";
       mouse_coords.style.left = mouseEvent.clientX + 'px';
-      mouse_coords.style.bottom = (800 - mouseEvent.clientY) + 'px';
+      mouse_coords.style.bottom = (830 - mouseEvent.clientY) + 'px';
+    }
+
+    function changeMouseCoordsVisibility() {
+      const mouseVisibilityCheckBox = document.getElementById("mouseVisibilityCheckBox");
+      const mouse_coords = document.getElementById("mouse_coords");
+      if(mouseVisibilityCheckBox.checked) {
+        mouse_coords.style.display = "inline";
+      } else {
+        mouse_coords.style.display = "none";
+      }
     }
 
     function changeLightSourceCoordinates() {
@@ -346,7 +360,7 @@ SOFTWARE. -->
     }
 
     function drawLightSource() {
-      drawCircle(lightSource.x, lightSource.y, 5, LIGHT_SOURCE_COLOR);
+      drawCircle(lightSource.x, lightSource.y, 2, LIGHT_SOURCE_COLOR);
     }
 
     function selectTriangle(event) {
@@ -507,7 +521,7 @@ SOFTWARE. -->
 
     function createPhotons() {
       photons = [];
-      const photonRadius = 0;
+      const photonRadius = 5;
       for (let i = 0; i < NUMBER_LIGHT_RAYS; i++) {
         const angle = (i / NUMBER_LIGHT_RAYS) * 2 * Math.PI;
         photons.push(new Photon(
