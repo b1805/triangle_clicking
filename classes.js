@@ -189,6 +189,7 @@ class Photon {
   }
 
   checkCollision(line) {
+    console.log("Photon coords: x =", this.x, "y =", this.y);
     console.log("checking for intersection with ");
     console.log(line);
     if(!this.active) {
@@ -206,13 +207,17 @@ class Photon {
     const v = this.vecDirRemaining; // Direction Vector of photon
 
     const vCROSSb = v.cross(b); 
-    if(vCROSSb == 0) {
+    console.log("vCROSSb =",vCROSSb);
+    if(0 - eps <= vCROSSb && vCROSSb <= 0 + eps) {
         return null;
     }
     const aSUBp = a.sub(p);
     const s = aSUBp.cross(b) / vCROSSb;  
     const t = aSUBp.cross(v) / vCROSSb;  
+    console.log("s =", s);
+    console.log("t =", t);
     if(s < 0 - eps || s > 1 + eps) {
+        
         return null;
     }
     if(t <= 0 - eps || t >= 1 + eps) {
