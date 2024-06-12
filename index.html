@@ -277,9 +277,9 @@ SOFTWARE. -->
       //console.log(SPEED_TIMES_TEN)
     }
 
-    // Advanced Function to change rendering speed to 100000
+    // Advanced Function to change rendering speed to 10000
     function changeSpeed2() {
-      SPEED_TIMES_TEN = 100000;
+      SPEED_TIMES_TEN = 10000;
       //console.log(SPEED_TIMES_TEN)
     }
 
@@ -346,7 +346,7 @@ SOFTWARE. -->
     }
 
     function drawLightSource() {
-      drawCircle(lightSource.x, lightSource.y, 5, LIGHT_SOURCE_COLOR);
+      drawCircle(lightSource.x, lightSource.y, 3.33, LIGHT_SOURCE_COLOR);
     }
 
     function selectTriangle(event) {
@@ -507,7 +507,7 @@ SOFTWARE. -->
 
     function createPhotons() {
       photons = [];
-      const photonRadius = 0;
+      const photonRadius = 5;
       for (let i = 0; i < NUMBER_LIGHT_RAYS; i++) {
         const angle = (i / NUMBER_LIGHT_RAYS) * 2 * Math.PI;
         photons.push(new Photon(
