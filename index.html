@@ -169,7 +169,7 @@ SOFTWARE. -->
 
     var COORDS = [];
     let lightSource = { x: 500, y: 400 };
-    let MAG = [500, 400];
+    let MAG = new Magnifier([lightsource.x, lightsource.y], 10, 50, [950,50]);
 
     function initialize() {
       createTriangleGrid();

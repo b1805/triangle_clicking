@@ -141,6 +141,13 @@ class Square {
     this.x = x;
     this.y = y;
     this.size = size;
+    this.sides = [
+        new LineSegment(this.x, this.y, this.x + this.size, this.y),
+        new LineSegment(this.x, this.y, this.x, this.y + this.size),
+        new LineSegment(this.x + this.size, this.y, this.x + this.size, this.y + this.size),
+        new LineSegment(this.x, this.y + this.size, this.x + this.size, this.y + this.size)
+        ];
+
   }
   
   // Returns true if the point (x, y) is in the square
@@ -164,7 +171,7 @@ class Square {
 //                      must be from a line segment for a collision to occur.
 //
 class Photon {
-  constructor(x, y, dir, speed, headColor, tailColor) {
+  constructor(x, y, dir, speed, headColor, tailColor, inMagBox = false) {
     this.x = x;
     this.y = y;
     this.vecDir = new Vector(speed * Math.cos(dir), speed * Math.sin(dir));
@@ -176,9 +183,11 @@ class Photon {
     this.contactPoints = new Array();
     this.contactPoints.push([this.x, this.y]);
     this.lastLineCollided = null;
-    this.magEntry = null;
-    this.lastMagPoint = null;
     this.active = true;
+    this.inMagBox = inMagBox;
+    this.magEntryCollision = null;
+    this.magContactPoints = new Array();
+    this.magExitCollision = null;
   }
 
   deactivate() {
@@ -194,6 +203,7 @@ class Photon {
     }
   }
 
+  // Raycast the photon forward to see if it will collide, or rather intersect, with a line segment this frame
   checkCollision(line) {
     //console.log("Photon coords: x =", this.x, "y =", this.y);
     //console.log("checking for intersection with ");
@@ -201,7 +211,7 @@ class Photon {
     if(!this.active) {
       return null;
     }
-    if(line != null) { // Not the first collision this frame
+    if(line != null) { // Not the first collision
       if(line.equals(this.lastLineCollided)) { // It is impossible to collide with the same line segment twice in a row
         return null;
       }
@@ -253,6 +263,7 @@ class Photon {
       return;
     }
     const line = collision.l;
+    // Mark this line, so we don't reflect off of it multiple times
     this.lastLineCollided = line;
     // Distance from photon to line segment
     const preReflectionVector = new Vector(collision.intersection.x - this.x, collision.intersection.y - this.y);
