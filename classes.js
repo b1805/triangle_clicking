@@ -1,3 +1,42 @@
+// The magnifier location
+class Magnifier {
+  constructor(mag, magSide, magView, magViewSide) {
+    this.mag = mag;
+    this.magSide = magSide;
+    this.magView = magView;
+    this.magViewSide = magViewSide;
+    this.magSquare = new Square(
+      mag[0] - magSide / 2,
+      mag[1] - magSide / 2,
+      magSide
+    );
+    this.magBox = [
+      [mag[0] - magSide / 2, mag[1] - magSide / 2],
+      [mag[0] - magSide / 2, mag[1] + magSide / 2],
+      [mag[0] + magSide / 2, mag[1] + magSide / 2],
+      [mag[0] + magSide / 2, mag[1] - magSide / 2],
+    ];
+    this.magViewBox = [
+      [magView[0] - magViewSide / 2, magView[1] - magViewSide / 2],
+      [magView[0] - magViewSide / 2, magView[1] + magViewSide / 2],
+      [magView[0] + magViewSide / 2, magView[1] + magViewSide / 2],
+      [magView[0] + magViewSide / 2, magView[1] - magViewSide / 2],
+    ];
+  }
+
+  // Convert coordinates inside `this.mag` to scaled coordinates inside
+  // `this.magBox`.
+  translate(x, y) {
+    var dx = x - this.mag[0];
+    var dy = y - this.mag[1];
+    return [
+      this.magView[0] + (this.magViewSide / this.magSide) * dx,
+      this.magView[1] + (this.magViewSide / this.magSide) * dy,
+    ];
+  }
+}
+
+
 class Vector {
   constructor(x, y) {
     this.x = x;
