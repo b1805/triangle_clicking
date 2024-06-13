@@ -48,6 +48,15 @@ SOFTWARE. -->
                 <button onclick="changeSpeed()">Apply</button></label>
             </div>
             <div>
+              <label for="triangleSideInput">Number of Triangles
+              <select id="triangleSideInput">
+                  <option value="200">Less</option>
+                  <option value="100">Default</option>
+                  <option value="50">More</option>
+              </select>
+              <button onclick="changeNumberTriangles()">Apply</button></label>
+            </div>
+            <div>
               <h2>Advanced Instantaneous Speed</h2>
               <button id = "advancedSpeedButton" onclick="changeSpeed2()">Apply Instantaneous Speed!</button>
             </div>
@@ -140,8 +149,9 @@ SOFTWARE. -->
     let NUMBER_LIGHT_RAYS = 360;
     const RENDER_INTERVAL_TIME = 33;
     let SPEED_TIMES_TEN = 5
-    let HEAD_SIZE = 1.3
-    let TAIL_SIZE = 0.5
+    let HEAD_SIZE = 0.6
+    let TAIL_SIZE = 0.3
+    let TRIANGLE_SIDE = 100;
 
     var triangles = [];
     var selectedTriangles = [];
@@ -179,8 +189,8 @@ SOFTWARE. -->
     function printCoord (mouseEvent) {
       const x_coord = document.getElementById("x_coord");
       const y_coord = document.getElementById("y_coord");
-      console.log("Mouse X:", mouseEvent.clientX);
-      console.log("Mouse Y:", mouseEvent.clientY);
+      //console.log("Mouse X:", mouseEvent.clientX);
+      //console.log("Mouse Y:", mouseEvent.clientY);
       const mouse_coords = document.getElementById("mouse_coords");
       x_coord.innerHTML = "X: " + Math.floor(mouseEvent.clientX - canvas.getBoundingClientRect().x);
       y_coord.innerHTML = "Y: " + Math.max(Math.floor(mouseEvent.clientY - canvas.getBoundingClientRect().y),0);
@@ -205,11 +215,26 @@ SOFTWARE. -->
       updateScreen(); // Update canvas with new coordinates
     }
 
+    //log function
+    function log(b, n) {
+      return Math.log(n) / Math.log(b);
+    }
+
     // Function to change number of light rays
     function changeNumRays() {
       NUMBER_LIGHT_RAYS = parseInt(document.getElementById("numRaysInput").value);
-      //y=(0.7/log250(x))-0.35
-      //y=(450-x)/300
+      if (NUMBER_LIGHT_RAYS < 360) {
+        //y=(630-x)/900
+        TAIL_SIZE = (630-NUMBER_LIGHT_RAYS)/900;
+        HEAD_SIZE = 1.5*TAIL_SIZE;
+        //console.log(TAIL_SIZE)
+      }
+      else {
+        //y=(0.7/log250(x))-0.35
+        TAIL_SIZE = (0.7/(log(250,NUMBER_LIGHT_RAYS)))-0.35;
+        HEAD_SIZE = 2*TAIL_SIZE;
+        //console.log(TAIL_SIZE)
+      }
     }
 
     // Function to change rendering speed
@@ -224,8 +249,16 @@ SOFTWARE. -->
       //console.log(SPEED_TIMES_TEN)
     }
 
+    function changeNumberTriangles(){
+      TRIANGLE_SIDE = parseInt(document.getElementById("triangleSideInput").value);
+      triangles = [];
+      selectedTriangles = [];
+      createTriangleGrid();
+      console.log(TRIANGLE_SIDE);
+    }
+
     function createTriangleGrid() {
-      const triangleSize = 50;
+      const triangleSize = TRIANGLE_SIDE;
       for (let y = 0; y < canvas.height; y += triangleSize) {
         for (let x = 0; x < canvas.width; x += triangleSize) {
           let isEvenRow = (y / triangleSize) % 2 === 0;
@@ -278,9 +311,11 @@ SOFTWARE. -->
       triangles.forEach(triangle => {
         if (triangle.selected) {
           ctx.fillStyle = 'black';
+          ctx.strokeStyle = 'black';
           ctx.fill(triangle.path);
         }
         ctx.stroke(triangle.path);
+        ctx.strokeStyle = WALL_COLOR;
       });
 
       drawLightSource();

@@ -199,7 +199,8 @@ class Photon {
         return null;
       }
     }
-    const eps = 0.00001;
+    const edge_eps = 0.0001;
+    const corner_eps = 0.01;
     const a = new Vector(line.x1, line.y1); // Position Vector of line segment
     const b = new Vector(line.dx, line.dy); // Direction Vector of line segment (a + b is the other endpoint)
     const p = new Vector(this.x, this.y); // Position Vector of photon
@@ -207,7 +208,7 @@ class Photon {
 
     const vCROSSb = v.cross(b); 
     //console.log("vCROSSb =",vCROSSb);
-    if(0 - eps <= vCROSSb && vCROSSb <= 0 + eps) {
+    if(0 - edge_eps <= vCROSSb && vCROSSb <= 0 + edge_eps) {
         return null;
     }
     const aSUBp = a.sub(p);
@@ -215,15 +216,15 @@ class Photon {
     const t = aSUBp.cross(v) / vCROSSb;  
     //console.log("s =", s);
     //console.log("t =", t);
-    if(s < 0 - eps || s > 1 + eps) {
+    if(s < 0 - edge_eps || s > 1 + edge_eps) {
         
         return null;
     }
-    if(t <= 0 - eps || t >= 1 + eps) {
+    if(t <= 0 - edge_eps || t >= 1 + edge_eps) {
         return null;
     }
     let oc = false;
-    if((0 - eps < t && t < eps + 0) || (1 - eps < t && t < eps + 1)) {
+    if((0 - corner_eps < t && t < corner_eps + 0) || (1 - corner_eps < t && t < corner_eps + 1)) {
         oc = true;
     }
     return {
