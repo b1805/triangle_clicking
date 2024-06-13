@@ -550,36 +550,6 @@ SOFTWARE. -->
       // Update the active photon count.
       updatePhotonCount()
     }
-    function updatePositions() {
-      // Delete photons that hit corners.
-      for (var i = photons.length - 1; i >= 0; --i) {
-        for (var point = 0; point < COORDS.length; ++point) {
-          if (photons[i].checkPointCollision(
-                COORDS[point][0], COORDS[point][1])) {
-            photons[i].deactivate();
-            break;
-          }
-        }
-      }
-      // Bounce photons off edges.
-      for (var i = 0; i < photons.length; ++i) {
-        for (var edge = 0; edge < boundaries.length; ++edge) {
-          if (edge !== photons[i].lastBounce &&
-              photons[i].checkLineCollision(boundaries[edge])) {
-            photons[i].lastBounce = edge;
-            photons[i].bounceOffSegment(boundaries[edge]);
-            hasBounced = true;
-            break;
-          }
-        }
-      }
-      // Move the photons.
-      for (var i = 0; i < photons.length; ++i) {
-        photons[i].updatePosition();
-      }
-      // Update the active photon count.
-      updatePhotonCount()
-    }
 
     function drawPhotons() {
       photons.forEach(photon => {

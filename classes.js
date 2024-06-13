@@ -155,38 +155,6 @@ class Photon {
     }
   }
 
-  // Returns whether or not the photon collides with the point (a corner).
-  checkPointCollision(px, py) {
-    if (!this.active) {
-      return false;
-    }
-    var dist = Math.hypot(this.x - px, this.y - py);
-    return dist <= Math.max(0.3, this.collisionRadius);
-  }
-
-  // Returns whether or not the photon collides with a line segment (a wall).
-  checkLineCollision(line) {
-    if (!this.active) {
-      return false;
-    }
-    if (this.checkPointCollision(line.x1, line.y1) ||
-        this.checkPointCollision(line.x2, line.y2)) {
-      return true;
-    }
-    var vecX = this.x - line.x1;
-    var vecY = this.y - line.y1;
-    var dot = (vecX * (line.x2 - line.x1) + vecY * (line.y2 - line.y1))
-        / (line.length * line.length);
-    var closestX = line.x1 + dot * (line.x2 - line.x1);
-    var closestY = line.y1 + dot * (line.y2 - line.y1);
-    if (dot >= 0 && dot <= 1) {
-      // On the line segment.
-      var dist = Math.hypot(this.x - closestX, this.y - closestY);
-      return dist <= this.collisionRadius;
-    }
-    return false;
-  }
-
   checkCollision(line) {
     //console.log("Photon coords: x =", this.x, "y =", this.y);
     //console.log("checking for intersection with ");
