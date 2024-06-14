@@ -45,6 +45,14 @@ class Magnifier {
     this.ctx.stroke();
     this.ctx.lineWidth = 0.5;
   }
+    
+  drawCircle(x, y, radius, color) {
+    const pos = this.map(new Vector(x, y));
+    this.ctx.beginPath();
+    this.ctx.fillStyle = color; 
+    this.ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
+    this.ctx.fill();
+  }
 }
 
 

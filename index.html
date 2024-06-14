@@ -108,8 +108,8 @@ SOFTWARE. -->
         </div>
     </div>
 </div>
+<div><canvas id="mag_canvas" width="200" height="200" style="border: 1px solid black;" ></canvas></div>
 <br/>
-<canvas id="mag_canvas" width="200" height="200" style="border: 1px solid black;" ></canvas>
 <canvas id="canvas" width="1000" height="800" onmousemove="printCoord(event)" style="border: 1px solid black;" ></canvas>
 <div id="mouse_coords">
     <span id="x_coord">Y</span>
@@ -583,6 +583,7 @@ SOFTWARE. -->
     }
 
     function drawCircle(x, y, radius, color) {
+      MAG.drawCircle(x, y, radius, color); 
       ctx.beginPath();
       ctx.fillStyle = color; 
       ctx.arc(x, y, radius, 0, 2 * Math.PI);
