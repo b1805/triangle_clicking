@@ -265,6 +265,7 @@ SOFTWARE. -->
       triangles = [];
       selectedTriangles = [];
       createTriangleGrid();
+      drawMagBox(MAG, MAG_COLOR);
       console.log(TRIANGLE_SIDE);
     }
 
@@ -314,6 +315,7 @@ SOFTWARE. -->
     }
 
     function drawTriangles() {
+      MAG.drawTriangles(BACKGROUND_COLOR);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = BACKGROUND_COLOR;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -354,6 +356,7 @@ SOFTWARE. -->
         }
       });
       drawTriangles();
+      drawMagBox(MAG, MAG_COLOR);
     }
 
     function setLightSource(event) {
@@ -512,6 +515,7 @@ SOFTWARE. -->
       rayTracedUpdatePositions();
       drawTriangles();
       drawPhotons();
+      drawMagBox(MAG, MAG_COLOR);
       if (currentlyRecording) {
         video.add(ctx);
         numCapturedFrames++;

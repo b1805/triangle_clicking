@@ -56,6 +56,12 @@ class Magnifier {
     this.ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
     this.ctx.fill();
   }
+
+  drawTriangles(BACKGROUND_COLOR) {
+    ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
+    ctx.fillStyle = BACKGROUND_COLOR;
+    ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
+  }
 }
 
 
