@@ -199,7 +199,7 @@ class Square {
 //                      must be from a line segment for a collision to occur.
 //
 class Photon {
-  constructor(x, y, dir, speed, headColor, tailColor, inMagBox = false) {
+  constructor(x, y, dir, speed, headColor, tailColor) {
     this.x = x;
     this.y = y;
     this.vecDir = new Vector(speed * Math.cos(dir), speed * Math.sin(dir));
@@ -212,10 +212,6 @@ class Photon {
     this.contactPoints.push([this.x, this.y]);
     this.lastLineCollided = null;
     this.active = true;
-    this.inMagBox = inMagBox;
-    this.magEntryCollision = null;
-    this.magContactPoints = new Array();
-    this.magExitCollision = null;
   }
 
   deactivate() {
@@ -244,8 +240,9 @@ class Photon {
         return null;
       }
     }
-    const edge_eps = 0.0001;
-    const corner_eps = 0.01;
+    const edge_eps = 0.00000001;
+    //const corner_eps = 0.01
+    //console.log(corner_eps)
     const a = new Vector(line.x1, line.y1); // Position Vector of line segment
     const b = new Vector(line.dx, line.dy); // Direction Vector of line segment (a + b is the other endpoint)
     const p = new Vector(this.x, this.y); // Position Vector of photon
