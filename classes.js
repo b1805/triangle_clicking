@@ -65,6 +65,7 @@ class Magnifier {
 
   //Maps the trangle grid to the magnifier
   drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR) {
+    this.ctx.lineWidth = 0.5
     this.ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
     this.ctx.fillStyle = BACKGROUND_COLOR;
     this.ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
