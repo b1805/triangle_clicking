@@ -105,6 +105,14 @@ SOFTWARE. -->
             <h2 for="showMouseCoordsCheckBox">Show Mouse Coords
             <input type="checkbox" id="mouseVisibilityCheckBox" checked="true" onclick="changeMouseCoordsVisibility()"> </h2>
           </div>
+          <div>
+            <label for="magOnOffInput">Mag on off
+            <select id="magOnOffInput">
+                <option value="1">On</option>
+                <option value="0">Off</option>
+            </select>
+            <button onclick="turnMagOnOff()">Apply</button></label>
+          </div>
         </div>
     </div>
 </div>
@@ -193,7 +201,8 @@ SOFTWARE. -->
 
     // Turns the mag box on and off
     function turnMagOnOff() {
-
+      bool = parseInt(document.getElementById("magOnOffInput").value);
+      MAG.calculate = bool;
     }
 
     function printCoord (mouseEvent) {
