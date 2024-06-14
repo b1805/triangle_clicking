@@ -16,14 +16,6 @@ class Magnifier {
       [mag[0] + magSide / 2, mag[1] + magSide / 2],
       [mag[0] + magSide / 2, mag[1] - magSide / 2],
     ];
-    /*
-    this.magViewBox = [
-      [this.magView[0] - magViewSide / 2, this.magView[1] - magViewSide / 2],
-      [magView[0] - magViewSide / 2, magView[1] + magViewSide / 2],
-      [magView[0] + magViewSide / 2, magView[1] + magViewSide / 2],
-      [magView[0] + magViewSide / 2, magView[1] - magViewSide / 2],
-    ];
-    */
   }
 
   // Change the location of the magBox
@@ -41,25 +33,29 @@ class Magnifier {
   map(pos) {
     return pos.mult(this.scale).add(this.translation);
   }
+
+  // Draw a line from the main canvas onto the magnified canvas
   drawLine(x1, y1, x2, y2, color, width = 100) {
     if(!this.calculate) return;
+    // Map coordinates
     const pos1 = this.map(new Vector(x1, y1));
     const pos2 = this.map(new Vector(x2, y2));
     this.ctx.beginPath();
     this.ctx.strokeStyle = color;
-    this.ctx.lineWidth = width;
+    this.ctx.lineWidth = 1.5*width;
     this.ctx.moveTo(pos1.x, pos1.y);
     this.ctx.lineTo(pos2.x, pos2.y);
     this.ctx.stroke();
     this.ctx.lineWidth = 0.5;
   }
     
+  // Light source and photon head
   drawCircle(x, y, radius, color) {
     if(!this.calculate) return;
     const pos = this.map(new Vector(x, y));
     this.ctx.beginPath();
     this.ctx.fillStyle = color; 
-    this.ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
+    this.ctx.arc(pos.x, pos.y, 1.5*radius, 0, 2 * Math.PI);
     this.ctx.fill();
   }
 

@@ -137,7 +137,7 @@ SOFTWARE. -->
 </div>
 <br/>
 <canvas id="canvas" width="1000" height="800" onmousemove="printCoord(event)" style="border: 1px solid black;" ></canvas>
-<canvas id="mag_canvas" width="200" height="200" style="border: 1px solid black;"></canvas>
+<canvas id="mag_canvas" width="200" height="200" style="border: 3px solid blue;"></canvas>
 <div id="mouse_coords">
     <span id="x_coord">Y</span>
     <span id="y_coord">X</span>
@@ -200,7 +200,7 @@ SOFTWARE. -->
 
     var COORDS = [];
     let lightSource = { x: 500, y: 400 };
-    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, 200, mag_ctx);
+    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, mag_canvas.width, mag_ctx);
 
     function initialize() {
       createTriangleGrid();
