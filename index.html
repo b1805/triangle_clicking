@@ -200,6 +200,7 @@ SOFTWARE. -->
     let PHOTON_HEAD_COLOR = '#E1FF00';
     let PHOTON_TAIL_COLOR = '#00FFB3';
     let LIGHT_SOURCE_COLOR = 'red';
+    let photonRadius = 10; // Distance away from source
 
     let NUMBER_LIGHT_RAYS = 360;
     const RENDER_INTERVAL_TIME = 33;
@@ -295,8 +296,9 @@ SOFTWARE. -->
 
     // The radius of a square is its side length
     function changeMagBoxRadius() {
-        r = parseInt(document.getElementById(magBoxRadiusInput).value);
+        r = parseInt(document.getElementById("magBoxRadiusInput").value);
         MAG.rescale(r);
+        photonRadius = r;
         updateScreen();
     }
 
@@ -574,7 +576,6 @@ SOFTWARE. -->
 
     function createPhotons() {
       photons = [];
-      const photonRadius = 10;
       for (let i = 0; i < NUMBER_LIGHT_RAYS; i++) {
         const angle = (i / NUMBER_LIGHT_RAYS) * 2 * Math.PI;
         photons.push(new Photon(
