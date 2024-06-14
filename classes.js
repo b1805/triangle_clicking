@@ -2,6 +2,7 @@
 class Magnifier {
   constructor(mag, magSide, magViewSide, ctx) {
     this.mag = mag;
+    this.calculate = true;
     this.ctx = ctx;
     this.magSide = magSide;
     this.magViewSide = magViewSide;
@@ -35,6 +36,7 @@ class Magnifier {
     return pos.mult(this.scale).add(this.translation);
   }
   drawLine(x1, y1, x2, y2, color, width = 0.3) {
+    if(!this.calculate) return;
     const pos1 = this.map(new Vector(x1, y1));
     const pos2 = this.map(new Vector(x2, y2));
     this.ctx.beginPath();
