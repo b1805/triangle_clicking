@@ -49,6 +49,7 @@ class Magnifier {
   }
     
   drawCircle(x, y, radius, color) {
+    if(!this.calculate) return;
     const pos = this.map(new Vector(x, y));
     this.ctx.beginPath();
     this.ctx.fillStyle = color; 
