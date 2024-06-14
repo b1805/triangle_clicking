@@ -278,6 +278,13 @@ SOFTWARE. -->
       updateScreen(); // Update canvas with new coordinates
     }
 
+    // The radius of a square is its side length
+    function changeMagBoxRadius() {
+        r = parseInt(document.getElementById(magBoxRadiusInput).value);
+        MAG.rescale(r);
+        updateScreen();
+    }
+
     //log function
     function log(b, n) {
       return Math.log(n) / Math.log(b);

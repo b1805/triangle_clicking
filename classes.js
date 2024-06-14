@@ -18,6 +18,17 @@ class Magnifier {
     ];
   }
 
+  rescale(magSide) {
+    this.magSide = magSide;
+    this.scale = this.magViewSide/this.magSide; 
+    this.translation = new Vector(this.magView[0] - this.scale * this.mag[0], this.magView[1] - this.scale * this.mag[1]);
+    this.magBox = [
+      [this.mag[0] - this.magSide / 2, this.mag[1] - this.magSide / 2],
+      [this.mag[0] - this.magSide / 2, this.mag[1] + this.magSide / 2],
+      [this.mag[0] + this.magSide / 2, this.mag[1] + this.magSide / 2],
+      [this.mag[0] + this.magSide / 2, this.mag[1] - this.magSide / 2],
+    ];
+  }
   // Change the location of the magBox
   moveMag(x, y) {
     this.mag = [x, y];
