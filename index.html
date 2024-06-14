@@ -140,7 +140,7 @@ SOFTWARE. -->
 
     const BACKGROUND_COLOR = '#FFFFFF';
     let WALL_COLOR = '#FFA914';
-    let MAG_COLOR = '#FFA500';
+    let MAG_COLOR = '#032CAB';
     let ORIGIN_COLOR = MAG_COLOR;
     let PHOTON_HEAD_COLOR = '#E1FF00';
     let PHOTON_TAIL_COLOR = '#00FFB3';
@@ -169,10 +169,11 @@ SOFTWARE. -->
 
     var COORDS = [];
     let lightSource = { x: 500, y: 400 };
-    let MAG = new Magnifier([lightsource.x, lightsource.y], 10, 50, [950,50]);
+    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, [950,50], 100, ctx);
 
     function initialize() {
       createTriangleGrid();
+      drawMagBox(MAG, MAG_COLOR);
       canvas.addEventListener('click', selectTriangle);
       canvas.addEventListener('contextmenu', setLightSource);
     }
@@ -584,7 +585,24 @@ SOFTWARE. -->
       ctx.fill();
     }
 
+    function drawMagBox(magnifier, color) {
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1;
+      ctx.moveTo(magnifier.magBox[0][0], magnifier.magBox[0][1]);
+      for(let i = 1; i <= magnifier.magBox.length; ++i) {
+        ctx.lineTo(magnifier.magBox[i % magnifier.magBox.length][0], magnifier.magBox[i % magnifier.magBox.length][1]);
+      }
+      ctx.moveTo(magnifier.magViewBox[0][0], magnifier.magViewBox[0][1]);
+      for(let i = 1; i <= magnifier.magViewBox.length; ++i) {
+        ctx.lineTo(magnifier.magViewBox[i % magnifier.magViewBox.length][0], magnifier.magViewBox[i % magnifier.magViewBox.length][1]);
+      }
+      ctx.stroke()
+      ctx.lineWidth = 0.5;
+    }
+
     function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
+      this.MAG.drawLine(x1, y1, x2, y2, color, width); 
       ctx.beginPath();
       ctx.strokeStyle = color;
       ctx.lineWidth = width;

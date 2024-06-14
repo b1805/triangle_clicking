@@ -1,10 +1,14 @@
-// The magnifier location
+// The magnifier
 class Magnifier {
-  constructor(mag, magSide, magView, magViewSide) {
+  constructor(mag, magSide, magView, magViewSide, ctx) {
     this.mag = mag;
     this.magSide = magSide;
     this.magView = magView;
     this.magViewSide = magViewSide;
+    // Scale factor and translation to map vectors on the canvas to the larger virtual canvas of the magnified image
+    this.scale = magViewSide/magSide; 
+    this.translation = new Vector(this.magView[0] - this.scale * this.mag[0], this.magView[1] - this.scale * this.mag[1]);
+    this.canvas = ctx;
     this.magSquare = new Square(
       mag[0] - magSide / 2,
       mag[1] - magSide / 2,
@@ -24,15 +28,20 @@ class Magnifier {
     ];
   }
 
-  // Convert coordinates inside `this.mag` to scaled coordinates inside
-  // `this.magBox`.
-  translate(x, y) {
-    var dx = x - this.mag[0];
-    var dy = y - this.mag[1];
-    return [
-      this.magView[0] + (this.magViewSide / this.magSide) * dx,
-      this.magView[1] + (this.magViewSide / this.magSide) * dy,
-    ];
+  // Map a position vector to the magnified virtual canvas
+  map(pos) {
+    return pos.mult(this.scale).add(this.translation);
+  }
+  drawLine(x1, y1, x2, y2, color, width = 0.3) {
+    const pos1 = map(new Vector(x1, y1));
+    const pos2 = map(new Vector(x2, y2));
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = color;
+    this.ctx.lineWidth = width;
+    this.ctx.moveTo(pos1.x, pos1.y);
+    this.ctx.lineTo(pos2.x, pos2.y);
+    this.ctx.stroke();
+    this.ctx.lineWidth = 0.5;
   }
 }
 
