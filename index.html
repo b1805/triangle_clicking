@@ -64,6 +64,25 @@ SOFTWARE. -->
               <h2>Photon Counter</h2>
               <p>Active Photons: <span id="activePhotonCount">0</span></p>
             </div>
+            <div>
+              <h2>Change Epsilon</h2>
+              <label for="epsilonInput">Epsilon Value: 
+              <select id="epsilonInput">
+                <option value="0.1">0.1</option>
+                <option selected value="0.01">0.01 (Default)</option>
+                <option value="0.001">0.001</option>
+                <option value="0.0001">0.0001</option>
+                <option value="0.00001">0.00001</option>
+                <option value="0.000001">0.000001</option>
+                <option value="0.0000001">0.0000001</option>
+                <option value="0.00000001">0.00000001</option>
+                <option value="0.000000001">0.000000001</option>
+                <option value="0.0000000001">0.0000000001</option>
+                <option value="0.00000000001">0.00000000001</option>
+                <option value="0.000000000001">0.000000000001</option>
+            </select>
+            <button onclick="changeEpsilon()">Apply</button></label>
+            </div>
             <p> </p>
             <h2>Animation</h2>
             <button id="createShapeButton" onclick="createShape()">Create Shape</button>
@@ -106,19 +125,19 @@ SOFTWARE. -->
             <input type="checkbox" id="mouseVisibilityCheckBox" checked="true" onclick="changeMouseCoordsVisibility()"> </h2>
           </div>
           <div>
-            <label for="magOnOffInput">Mag on off
+            <h2 for="magOnOffInput">Show Magnification box
             <select id="magOnOffInput">
                 <option value="1">On</option>
                 <option value="0">Off</option>
             </select>
-            <button onclick="turnMagOnOff()">Apply</button></label>
+            <button onclick="turnMagOnOff()">Apply</button></h2>
           </div>
         </div>
     </div>
 </div>
-<div><canvas id="mag_canvas" width="200" height="200" style="border: 1px solid black;" ></canvas></div>
 <br/>
 <canvas id="canvas" width="1000" height="800" onmousemove="printCoord(event)" style="border: 1px solid black;" ></canvas>
+<canvas id="mag_canvas" width="200" height="200" style="border: 1px solid black;"></canvas>
 <div id="mouse_coords">
     <span id="x_coord">Y</span>
     <span id="y_coord">X</span>
@@ -163,6 +182,7 @@ SOFTWARE. -->
     let HEAD_SIZE = 0.6;
     let TAIL_SIZE = 0.3;
     let TRIANGLE_SIDE = 100;
+    corner_eps = 0.01; //Global Variable
 
     var triangles = [];
     var selectedTriangles = [];
@@ -197,6 +217,12 @@ SOFTWARE. -->
       ORIGIN_COLOR = document.getElementById("magnifierColorInput").value;
       LIGHT_SOURCE_COLOR = document.getElementById("magnifierColorInput").value;
       updateScreen(); // Update canvas with new colors
+    }
+
+    // Changes Epsilon Value
+    function changeEpsilon() {
+      corner_eps = parseFloat(document.getElementById("epsilonInput").value);
+      console.log(corner_eps);
     }
 
     // Turns the mag box on and off
