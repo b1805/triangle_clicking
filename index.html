@@ -95,6 +95,21 @@ SOFTWARE. -->
               </select>
               <button onclick="turnMagOnOff()">Apply</button></h2>
             </div>
+            <div>
+              <h2>Change Magnification Box Radius</h2>
+              <label for="magBoxRadiusInput">Epsilon Value: 
+              <select id="magBoxRadiusInput">
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option selected value="10">10 (Default)</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            <button onclick="changeMagBoxRadius()">Apply</button></label>
+            </div>
             <p> </p>
             <h2>Animation</h2>
             <button id="createShapeButton" onclick="createShape()">Create Shape</button>
@@ -148,7 +163,7 @@ SOFTWARE. -->
 </div>
 <br/>
 <canvas id="canvas" width="1000" height="800" onmousemove="printCoord(event)" style="border: 1px solid black;" ></canvas>
-<canvas id="mag_canvas" width="200" height="200" style="border: 3px solid blue;"></canvas>
+<canvas id="mag_canvas" width="400" height="400" style="border: 3px solid blue;"></canvas>
 <div id="mouse_coords">
     <span id="x_coord">Y</span>
     <span id="y_coord">X</span>
@@ -210,7 +225,7 @@ SOFTWARE. -->
 
     var COORDS = [];
     let lightSource = { x: 500, y: 400 };
-    let MAG = new Magnifier([lightSource.x, lightSource.y], 15, mag_canvas.width, mag_ctx);
+    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, mag_canvas.width, mag_ctx);
 
     function initialize() {
       createTriangleGrid();
@@ -306,9 +321,9 @@ SOFTWARE. -->
       //console.log(SPEED_TIMES_TEN)
     }
 
-    // Advanced Function to change rendering speed to 5000
+    // Advanced Function to change rendering speed to 1000
     function changeSpeed2() {
-      SPEED_TIMES_TEN = 5000;
+      SPEED_TIMES_TEN = 1000;
       //console.log(SPEED_TIMES_TEN)
     }
 
@@ -552,7 +567,7 @@ SOFTWARE. -->
 
     function createPhotons() {
       photons = [];
-      const photonRadius = 12;
+      const photonRadius = 10;
       for (let i = 0; i < NUMBER_LIGHT_RAYS; i++) {
         const angle = (i / NUMBER_LIGHT_RAYS) * 2 * Math.PI;
         photons.push(new Photon(
