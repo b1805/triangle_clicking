@@ -83,6 +83,18 @@ SOFTWARE. -->
             </select>
             <button onclick="changeEpsilon()">Apply</button></label>
             </div>
+            <div>
+              <h2 for="showMouseCoordsCheckBox">Show Mouse Coords
+              <input type="checkbox" id="mouseVisibilityCheckBox" checked="true" onclick="changeMouseCoordsVisibility()"> </h2>
+            </div>
+            <div>
+              <h2 for="magOnOffInput">Show Magnification box
+              <select id="magOnOffInput">
+                  <option value="1">On</option>
+                  <option value="0">Off</option>
+              </select>
+              <button onclick="turnMagOnOff()">Apply</button></h2>
+            </div>
             <p> </p>
             <h2>Animation</h2>
             <button id="createShapeButton" onclick="createShape()">Create Shape</button>
@@ -112,26 +124,25 @@ SOFTWARE. -->
             <h2>Light Source Coordinates</h2>
             <div>
                 <label for="lightSourceXInput">Light Source X Coordinate:
-                <input type="number" id="lightSourceXInput" min="1" max="36000" value="500"></label>
+                <input type="number" id="lightSourceXInput" min="1" max="1000" value="500"></label>
             </div>
             <div>
                 <label for="lightSourceYInput">Light Source Y Coordinate:
-                <input type="number" id="lightSourceYInput" min="1" max="36000" value="400"></label>
+                <input type="number" id="lightSourceYInput" min="1" max="1000" value="400"></label>
             </div>
             <p> </p>
             <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button></label>
-          <div>
-            <h2 for="showMouseCoordsCheckBox">Show Mouse Coords
-            <input type="checkbox" id="mouseVisibilityCheckBox" checked="true" onclick="changeMouseCoordsVisibility()"> </h2>
-          </div>
-          <div>
-            <h2 for="magOnOffInput">Show Magnification box
-            <select id="magOnOffInput">
-                <option value="1">On</option>
-                <option value="0">Off</option>
-            </select>
-            <button onclick="turnMagOnOff()">Apply</button></h2>
-          </div>
+            <h2>Magnification Box Coordinates</h2>
+            <div>
+                <label for="magBoxXInput">Magnification Box X Coordinate:
+                <input type="number" id="magBoxXInput" min="1" max="1000" value="500"></label>
+            </div>
+            <div>
+                <label for="magBoxYInput">Magnification Box Y Coordinate:
+                <input type="number" id="magBoxYInput" min="1" max="1000" value="400"></label>
+            </div>
+            <p> </p>
+            <button onclick="changeMagBoxCoordinates()">Apply Coordinates</button></label>
         </div>
     </div>
 </div>
@@ -258,6 +269,13 @@ SOFTWARE. -->
       lightSource["x"] = parseInt(document.getElementById("lightSourceXInput").value);
       lightSource["y"] = parseInt(document.getElementById("lightSourceYInput").value);
       photons = [];
+      updateScreen(); // Update canvas with new coordinates
+    }
+
+    function changeMagBoxCoordinates() { 
+      x = parseInt(document.getElementById("magBoxXInput").value);
+      y = parseInt(document.getElementById("magBoxYInput").value);
+      MAG.moveMag(x,y);
       updateScreen(); // Update canvas with new coordinates
     }
 
