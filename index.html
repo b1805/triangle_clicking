@@ -214,6 +214,7 @@ SOFTWARE. -->
     function changeLightSourceCoordinates() {
       lightSource["x"] = parseInt(document.getElementById("lightSourceXInput").value);
       lightSource["y"] = parseInt(document.getElementById("lightSourceYInput").value);
+      photons = [];
       updateScreen(); // Update canvas with new coordinates
     }
 
