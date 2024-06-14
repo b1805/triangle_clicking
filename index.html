@@ -181,8 +181,7 @@ SOFTWARE. -->
 
     const BACKGROUND_COLOR = '#FFFFFF';
     let WALL_COLOR = '#FFA914';
-    let MAG_COLOR = '#033FFB';
-    let ORIGIN_COLOR = MAG_COLOR;
+    let MAG_COLOR = 'red';
     let PHOTON_HEAD_COLOR = '#E1FF00';
     let PHOTON_TAIL_COLOR = '#00FFB3';
     let LIGHT_SOURCE_COLOR = 'red';
@@ -211,7 +210,7 @@ SOFTWARE. -->
 
     var COORDS = [];
     let lightSource = { x: 500, y: 400 };
-    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, 200, mag_ctx);
+    let MAG = new Magnifier([lightSource.x, lightSource.y], 15, 200, mag_ctx);
 
     function initialize() {
       createTriangleGrid();
@@ -389,7 +388,7 @@ SOFTWARE. -->
     }
 
     function drawLightSource() {
-      drawCircle(lightSource.x, lightSource.y, 3, LIGHT_SOURCE_COLOR);
+      drawCircle(lightSource.x, lightSource.y, 2, LIGHT_SOURCE_COLOR);
     }
 
     function selectTriangle(event) {
@@ -553,7 +552,7 @@ SOFTWARE. -->
 
     function createPhotons() {
       photons = [];
-      const photonRadius = 5;
+      const photonRadius = 12;
       for (let i = 0; i < NUMBER_LIGHT_RAYS; i++) {
         const angle = (i / NUMBER_LIGHT_RAYS) * 2 * Math.PI;
         photons.push(new Photon(
