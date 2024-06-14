@@ -58,9 +58,9 @@ class Magnifier {
   }
 
   drawTriangles(BACKGROUND_COLOR) {
-    ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
-    ctx.fillStyle = BACKGROUND_COLOR;
-    ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
+    this.ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
+    this.ctx.fillStyle = BACKGROUND_COLOR;
+    this.ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
   }
 }
 
