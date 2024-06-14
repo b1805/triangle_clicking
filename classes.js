@@ -1,11 +1,11 @@
 // The magnifier
 class Magnifier {
-  constructor(mag, magSide, magView, magViewSide, ctx) {
+  constructor(mag, magSide, magViewSide, ctx) {
     this.mag = mag;
     this.ctx = ctx;
     this.magSide = magSide;
-    this.magView = magView;
     this.magViewSide = magViewSide;
+    this.magView = [magViewSide/2, magViewSide/2];
     // Scale factor and translation to map vectors on the canvas to the larger virtual canvas of the magnified image
     this.scale = magViewSide/magSide; 
     this.translation = new Vector(this.magView[0] - this.scale * this.mag[0], this.magView[1] - this.scale * this.mag[1]);
@@ -20,12 +20,14 @@ class Magnifier {
       [mag[0] + magSide / 2, mag[1] + magSide / 2],
       [mag[0] + magSide / 2, mag[1] - magSide / 2],
     ];
+    /*
     this.magViewBox = [
-      [magView[0] - magViewSide / 2, magView[1] - magViewSide / 2],
+      [this.magView[0] - magViewSide / 2, this.magView[1] - magViewSide / 2],
       [magView[0] - magViewSide / 2, magView[1] + magViewSide / 2],
       [magView[0] + magViewSide / 2, magView[1] + magViewSide / 2],
       [magView[0] + magViewSide / 2, magView[1] - magViewSide / 2],
     ];
+    */
   }
 
   // Map a position vector to the magnified virtual canvas

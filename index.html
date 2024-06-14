@@ -137,8 +137,9 @@ SOFTWARE. -->
 <script src="classes.js"></script>
 <script>
     var canvas = document.getElementById('canvas');
+    const mag_canvas = document.getElementById('mag_canvas');
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    const mag_ctx = canvas.getContext('2d', {willReadFrequently: true });
+    const mag_ctx = mag_canvas.getContext('2d', {willReadFrequently: true });
 
     const BACKGROUND_COLOR = '#FFFFFF';
     let WALL_COLOR = '#FFA914';
@@ -171,7 +172,7 @@ SOFTWARE. -->
 
     var COORDS = [];
     let lightSource = { x: 500, y: 400 };
-    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, mag_ctx);
+    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, 200, mag_ctx);
 
     function initialize() {
       createTriangleGrid();
@@ -595,10 +596,6 @@ SOFTWARE. -->
       ctx.moveTo(magnifier.magBox[0][0], magnifier.magBox[0][1]);
       for(let i = 1; i <= magnifier.magBox.length; ++i) {
         ctx.lineTo(magnifier.magBox[i % magnifier.magBox.length][0], magnifier.magBox[i % magnifier.magBox.length][1]);
-      }
-      ctx.moveTo(magnifier.magViewBox[0][0], magnifier.magViewBox[0][1]);
-      for(let i = 1; i <= magnifier.magViewBox.length; ++i) {
-        ctx.lineTo(magnifier.magViewBox[i % magnifier.magViewBox.length][0], magnifier.magViewBox[i % magnifier.magViewBox.length][1]);
       }
       ctx.stroke()
       ctx.lineWidth = 0.5;
