@@ -324,6 +324,7 @@ SOFTWARE. -->
     }
 
     function drawTriangles() {
+      ctx.lineWidth = 0.5
       MAG.drawTriangles(BACKGROUND_COLOR);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = BACKGROUND_COLOR;
