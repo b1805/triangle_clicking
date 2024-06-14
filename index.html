@@ -151,7 +151,7 @@ SOFTWARE. -->
 
     const BACKGROUND_COLOR = '#FFFFFF';
     let WALL_COLOR = '#FFA914';
-    let MAG_COLOR = '#032CAB';
+    let MAG_COLOR = '#033FFB';
     let ORIGIN_COLOR = MAG_COLOR;
     let PHOTON_HEAD_COLOR = '#E1FF00';
     let PHOTON_TAIL_COLOR = '#00FFB3';
@@ -325,7 +325,7 @@ SOFTWARE. -->
 
     function drawTriangles() {
       ctx.lineWidth = 0.5
-      MAG.drawTriangles(BACKGROUND_COLOR);
+      MAG.drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = BACKGROUND_COLOR;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -374,8 +374,10 @@ SOFTWARE. -->
       const x = event.offsetX;
       const y = event.offsetY;
       lightSource = { x: x, y: y };
+      MAG.moveMag(x, y);
       createPhotons();
       drawTriangles();
+      drawMagBox(MAG, MAG_COLOR);
     }
     // This function removes line segments that appear twice, since those are internal
     function pruneRepeatedBounds() {
@@ -612,7 +614,7 @@ SOFTWARE. -->
     function drawMagBox(magnifier, color) {
       ctx.beginPath();
       ctx.strokeStyle = color;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 1.5;
       ctx.moveTo(magnifier.magBox[0][0], magnifier.magBox[0][1]);
       for(let i = 1; i <= magnifier.magBox.length; ++i) {
         ctx.lineTo(magnifier.magBox[i % magnifier.magBox.length][0], magnifier.magBox[i % magnifier.magBox.length][1]);

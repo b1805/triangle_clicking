@@ -10,11 +10,6 @@ class Magnifier {
     // Scale factor and translation to map vectors on the canvas to the larger virtual canvas of the magnified image
     this.scale = magViewSide/magSide; 
     this.translation = new Vector(this.magView[0] - this.scale * this.mag[0], this.magView[1] - this.scale * this.mag[1]);
-    this.magSquare = new Square(
-      mag[0] - magSide / 2,
-      mag[1] - magSide / 2,
-      magSide
-    );
     this.magBox = [
       [mag[0] - magSide / 2, mag[1] - magSide / 2],
       [mag[0] - magSide / 2, mag[1] + magSide / 2],
@@ -31,11 +26,22 @@ class Magnifier {
     */
   }
 
+  // Change the location of the magBox
+  moveMag(x, y) {
+    this.mag = [x, y];
+    this.translation = new Vector(this.magView[0] - this.scale * this.mag[0], this.magView[1] - this.scale * this.mag[1]);
+    this.magBox = [
+      [this.mag[0] - this.magSide / 2, this.mag[1] - this.magSide / 2],
+      [this.mag[0] - this.magSide / 2, this.mag[1] + this.magSide / 2],
+      [this.mag[0] + this.magSide / 2, this.mag[1] + this.magSide / 2],
+      [this.mag[0] + this.magSide / 2, this.mag[1] - this.magSide / 2],
+    ];
+  }
   // Map a position vector to the magnified virtual canvas
   map(pos) {
     return pos.mult(this.scale).add(this.translation);
   }
-  drawLine(x1, y1, x2, y2, color, width = 0.3) {
+  drawLine(x1, y1, x2, y2, color, width = 100) {
     if(!this.calculate) return;
     const pos1 = this.map(new Vector(x1, y1));
     const pos2 = this.map(new Vector(x2, y2));
@@ -57,10 +63,31 @@ class Magnifier {
     this.ctx.fill();
   }
 
-  drawTriangles(BACKGROUND_COLOR) {
+  //Maps the trangle grid to the magnifier
+  drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR) {
     this.ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
     this.ctx.fillStyle = BACKGROUND_COLOR;
     this.ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
+
+    this.ctx.strokeStyle = WALL_COLOR;
+    triangles.forEach(triangle => {
+      // Mat the coordinates of the vertices in the original grid to the magnifier
+      const p1 = this.map(new Vector(triangle.point1.x, triangle.point1.y));
+      const p2 = this.map(new Vector(triangle.point2.x, triangle.point2.y));
+      const p3 = this.map(new Vector(triangle.point3.x, triangle.point3.y));
+      let path = new Path2D();
+      path.moveTo(p1.x, p1.y);
+      path.lineTo(p2.x, p2.y);
+      path.lineTo(p3.x, p3.y);
+      path.closePath();
+      if (triangle.selected) {
+        this.ctx.fillStyle = 'black';
+        this.ctx.strokeStyle = 'black';
+        this.ctx.fill(path);
+      }
+      this.ctx.stroke(path);
+      this.ctx.strokeStyle = WALL_COLOR;
+    });
   }
 }
 
