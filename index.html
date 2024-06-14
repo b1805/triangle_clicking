@@ -109,6 +109,7 @@ SOFTWARE. -->
     </div>
 </div>
 <br/>
+<canvas id="mag_canvas" width="200" height="200" style="border: 1px solid black;" ></canvas>
 <canvas id="canvas" width="1000" height="800" onmousemove="printCoord(event)" style="border: 1px solid black;" ></canvas>
 <div id="mouse_coords">
     <span id="x_coord">Y</span>
@@ -136,7 +137,8 @@ SOFTWARE. -->
 <script src="classes.js"></script>
 <script>
     var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const mag_ctx = canvas.getContext('2d', {willReadFrequently: true });
 
     const BACKGROUND_COLOR = '#FFFFFF';
     let WALL_COLOR = '#FFA914';
@@ -169,7 +171,7 @@ SOFTWARE. -->
 
     var COORDS = [];
     let lightSource = { x: 500, y: 400 };
-    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, [950,50], 100, ctx);
+    let MAG = new Magnifier([lightSource.x, lightSource.y], 10, mag_ctx);
 
     function initialize() {
       createTriangleGrid();
@@ -603,7 +605,7 @@ SOFTWARE. -->
     }
 
     function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
-      this.MAG.drawLine(x1, y1, x2, y2, color, width); 
+      MAG.drawLine(x1, y1, x2, y2, color, width); 
       ctx.beginPath();
       ctx.strokeStyle = color;
       ctx.lineWidth = width;
