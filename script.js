@@ -210,6 +210,7 @@ function drawTriangles() {
     ctx.stroke(triangle.path);
     ctx.strokeStyle = WALL_COLOR;
   });
+  drawBounds();
   drawMagBox(MAG, MAG_COLOR);
   drawLightSource();
 }
@@ -363,6 +364,7 @@ function createShape() {
   // Log the COORDS and Boundaries list
   console.log("COORDS Array:", COORDS);
   console.log("Boundaries Array:", boundaries);
+  drawTriangles();
 }
 
 function startAnimation() {
@@ -512,6 +514,16 @@ function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
   ctx.lineTo(x2, y2);
   ctx.stroke();
   ctx.lineWidth = 0.5;
+}
+
+function drawBounds() {
+  //console.log(boundaries[0].x1)
+  for (i in boundaries) {
+    drawLine(boundaries[i].x1, boundaries[i].y1, boundaries[i].x2, boundaries[i].y2, WALL_COLOR, 5);
+  }
+  for (j in COORDS) {
+    drawCircle(COORDS[j][0], COORDS[j][1], 2.5, WALL_COLOR)
+  }
 }
 
 // Recording:
