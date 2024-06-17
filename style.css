@@ -27,13 +27,13 @@ body {
 }
 
 h2 {
-  font-size: 125%;
+  font-size: calc(.5em + 1vw);
   font-family: cursive;
   margin-bottom: 10px;
   color: #1877f2;
 }
 h3 {
-  font-size: 156.25%;
+  font-size: calc(1.25*(.5em + 1vw));
   font-family: cursive;
   text-align: center;
   color: red;
@@ -56,7 +56,7 @@ button {
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
-    font-size: 100%;
+    font-size: calc(0.8*(.5em + 1vw));
   }
   #startAnimButton, #stopAnimButton, #startRecButton, #stopRecButton, #startAllButton {
     background-color: #42b72a;
