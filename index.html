@@ -35,10 +35,10 @@ SOFTWARE. -->
     <label>This program lets you create your own Un-illuminable Rooms! 
            Simply select the right angle isosceles triangles you like 
            and click create shape. You can also have various options to 
-           customize, including the location and size of your magnification 
+           customize, including the location and zoom of your magnification 
            box for the Un-illuminable point, number of light rays, speed, 
-           colours, size of the triangle grid, etc. Lets discover new 
-           Un-illuminable rooms together! </label>
+           precision, colours, size of the triangle grid, etc. Lets discover 
+           new Un-illuminable rooms together! </label>
     <p> </p>
     <label>~ Bhavya Jain, Austin Lu</label>
   </div>
@@ -102,16 +102,17 @@ SOFTWARE. -->
                 </select>
                 <button onclick="turnMagOnOff()">Apply</button></label>
               </div>
-              <label for="magBoxRadiusInput">Magnification Box Side Length: 
+              <label for="magBoxRadiusInput">Amount of Magnification: 
               <select id="magBoxRadiusInput">
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option selected value="10">10 (Default)</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
+                <option value="1">400x</option>
+                <option value="2">200x</option>
+                <option value="4">100x</option>
+                <option value="8">50x</option>
+                <option selected value="10">40x (Default)</option>
+                <option value="16">25x</option>
+                <option value="20">20x</option>
+                <option value="25">16x</option>
+                <option value="40">10x</option>
             </select>
             <button onclick="changeMagBoxRadius()">Apply</button></label>
             </div>
