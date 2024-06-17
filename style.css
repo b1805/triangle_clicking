@@ -86,6 +86,7 @@ button {
   }
   #mag_viewer {
     position: absolute;
+    display: inline;
   }
 
 
