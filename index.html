@@ -47,6 +47,15 @@ SOFTWARE. -->
         <div class="flex-item">
             <h2>Controls</h2>
             <div>
+              <label for="triangleSideInput">Number of Triangles in the Grid (Grid Size)
+              <select id="triangleSideInput">
+                  <option value="200">Less</option>
+                  <option selected value="100">Default</option>
+                  <option value="50">More</option>
+              </select>
+              <button onclick="changeNumberTriangles()">Apply</button></label>
+            </div>
+            <div>
               <label for="numRaysInput">Number of Light Rays (1 to 36000)
               <input type="number" id="numRaysInput" min="1" max="36000" value="360">
               <button onclick="changeNumRays()">Apply</button></label>
@@ -57,21 +66,8 @@ SOFTWARE. -->
                 <button onclick="changeSpeed()">Apply</button></label>
             </div>
             <div>
-              <label for="triangleSideInput">Number of Triangles in the Grid (Grid Size)
-              <select id="triangleSideInput">
-                  <option value="200">Less</option>
-                  <option selected value="100">Default</option>
-                  <option value="50">More</option>
-              </select>
-              <button onclick="changeNumberTriangles()">Apply</button></label>
-            </div>
-            <div>
               <h2>Advanced Instantaneous Speed</h2>
               <button id = "advancedSpeedButton" onclick="changeSpeed2()">Apply Instantaneous Speed!</button>
-            </div>
-            <div>
-              <h2>Photon Counter</h2>
-              <p>Active Photons: <span id="activePhotonCount">0</span></p>
             </div>
             <div>
               <h2>Change Epsilon</h2>
@@ -118,6 +114,10 @@ SOFTWARE. -->
                   <option value="0">Off</option>
               </select>
               <button onclick="turnMagOnOff()">Apply</button></h2>
+            </div>
+            <div>
+              <h2>Photon Counter</h2>
+              <label>Active Photons: <span id="activePhotonCount">0</span></label>
             </div>
             <p> </p>
             <h2>Animation</h2>
