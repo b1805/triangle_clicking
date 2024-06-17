@@ -5,10 +5,11 @@ const mag_ctx = mag_canvas.getContext('2d', {willReadFrequently: true });
 
 const BACKGROUND_COLOR = '#FFFFFF';
 let WALL_COLOR = '#FFA914';
-let MAG_COLOR = 'red';
 let PHOTON_HEAD_COLOR = '#E1FF00';
 let PHOTON_TAIL_COLOR = '#00FFB3';
+let MAG_COLOR = 'blue';
 let LIGHT_SOURCE_COLOR = 'red';
+let MAG_POINT_COLOR = 'blue'
 let photonRadius = 10; // Distance away from source
 
 let NUMBER_LIGHT_RAYS = 360;
@@ -49,9 +50,9 @@ function applyColors() {
   WALL_COLOR = document.getElementById("wallColorInput").value;
   PHOTON_HEAD_COLOR = document.getElementById("photonHeadColorInput").value;
   PHOTON_TAIL_COLOR = document.getElementById("photonTailColorInput").value;
-  MAG_COLOR = document.getElementById("magnifierColorInput").value;
-  ORIGIN_COLOR = document.getElementById("magnifierColorInput").value;
-  LIGHT_SOURCE_COLOR = document.getElementById("magnifierColorInput").value;
+  MAG_COLOR = document.getElementById("magnifierColorInput").value; mag_canvas.style.borderColor = MAG_COLOR;
+  LIGHT_SOURCE_COLOR = document.getElementById("lightSourceColorInput").value;
+  MAG_POINT_COLOR = document.getElementById("magnifierPointColorInput").value;
   updateScreen(); // Update canvas with new colors
 }
 
