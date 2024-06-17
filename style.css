@@ -81,7 +81,11 @@ button {
   }
   #mouse_coords {
     background-color: white;
+    position: fixed;
     margin-top: 5px;
+  }
+  #mag_canvas {
+    position: absolute;
   }
 
 

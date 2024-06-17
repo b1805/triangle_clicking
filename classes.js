@@ -45,8 +45,19 @@ class Magnifier {
     return pos.mult(this.scale).add(this.translation);
   }
 
+
+  // Mark the center of the magnification box.
+  drawCenter(color = "blue", radius = 3) {
+    if(!this.calculate) return;
+    this.ctx.beginPath();
+    this.ctx.fillStyle = color; 
+    this.ctx.arc(this.magViewSide / 2, this.magViewSide / 2, radius, 0, 2 * Math.PI);
+    this.ctx.fill();
+
+  }
   // Draw a line from the main canvas onto the magnified canvas
   drawLine(x1, y1, x2, y2, color, width = 100) {
+    this.drawCenter();
     if(!this.calculate) return;
     // Map coordinates
     const pos1 = this.map(new Vector(x1, y1));
@@ -62,6 +73,7 @@ class Magnifier {
     
   // Light source and photon head
   drawCircle(x, y, radius, color) {
+    this.drawCenter();
     if(!this.calculate) return;
     const pos = this.map(new Vector(x, y));
     this.ctx.beginPath();
@@ -72,6 +84,7 @@ class Magnifier {
 
   //Maps the trangle grid to the magnifier
   drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR) {
+    this.drawCenter();
     this.ctx.lineWidth = 0.5
     this.ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
     this.ctx.fillStyle = BACKGROUND_COLOR;

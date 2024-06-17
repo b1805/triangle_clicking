@@ -36,6 +36,7 @@ var numCapturedFrames = 0;
 var COORDS = [];
 let lightSource = { x: 500, y: 400 };
 let MAG = new Magnifier([lightSource.x, lightSource.y], 10, mag_canvas.width, mag_ctx);
+let draggable = null;
 
 function initialize() {
   createTriangleGrid();
@@ -66,18 +67,6 @@ function turnMagOnOff() {
   MAG.calculate = bool;
 }
 
-function printCoord (mouseEvent) {
-  const x_coord = document.getElementById("x_coord");
-  const y_coord = document.getElementById("y_coord");
-  //console.log("Mouse X:", mouseEvent.clientX);
-  //console.log("Mouse Y:", mouseEvent.clientY);
-  const mouse_coords = document.getElementById("mouse_coords");
-  x_coord.innerHTML = "X: " + Math.floor(mouseEvent.clientX - canvas.getBoundingClientRect().x);
-  y_coord.innerHTML = "Y: " + Math.max(Math.floor(mouseEvent.clientY - canvas.getBoundingClientRect().y),0);
-  mouse_coords.style.position = "fixed";
-  mouse_coords.style.left = mouseEvent.clientX + 'px';
-  mouse_coords.style.bottom = (window.innerHeight + 17.5 - mouseEvent.clientY) + 'px';
-}
 
 function changeMouseCoordsVisibility() {
   const mouseVisibilityCheckBox = document.getElementById("mouseVisibilityCheckBox");
