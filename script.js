@@ -62,8 +62,15 @@ function changeEpsilon() {
 
 // Turns the mag box on and off
 function turnMagOnOff() {
-  bool = parseInt(document.getElementById("magOnOffInput").value);
-  MAG.calculate = bool;
+  const magCanvas = document.getElementById('mag_canvas');
+  const bool = parseInt(document.getElementById("magOnOffInput").value);
+  if (bool) {
+    MAG.calculate = true;
+    magCanvas.style.display = 'inline';
+  } else {
+    MAG.calculate = false;
+    magCanvas.style.display = 'none';
+  }
 }
 
 
