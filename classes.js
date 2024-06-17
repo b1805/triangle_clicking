@@ -47,7 +47,7 @@ class Magnifier {
 
 
   // Mark the center of the magnification box.
-  drawCenter(color = "blue", radius = 3) {
+  drawCenter(color = MAG_POINT_COLOR, radius = 3) {
     if(!this.calculate) return;
     this.ctx.beginPath();
     this.ctx.fillStyle = color; 

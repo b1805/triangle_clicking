@@ -35,10 +35,10 @@ SOFTWARE. -->
     <label>This program lets you create your own Un-illuminable Rooms! 
            Simply select the right angle isosceles triangles you like 
            and click create shape. You can also have various options to 
-           customize, including the location and size of your magnification 
+           customize, including the location and zoom of your magnification 
            box for the Un-illuminable point, number of light rays, speed, 
-           colours, size of the triangle grid, etc. Lets discover new 
-           Un-illuminable rooms together! </label>
+           precision, colours, size of the triangle grid, etc. Lets discover 
+           new Un-illuminable rooms together! </label>
     <p> </p>
     <label>~ Bhavya Jain, Austin Lu</label>
   </div>
@@ -61,16 +61,6 @@ SOFTWARE. -->
               <button onclick="changeNumRays()">Apply</button></label>
             </div>
             <div>
-                <label for="speedInput">Speed
-                  <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
-                <button onclick="changeSpeed()">Apply</button></label>
-            </div>
-            <div>
-              <h2>Advanced Instantaneous Speed</h2>
-              <button id = "advancedSpeedButton" onclick="changeSpeed2()">Apply Instantaneous Speed!</button>
-            </div>
-            <div>
-              <h2>Change Epsilon</h2>
               <label for="epsilonInput">Epsilon Value: 
               <select id="epsilonInput">
                 <option value="0.1">0.1</option>
@@ -89,31 +79,42 @@ SOFTWARE. -->
             <button onclick="changeEpsilon()">Apply</button></label>
             </div>
             <div>
-              <h2>Change Magnification Box Size</h2>
-              <label for="magBoxRadiusInput">Side Length: 
+              <label for="showMouseCoordsCheckBox">Show Mouse Coords
+              <input type="checkbox" id="mouseVisibilityCheckBox" checked="true" onclick="changeMouseCoordsVisibility()"> </label>
+            </div>
+            <p> </p>
+            <div>
+                <label for="speedInput">Speed
+                  <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
+                <button onclick="changeSpeed()">Apply</button></label>
+            </div>
+            <div>
+              <h2>Advanced Instantaneous Speed</h2>
+              <button id = "advancedSpeedButton" onclick="changeSpeed2()">Apply Instantaneous Speed!</button>
+            </div>
+            <div>
+              <h2>Magnification Box Controls</h2>
+              <div>
+                <label for="magOnOffInput">Show Magnification Box
+                <select id="magOnOffInput">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </select>
+                <button onclick="turnMagOnOff()">Apply</button></label>
+              </div>
+              <label for="magBoxRadiusInput">Amount of Magnification: 
               <select id="magBoxRadiusInput">
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option selected value="10">10 (Default)</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
+                <option value="1">400x</option>
+                <option value="2">200x</option>
+                <option value="4">100x</option>
+                <option value="8">50x</option>
+                <option selected value="10">40x (Default)</option>
+                <option value="16">25x</option>
+                <option value="20">20x</option>
+                <option value="25">16x</option>
+                <option value="40">10x</option>
             </select>
             <button onclick="changeMagBoxRadius()">Apply</button></label>
-            </div>
-            <div>
-              <h2 for="showMouseCoordsCheckBox">Show Mouse Coords
-              <input type="checkbox" id="mouseVisibilityCheckBox" checked="true" onclick="changeMouseCoordsVisibility()"> </h2>
-            </div>
-            <div>
-              <h2 for="magOnOffInput">Show Magnification box
-              <select id="magOnOffInput">
-                  <option value="1">On</option>
-                  <option value="0">Off</option>
-              </select>
-              <button onclick="turnMagOnOff()">Apply</button></h2>
             </div>
             <div>
               <h2>Photon Counter</h2>
@@ -121,6 +122,11 @@ SOFTWARE. -->
             </div>
             <p> </p>
             <h2>Animation</h2>
+            <label>Note: Select Triangles using left mouse click, 
+              right click changes the location (coordinates) of 
+              light source and magnification box. You can individually 
+              change their coordinates using the controls on the right. 
+              Click Create Shape and Start Animation when you're done!</label>
             <button id="createShapeButton" onclick="createShape()">Create Shape</button>
             <button id="startAnimButton" onclick="startAnimation()">Start Animation</button>
             <button id="stopAnimButton" onclick="stopAnimation()">Stop Animation</button>
@@ -148,7 +154,7 @@ SOFTWARE. -->
                 <input type="color" id="lightSourceColorInput" value="#FF0000"></label>
             </div>
             <div>
-              <label for="magnifierPointColorInput">Magnification Box Point Colour
+              <label for="magnifierPointColorInput">Magnified Point Colour
               <input type="color" id="magnifierPointColorInput" value="#0000FF"></label>
             </div>
             <p> </p>
