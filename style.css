@@ -56,7 +56,7 @@ button {
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
-    font-size: 16x;
+    font-size: 16px;
   }
   #startAnimButton, #stopAnimButton, #startRecButton, #stopRecButton, #startAllButton {
     background-color: #42b72a;
