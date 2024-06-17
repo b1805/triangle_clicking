@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas');
-const mag_canvas = document.getElementById('mag_canvas');
+const mag_div_list = [document.getElementById('mag_viewer')]; // This includes the labels associated with each magnifier
+const mag_canvas_list = [document.getElementById('mag_canvas')]; // This refers to just the magnifier canvas
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
-const mag_ctx = mag_canvas.getContext('2d', {willReadFrequently: true });
 
 const BACKGROUND_COLOR = '#FFFFFF';
 let WALL_COLOR = '#FFA914';
@@ -36,7 +36,10 @@ var numCapturedFrames = 0;
 
 var COORDS = [];
 let lightSource = { x: 500, y: 400 };
-let MAG = new Magnifier([lightSource.x, lightSource.y], 10, mag_canvas.width, mag_ctx);
+// For every mag canvas, we create a corresponding Magnifier which interacts with it
+let MAG_LIST = mag_canvas_list.map(mag_canvas => 
+  new Magnifier([lightSource.x, lightSource.y], 10, mag_canvas.width, mag_canvas.getContext('2d', {willReadFrequently: true }))
+);
 
 function initialize() {
   createTriangleGrid();
@@ -48,7 +51,8 @@ function applyColors() {
   WALL_COLOR = document.getElementById("wallColorInput").value;
   PHOTON_HEAD_COLOR = document.getElementById("photonHeadColorInput").value;
   PHOTON_TAIL_COLOR = document.getElementById("photonTailColorInput").value;
-  MAG_COLOR = document.getElementById("magnifierColorInput").value; mag_canvas.style.borderColor = MAG_COLOR;
+  MAG_COLOR = document.getElementById("magnifierColorInput").value; 
+  mag_canvas_list.forEach(mag_canvas => mag_canvas.style.borderColor = MAG_COLOR);
   LIGHT_SOURCE_COLOR = document.getElementById("lightSourceColorInput").value;
   MAG_POINT_COLOR = document.getElementById("magnifierPointColorInput").value;
   updateScreen(); // Update canvas with new colors
@@ -65,11 +69,11 @@ function turnMagOnOff() {
   const magCanvas = document.getElementById('mag_viewer');
   const bool = parseInt(document.getElementById("magOnOffInput").value);
   if (bool) {
-    MAG.calculate = true;
-    magCanvas.style.display = 'inline';
+    MAG_LIST.forEach(MAG => MAG.calculate = true);
+    mag_viewer_list.forEach(magViewer => magViewer.style.display = 'inline');
   } else {
-    MAG.calculate = false;
-    magCanvas.style.display = 'none';
+    MAG_LIST.forEach(MAG => MAG.calculate = false);
+    mag_viewer_list.forEach(magViewer => magViewer.style.display = 'none');
   }
 }
 
@@ -94,14 +98,14 @@ function changeLightSourceCoordinates() {
 function changeMagBoxCoordinates() { 
   x = parseInt(document.getElementById("magBoxXInput").value);
   y = parseInt(document.getElementById("magBoxYInput").value);
-  MAG.moveMag(x,y);
+  MAG_LIST[0].moveMag(x,y);
   updateScreen(); // Update canvas with new coordinates
 }
 
 // The radius of a square is its side length
 function changeMagBoxRadius() {
     r = parseInt(document.getElementById("magBoxRadiusInput").value);
-    MAG.rescale(r);
+    MAG_LIST.forEach(MAG => MAG.rescale(r));
     photonRadius = r;
     updateScreen();
 }
@@ -195,7 +199,7 @@ function createTriangleGrid() {
 
 function drawTriangles() {
   ctx.lineWidth = 0.5
-  MAG.drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR);
+  MAG_LIST.forEach(MAG => MAG.drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR));
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = BACKGROUND_COLOR;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -210,7 +214,7 @@ function drawTriangles() {
     ctx.stroke(triangle.path);
     ctx.strokeStyle = WALL_COLOR;
   });
-  drawMagBox(MAG, MAG_COLOR);
+  MAG_LIST.forEach(MAG => drawMagBox(MAG, MAG_COLOR));
   drawLightSource();
 }
 
@@ -243,7 +247,7 @@ function setLightSource(event) {
   const x = event.offsetX;
   const y = event.offsetY;
   lightSource = { x: x, y: y };
-  MAG.moveMag(x, y);
+  MAG_LIST[0].moveMag(x, y);
   createPhotons();
   drawTriangles();
 }
@@ -470,7 +474,7 @@ function drawPhotons() {
 }
 
 function drawCircle(x, y, radius, color) {
-  MAG.drawCircle(x, y, radius, color); 
+  MAG_LIST.forEach(MAG => MAG.drawCircle(x, y, radius, color));
   ctx.beginPath();
   ctx.fillStyle = color; 
   ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -504,7 +508,7 @@ function drawMagBox(magnifier, color) {
 }
 
 function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
-  MAG.drawLine(x1, y1, x2, y2, color, width); 
+  MAG_LIST.forEach(MAG => MAG.drawLine(x1, y1, x2, y2, color, width));
   ctx.beginPath();
   ctx.strokeStyle = color;
   ctx.lineWidth = width;
