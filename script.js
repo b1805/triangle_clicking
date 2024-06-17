@@ -37,7 +37,6 @@ var numCapturedFrames = 0;
 var COORDS = [];
 let lightSource = { x: 500, y: 400 };
 let MAG = new Magnifier([lightSource.x, lightSource.y], 10, mag_canvas.width, mag_ctx);
-let draggable = null;
 
 function initialize() {
   createTriangleGrid();
