@@ -25,6 +25,11 @@ body {
   flex: 1;
   margin-right: 10px;
 }
+.tooltiptext {
+  visibility: hidden;
+  display: inline;
+  position: absolute;
+}
 
 h2 {
   font-size: 20px;
@@ -87,6 +92,9 @@ button {
   #mag_viewer {
     position: absolute;
     display: inline;
+  }
+  #mag_viewer:hover .tooltiptext {
+    visibility: visible;
   }
 
 
