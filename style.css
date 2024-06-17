@@ -29,6 +29,7 @@ body {
   visibility: hidden;
   display: inline;
   position: absolute;
+  top: 100%;
 }
 
 h2 {
