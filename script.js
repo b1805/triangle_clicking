@@ -41,7 +41,6 @@ let draggable = null;
 
 function initialize() {
   createTriangleGrid();
-  drawMagBox(MAG, MAG_COLOR);
   canvas.addEventListener('click', selectTriangle);
   canvas.addEventListener('contextmenu', setLightSource);
 }
@@ -140,7 +139,6 @@ function changeNumberTriangles(){
   triangles = [];
   selectedTriangles = [];
   createTriangleGrid();
-  drawMagBox(MAG, MAG_COLOR);
   console.log(TRIANGLE_SIDE);
 }
 
@@ -206,7 +204,7 @@ function drawTriangles() {
     ctx.stroke(triangle.path);
     ctx.strokeStyle = WALL_COLOR;
   });
-
+  drawMagBox(MAG, MAG_COLOR);
   drawLightSource();
 }
 
@@ -232,7 +230,6 @@ function selectTriangle(event) {
     }
   });
   drawTriangles();
-  drawMagBox(MAG, MAG_COLOR);
 }
 
 function setLightSource(event) {
@@ -243,7 +240,6 @@ function setLightSource(event) {
   MAG.moveMag(x, y);
   createPhotons();
   drawTriangles();
-  drawMagBox(MAG, MAG_COLOR);
 }
 // This function removes line segments that appear twice, since those are internal
 function pruneRepeatedBounds() {
@@ -392,7 +388,6 @@ function updateScreen() {
   rayTracedUpdatePositions();
   drawTriangles();
   drawPhotons();
-  drawMagBox(MAG, MAG_COLOR);
   if (currentlyRecording) {
     video.add(ctx);
     numCapturedFrames++;
@@ -486,6 +481,20 @@ function drawMagBox(magnifier, color) {
   }
   ctx.stroke()
   ctx.lineWidth = 0.5;
+
+  // Calculate the center of the magBox
+  let sumX = 0;
+  let sumY = 0;
+  for (let i = 0; i < magnifier.magBox.length; i++) {
+    sumX += magnifier.magBox[i][0];
+    sumY += magnifier.magBox[i][1];
+  }
+  const centerX = sumX / magnifier.magBox.length;
+  const centerY = sumY / magnifier.magBox.length;
+
+  // Draw a circle at the center of the magBox
+  const radius = 2;
+  drawCircle(centerX, centerY, radius, MAG_POINT_COLOR);
 }
 
 function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
