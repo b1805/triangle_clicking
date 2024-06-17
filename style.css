@@ -84,7 +84,7 @@ button {
     position: fixed;
     margin-top: 5px;
   }
-  #mag_canvas {
+  #mag_viewer {
     position: absolute;
   }
 

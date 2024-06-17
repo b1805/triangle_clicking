@@ -16,8 +16,8 @@ document.onmousemove = (mouseEvent) => {
   let x = mouseEvent.pageX - offsetX;
   let y = mouseEvent.pageY - offsetY;
   if(!draggable) return;
-  mag_canvas.style.left = x + 'px';
-  mag_canvas.style.top = y + 'px';
+  document.getElementById("mag_viewer").style.left = x + 'px';
+  document.getElementById("mag_viewer").style.top = y + 'px';
 
 }
 // show mouse coordinates
