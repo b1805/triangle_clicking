@@ -61,16 +61,6 @@ SOFTWARE. -->
               <button onclick="changeNumRays()">Apply</button></label>
             </div>
             <div>
-                <label for="speedInput">Speed
-                  <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
-                <button onclick="changeSpeed()">Apply</button></label>
-            </div>
-            <div>
-              <h2>Advanced Instantaneous Speed</h2>
-              <button id = "advancedSpeedButton" onclick="changeSpeed2()">Apply Instantaneous Speed!</button>
-            </div>
-            <div>
-              <h2>Change Epsilon</h2>
               <label for="epsilonInput">Epsilon Value: 
               <select id="epsilonInput">
                 <option value="0.1">0.1</option>
@@ -89,8 +79,30 @@ SOFTWARE. -->
             <button onclick="changeEpsilon()">Apply</button></label>
             </div>
             <div>
-              <h2>Change Magnification Box Size</h2>
-              <label for="magBoxRadiusInput">Side Length: 
+              <label for="showMouseCoordsCheckBox">Show Mouse Coords
+              <input type="checkbox" id="mouseVisibilityCheckBox" checked="true" onclick="changeMouseCoordsVisibility()"> </label>
+            </div>
+            <p> </p>
+            <div>
+                <label for="speedInput">Speed
+                  <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
+                <button onclick="changeSpeed()">Apply</button></label>
+            </div>
+            <div>
+              <h2>Advanced Instantaneous Speed</h2>
+              <button id = "advancedSpeedButton" onclick="changeSpeed2()">Apply Instantaneous Speed!</button>
+            </div>
+            <div>
+              <h2>Magnification Box Controls</h2>
+              <div>
+                <label for="magOnOffInput">Show Magnification Box
+                <select id="magOnOffInput">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </select>
+                <button onclick="turnMagOnOff()">Apply</button></label>
+              </div>
+              <label for="magBoxRadiusInput">Magnification Box Side Length: 
               <select id="magBoxRadiusInput">
                 <option value="1">1</option>
                 <option value="3">3</option>
@@ -102,18 +114,6 @@ SOFTWARE. -->
                 <option value="50">50</option>
             </select>
             <button onclick="changeMagBoxRadius()">Apply</button></label>
-            </div>
-            <div>
-              <h2 for="showMouseCoordsCheckBox">Show Mouse Coords
-              <input type="checkbox" id="mouseVisibilityCheckBox" checked="true" onclick="changeMouseCoordsVisibility()"> </h2>
-            </div>
-            <div>
-              <h2 for="magOnOffInput">Show Magnification box
-              <select id="magOnOffInput">
-                  <option value="1">On</option>
-                  <option value="0">Off</option>
-              </select>
-              <button onclick="turnMagOnOff()">Apply</button></h2>
             </div>
             <div>
               <h2>Photon Counter</h2>
