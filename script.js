@@ -451,6 +451,7 @@ function getClosestCollision(photon) {
     }
     return closestCollision;
 }
+
 // We calculate the path of each photon for this frame
 function rayTracedUpdatePositions() {
   for(let i = 0; i < PHOTONS.length; ++i) {
