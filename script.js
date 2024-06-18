@@ -108,7 +108,8 @@ function changeMagBoxCoordinates() {
 
 // Changes the maginfiction by changing the radius (size) of the (small) mag box (The radius of a square is its side length)
 function changeMagBoxRadius() {
-    r = parseInt(document.getElementById("magBoxRadiusInput").value);
+    r = parseFloat(document.getElementById("magBoxRadiusInput").value);
+    console.log("r", r)
     MAG_LIST.forEach(MAG => MAG.rescale(r));
     PHOTON_RADIUS = r;
     updateScreen();
@@ -451,6 +452,7 @@ function getClosestCollision(photon) {
     }
     return closestCollision;
 }
+
 // We calculate the path of each photon for this frame
 function rayTracedUpdatePositions() {
   for(let i = 0; i < PHOTONS.length; ++i) {

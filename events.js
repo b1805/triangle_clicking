@@ -50,4 +50,3 @@ canvas.onmouseenter = () => {
   const mouse_coords = document.getElementById("mouse_coords");
   mouse_coords.style.visibility = "visible";
 }
-
