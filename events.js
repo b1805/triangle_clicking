@@ -1,25 +1,26 @@
-let draggable = false;
+let draggable = null;
 let offsetX = 0;
 let offsetY = 0;
 // Calculate offset to drag the magnification canvas
-MAG_CANVAS_LIST.forEach(mag_canvas => 
-  mag_canvas.onmousedown = (mouseEvent) => {
-    draggable = true;
+MAG_DIV_LIST.forEach(mag_div => 
+  mag_div.onmousedown = (mouseEvent) => {
+    console.log("mouseDown");
+    draggable = mag_div;
     offsetX = mouseEvent.offsetX;
     offsetY = mouseEvent.offsetY;
   }
 );
 // Stop dragging when mouse released
 document.onmouseup = () => {
-  draggable = false;
+  draggable = null;
 }
 // Change mag_canvas coords
 document.onmousemove = (mouseEvent) => {
   let x = mouseEvent.pageX - offsetX;
   let y = mouseEvent.pageY - offsetY;
-  if(!draggable) return;
-  document.getElementById("mag_viewer").style.left = x + 'px';
-  document.getElementById("mag_viewer").style.top = y + 'px';
+  if(draggable == null) return;
+  draggable.style.left = x + 'px';
+  draggable.style.top = y + 'px';
 
 }
 // show mouse coordinates

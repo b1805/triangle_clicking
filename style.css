@@ -30,6 +30,13 @@ body {
   position: absolute;
   top: 100%;
 }
+.magnifier {
+  position: absolute;
+  display: inline;
+}
+.magnifier:hover .tooltiptext {
+  visibility: visible;
+}
 h1 {
   font-size: 25px;
   font-family: cursive;
@@ -86,10 +93,4 @@ input[type=checkbox] {
   position: fixed;
   margin-top: 5px;
 }
-#mag_viewer {
-  position: absolute;
-  display: inline;
-}
-#mag_viewer:hover .tooltiptext {
-  visibility: visible;
-}
+
