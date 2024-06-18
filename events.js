@@ -10,7 +10,7 @@ MAG_CANVAS_LIST.forEach(mag_canvas =>
   }
 );
 // Stop dragging when mouse released
-document.onmouseup = (mouseEvent) => {
+document.onmouseup = () => {
   draggable = false;
 }
 // Change mag_canvas coords
