@@ -69,13 +69,15 @@ function changeEpsilon() {
 
 // Turns the mag box on and off
 function turnMagOnOff() {
-  const bool = parseInt(document.getElementById("magOnOffInput").value);
-  if (bool) {
-    MAG_LIST.forEach(MAG => MAG.calculate = true);
-    MAG_DIV_LIST.forEach(magViewer => magViewer.style.display = 'inline');
-  } else {
-    MAG_LIST.forEach(MAG => MAG.calculate = false);
-    MAG_DIV_LIST.forEach(magViewer => magViewer.style.display = 'none');
+  const num = parseInt(document.getElementById("magOnOffInput").value);
+  for(let i in MAG_LIST) {
+    if(i < num) {
+      MAG_LIST[i].calculate = true;
+      MAG_DIV_LIST[i].style.display = 'inline';
+    } else {
+      MAG_LIST[i].calculate = false;
+      MAG_DIV_LIST[i].style.display = 'none';
+    }
   }
 }
 
