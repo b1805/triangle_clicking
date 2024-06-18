@@ -298,8 +298,8 @@ function pruneRepeatedBounds() {
   BOUNDARIES = goodBounds;
 }
 
+// Merges line segments, as many as possible
 function mergeLineSegments() {
-  // Merge line segments if possible
   let done = false;
   while (!done) {
     done = true;
@@ -325,6 +325,7 @@ function mergeLineSegments() {
   return done;
 }
 
+// Creates the user selected shape
 function createShape() {
   // Clear the COORDS list
   COORDS = [];
@@ -410,6 +411,7 @@ function createPhotons() {
   }
 }
 
+// Updates the screen
 function updateScreen() {
   rayTracedUpdatePositions();
   drawTriangles();
@@ -465,6 +467,7 @@ function rayTracedUpdatePositions() {
   updatePhotonCount()
 }
 
+// Draws the Photons
 function drawPhotons() {
   PHOTONS.forEach(photon => {
     const len = photon.contactPoints.length;
@@ -498,6 +501,7 @@ function drawCircle(x, y, radius, color) {
   CTX.fill();
 }
 
+// Draws the MAG box
 function drawMagBox(magnifier, color) {
   CTX.beginPath();
   CTX.strokeStyle = color;
@@ -535,18 +539,19 @@ function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
   CTX.lineWidth = 0.5;
 }
 
+// Draws the boundriesm of the user selected shape
 function drawBounds() {
-  //console.log(BOUNDARIES[0].x1)
+  // Takes all the lines from the BOUNDARIES array and draws a line at them
   for (i in BOUNDARIES) {
     drawLine(BOUNDARIES[i].x1, BOUNDARIES[i].y1, BOUNDARIES[i].x2, BOUNDARIES[i].y2, WALL_COLOR, 10);
   }
+  // Takes all the points from the COORDS array and draws a circle at them
   for (j in COORDS) {
     drawCircle(COORDS[j][0], COORDS[j][1], 5, WALL_COLOR)
   }
 }
 
 // Recording:
-
 function startRecording() {
   if (CURRENTLY_RECORDING) {
     return;
@@ -569,6 +574,7 @@ function stopRecording() {
   });
 }
 
+// Recording Status
 function displayStatus(text) {
   STATUS_ELEMENT.innerText = `Status: ${text}`;
 }
@@ -577,5 +583,3 @@ function startAnimationAndRecording() {
   startAnimation();
   startRecording();
 }
-
-
