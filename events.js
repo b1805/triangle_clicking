@@ -4,7 +4,7 @@ let offsetY = 0;
 // Calculate offset to drag the magnification canvas
 MAG_DIV_LIST.forEach(mag_div => 
   mag_div.onmousedown = (mouseEvent) => {
-    console.log("mouseDown");
+    //console.log("mouseDown");
     draggable = mag_div;
     offsetX = mouseEvent.offsetX;
     offsetY = mouseEvent.offsetY;

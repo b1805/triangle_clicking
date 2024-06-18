@@ -75,6 +75,7 @@ function turnMagOnOff() {
     if(i < num) {
       MAG_LIST[i].calculate = true;
       MAG_DIV_LIST[i].style.display = 'inline';
+      drawMagBox(MAG_LIST[i], MAG_COLOR);
     } else {
       MAG_LIST[i].calculate = false;
       MAG_DIV_LIST[i].style.display = 'none';
@@ -424,6 +425,7 @@ function updateScreen() {
   rayTracedUpdatePositions();
   drawTriangles();
   drawPhotons();
+  MAG_LIST.forEach(MAG => drawMagBox(MAG, MAG_COLOR));
   if (CURRENTLY_RECORDING) {
     VIDEO.add(CTX);
     numCapturedFrames++;
@@ -516,6 +518,7 @@ function drawCircle(x, y, radius, color) {
 
 // Draws the MAG box
 function drawMagBox(magnifier, color) {
+  if(!magnifier.calculate) return;
   CTX.beginPath();
   CTX.strokeStyle = color;
   CTX.lineWidth = 1.5;
@@ -538,7 +541,10 @@ function drawMagBox(magnifier, color) {
 
   // Draw a circle at the center of the magBox
   const radius = 2;
-  drawCircle(centerX, centerY, radius, MAG_POINT_COLOR);
+  CTX.beginPath();
+  CTX.fillStyle = MAG_POINT_COLOR; 
+  CTX.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+  CTX.fill();
 }
 
 function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
