@@ -47,6 +47,7 @@ function initialize() {
   createTriangleGrid();
   CANVAS.addEventListener('click', selectTriangle); // Left click for selecting the triangles
   CANVAS.addEventListener('contextmenu', setLightSource); // Right click for moving the light source (and MAG box)
+  turnMagOnOff();
 }
 
 // Changes colors
