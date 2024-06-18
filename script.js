@@ -522,10 +522,10 @@ function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
 function drawBounds() {
   //console.log(boundaries[0].x1)
   for (i in boundaries) {
-    drawLine(boundaries[i].x1, boundaries[i].y1, boundaries[i].x2, boundaries[i].y2, WALL_COLOR, 5);
+    drawLine(boundaries[i].x1, boundaries[i].y1, boundaries[i].x2, boundaries[i].y2, WALL_COLOR, 10);
   }
   for (j in COORDS) {
-    drawCircle(COORDS[j][0], COORDS[j][1], 2.5, WALL_COLOR)
+    drawCircle(COORDS[j][0], COORDS[j][1], 5, WALL_COLOR)
   }
 }
 
