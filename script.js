@@ -48,6 +48,7 @@ function initialize() {
   CANVAS.addEventListener('click', selectTriangle); // Left click for selecting the triangles
   CANVAS.addEventListener('contextmenu', setLightSource); // Right click for moving the light source (and MAG box)
   turnMagOnOff();
+  drawLightSource();
 }
 
 // Changes colors
@@ -425,7 +426,9 @@ function updateScreen() {
   rayTracedUpdatePositions();
   drawTriangles();
   drawPhotons();
+  drawLightSource();
   MAG_LIST.forEach(MAG => drawMagBox(MAG, MAG_COLOR));
+  MAG_LIST.forEach(MAG => MAG.drawCenter());
   if (CURRENTLY_RECORDING) {
     VIDEO.add(CTX);
     numCapturedFrames++;
