@@ -7,9 +7,9 @@ const BACKGROUND_COLOR = '#FFFFFF';
 let WALL_COLOR = '#FFA914';
 let PHOTON_HEAD_COLOR = '#E1FF00';
 let PHOTON_TAIL_COLOR = '#00FFB3';
-let MAG_COLOR = 'blue';
-let LIGHT_SOURCE_COLOR = 'red';
-let MAG_POINT_COLOR = 'blue'
+let MAG_COLOR = '#0000FF';
+let LIGHT_SOURCE_COLOR = '#FF0000';
+let MAG_POINT_COLOR = '#0000FF'
 let photonRadius = 10; // Distance away from source
 
 let NUMBER_LIGHT_RAYS = 360;
