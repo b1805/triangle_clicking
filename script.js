@@ -112,7 +112,7 @@ function changeMagBoxCoordinates() {
 // Changes the maginfiction by changing the radius (size) of the (small) mag box (The radius of a square is its side length)
 function changeMagBoxRadius() {
     r = parseFloat(document.getElementById("magBoxRadiusInput").value);
-    console.log("r", r)
+    //console.log("r", r)
     MAG_LIST.forEach(MAG => MAG.rescale(r));
     PHOTON_RADIUS = r;
     updateScreen();
