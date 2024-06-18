@@ -10,7 +10,7 @@ MAG_CANVAS_LIST.forEach(mag_canvas =>
   }
 );
 // Stop dragging when mouse released
-document.onmouseup = (mouseEvent) => {
+document.onmouseup = () => {
   draggable = false;
 }
 // Change mag_canvas coords
@@ -39,13 +39,13 @@ canvas.onmousemove = (mouseEvent) => {
   mouse_coords.style.bottom = (window.innerHeight + 17.5 - mouseEvent.clientY) + 'px';
 }
 // Hide coords when mouse leaves canvas
-canvas.onmouseleave = (mouseEvent) => {
+canvas.onmouseleave = () => {
   const mouse_coords = document.getElementById("mouse_coords");
   mouse_coords.style.visibility = "hidden";
 }
 
 // Show coords when mouse enters canvas
-canvas.onmouseenter = (mouseEvent) => {
+canvas.onmouseenter = () => {
   const mouse_coords = document.getElementById("mouse_coords");
   mouse_coords.style.visibility = "visible";
 }
