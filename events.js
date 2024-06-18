@@ -2,7 +2,7 @@ let draggable = false;
 let offsetX = 0;
 let offsetY = 0;
 // Calculate offset to drag the magnification canvas
-mag_canvas_list.forEach(mag_canvas => 
+MAG_CANVAS_LIST.forEach(mag_canvas => 
   mag_canvas.onmousedown = (mouseEvent) => {
     draggable = true;
     offsetX = mouseEvent.offsetX;

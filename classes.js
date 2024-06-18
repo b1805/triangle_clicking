@@ -283,7 +283,7 @@ class Photon {
         return null;
     }
     let oc = false;
-    if((0 - corner_eps < t && t < corner_eps + 0) || (1 - corner_eps < t && t < corner_eps + 1)) {
+    if((0 - CORNER_EPS < t && t < CORNER_EPS + 0) || (1 - CORNER_EPS < t && t < CORNER_EPS + 1)) {
         oc = true;
     }
     return {
