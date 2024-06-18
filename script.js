@@ -72,10 +72,10 @@ function turnMagOnOff() {
   const bool = parseInt(document.getElementById("magOnOffInput").value);
   if (bool) {
     MAG_LIST.forEach(MAG => MAG.calculate = true);
-    mag_viewer_list.forEach(magViewer => magViewer.style.display = 'inline');
+    MAG_DIV_LIST.forEach(magViewer => magViewer.style.display = 'inline');
   } else {
     MAG_LIST.forEach(MAG => MAG.calculate = false);
-    mag_viewer_list.forEach(magViewer => magViewer.style.display = 'none');
+    MAG_DIV_LIST.forEach(magViewer => magViewer.style.display = 'none');
   }
 }
 
