@@ -195,12 +195,13 @@ function createTriangleGrid() {
 
 function drawTriangles() {
   ctx.lineWidth = 0.5
-  MAG.drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR);
+  
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = BACKGROUND_COLOR;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
   ctx.strokeStyle = WALL_COLOR;
+  MAG.clearCanvas(BACKGROUND_COLOR);
+  drawBounds();
   triangles.forEach(triangle => {
     if (triangle.selected) {
       ctx.fillStyle = 'black';
@@ -210,7 +211,9 @@ function drawTriangles() {
     ctx.stroke(triangle.path);
     ctx.strokeStyle = WALL_COLOR;
   });
-  drawBounds();
+
+  
+  MAG.drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR);
   drawMagBox(MAG, MAG_COLOR);
   drawLightSource();
 }

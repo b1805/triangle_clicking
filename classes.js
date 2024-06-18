@@ -78,17 +78,18 @@ class Magnifier {
     const pos = this.map(new Vector(x, y));
     this.ctx.beginPath();
     this.ctx.fillStyle = color; 
-    this.ctx.arc(pos.x, pos.y, 1.5*radius, 0, 2 * Math.PI);
+    this.ctx.arc(pos.x, pos.y, 3*radius, 0, 2 * Math.PI);
     this.ctx.fill();
   }
-
+  clearCanvas(BACKGROUND_COLOR) {
+    this.ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
+    this.ctx.fillStyle = BACKGROUND_COLOR;
+    this.ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
+  }
   //Maps the trangle grid to the magnifier
   drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR) {
     this.drawCenter();
     this.ctx.lineWidth = 0.5
-    this.ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
-    this.ctx.fillStyle = BACKGROUND_COLOR;
-    this.ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
 
     this.ctx.strokeStyle = WALL_COLOR;
     triangles.forEach(triangle => {
