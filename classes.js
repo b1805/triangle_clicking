@@ -64,7 +64,7 @@ class Magnifier {
     const pos2 = this.map(new Vector(x2, y2));
     this.ctx.beginPath();
     this.ctx.strokeStyle = color;
-    this.ctx.lineWidth = 3*width;
+    this.ctx.lineWidth = Math.max(width,0.3);
     this.ctx.moveTo(pos1.x, pos1.y);
     this.ctx.lineTo(pos2.x, pos2.y);
     this.ctx.stroke();
@@ -78,7 +78,7 @@ class Magnifier {
     const pos = this.map(new Vector(x, y));
     this.ctx.beginPath();
     this.ctx.fillStyle = color; 
-    this.ctx.arc(pos.x, pos.y, 3*radius, 0, 2 * Math.PI);
+    this.ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
     this.ctx.fill();
   }
   clearCanvas(BACKGROUND_COLOR) {

@@ -104,15 +104,20 @@ SOFTWARE. -->
               </div>
               <label for="magBoxRadiusInput">Amount of Magnification: 
               <select id="magBoxRadiusInput">
-                <option value="1">400x</option>
-                <option value="2">200x</option>
-                <option value="4">100x</option>
-                <option value="8">50x</option>
-                <option selected value="10">40x (Default)</option>
-                <option value="16">25x</option>
-                <option value="20">20x</option>
-                <option value="25">16x</option>
-                <option value="40">10x</option>
+                <option value="0.2">1000x</option>
+                <option value="0.25">800x</option>
+                <option value="0.4">500x</option>
+                <option value="0.5">400x</option>
+                <option value="1">200x</option>
+                <option value="2">100x</option>
+                <option value="4">50x</option>
+                <option selected value="8">25x (Default)</option>
+                <option value="10">20x</option>
+                <option value="13.33333333">15x</option>
+                <option value="16.66666667">12x</option>
+                <option value="20">10x</option>
+                <option value="25">8x</option>
+                <option value="40">5x</option>
             </select>
             <button onclick="changeMagBoxRadius()">Apply</button></label>
             </div>
@@ -190,7 +195,7 @@ SOFTWARE. -->
 <div id="mag_viewer">
   <label for="mag_canvas">Magnification Box</label>
   <span class="tooltiptext">You can drag this!</span>
-  <canvas id="mag_canvas" width="400" height="400" style="border: 3px solid blue;"></canvas>
+  <canvas id="mag_canvas" width="200" height="200" style="border: 3px solid blue;"></canvas>
 </div>
 <div id="mouse_coords">
     <span id="x_coord">Y</span>
