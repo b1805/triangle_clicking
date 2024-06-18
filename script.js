@@ -159,14 +159,16 @@ function changeNumberTriangles(){
   console.log(TRIANGLE_SIDE);
 }
 
-// Function to make the grid of triangles *needs more comments
+// Function to make the grid of triangles
 function createTriangleGrid() {
   const triangleSize = TRIANGLE_SIDE;
+  // Split canvas into square cells
   for (let y = 0; y < CANVAS.height; y += triangleSize) {
     for (let x = 0; x < CANVAS.width; x += triangleSize) {
       let isEvenRow = (y / triangleSize) % 2 === 0;
       let isEvenCol = (x / triangleSize) % 2 === 0;
 
+      // We split the cell into two (45,45) triangles, which are oriented differently depending on the parity of the row and column
       if ((isEvenRow && isEvenCol) || (!isEvenRow && !isEvenCol)) {
         let triangle1 = new Path2D();
         triangle1.moveTo(x, y);
@@ -205,15 +207,18 @@ function createTriangleGrid() {
   drawTriangles();
 }
 
-// Function to draw the triangles *needs more comments
+// Function to draw the triangles, and also several other fixed canvas elements
 function drawTriangles() {
   CTX.lineWidth = 0.5
-  
+  // Clear the canvas
   CTX.clearRect(0, 0, canvas.width, canvas.height);
   CTX.fillStyle = BACKGROUND_COLOR;
   CTX.fillRect(0, 0, canvas.width, canvas.height);
   CTX.strokeStyle = WALL_COLOR;
+  // Clear all the magnifiers as well
   MAG_LIST.forEach(MAG => MAG.clearCanvas(BACKGROUND_COLOR));
+  // Drawing order is important here. We first draw the bolded boundaries to the shape,
+  // then we draw the triangles, and lastly we draw the mag box
   drawBounds();
   TRIANGLES.forEach(triangle => {
     if (triangle.selected) {
@@ -430,21 +435,25 @@ function updatePhotonCount() {
   document.getElementById('activePhotonCount').innerText = activePhotonCount;
 }
 
+// For a given photon, we want the first boundary it collides with this frame
 function getClosestCollision(photon) {
     let closestCollision = null;
-    for(let edge = 0; edge < BOUNDARIES.length; ++edge) {
+    for(let edge = 0; edge < BOUNDARIES.length; ++edge) { // Go through all boundaries
       const result = photon.checkCollision(BOUNDARIES[edge]);
       if(result == null) {
         continue;
       }
+      // photonScalar tells us how "far" a collision is
       if(closestCollision == null || result.photonScalar < closestCollision.photonScalar) {
         closestCollision = result;
       }
     }
     return closestCollision;
 }
+// We calculate the path of each photon for this frame
 function rayTracedUpdatePositions() {
   for(let i = 0; i < PHOTONS.length; ++i) {
+    // A photon can reflect multiple times in a frame, hence we track the magnitude of the vector representing it's remaining movement
     while(PHOTONS[i].vecDirRemaining.mag > 0.0001) {
       //console.log("PHOTONS["+i+"].vecDirRemaining.mag =", PHOTONS[i].vecDirRemaining.mag);
       let closestCollision = getClosestCollision(PHOTONS[i]);
