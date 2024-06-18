@@ -86,7 +86,7 @@ class Magnifier {
     this.ctx.fillStyle = BACKGROUND_COLOR;
     this.ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
   }
-  //Maps the trangle grid to the magnifier
+  // Maps the trangle grid to the magnifier
   drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR) {
     this.drawCenter();
     this.ctx.lineWidth = 0.5
@@ -112,7 +112,6 @@ class Magnifier {
     });
   }
 }
-
 
 class Vector {
   constructor(x, y) {
