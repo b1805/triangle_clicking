@@ -26,15 +26,14 @@ let TRIANGLES = [];
 let SELECTED_TRIANGLES = [];
 let BOUNDARIES = [];
 let COORDS = [];
-var photons = [];
-var renderInterval;
+var PHOTONS = [];
+var RENDER_INTERVAL;
 
-var video = new Whammy.Video(33);
-var currentlyRecording = false;
-var recording = document.getElementById('recording');
-var downloadButton = document.getElementById('downloadButton');
-var statusElement = document.getElementById('status');
-var startRecButton = document.getElementById('startRecButton');
+var VIDEO = new Whammy.Video(33);
+var CURRENTLY_RECORDING = false;
+var RECORDING = document.getElementById('recording');
+var DOWNLOAD_BUTTON = document.getElementById('downloadButton');
+var STATUS_ELEMENT = document.getElementById('status');
 var numCapturedFrames = 0;
 
 let lightSource = { x: 500, y: 400 };
@@ -96,7 +95,7 @@ function changeMouseCoordsVisibility() {
 function changeLightSourceCoordinates() {
   lightSource["x"] = parseInt(document.getElementById("lightSourceXInput").value);
   lightSource["y"] = parseInt(document.getElementById("lightSourceYInput").value);
-  photons = [];
+  PHOTONS = [];
   updateScreen(); // Update canvas with new coordinates
 }
 
@@ -226,7 +225,7 @@ function drawTriangles() {
     CTX.strokeStyle = WALL_COLOR;
   });
   MAG_LIST.forEach(MAG => drawMagBox(MAG, MAG_COLOR));
-  MAG_LIST.forEach(MAG => MAG.drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR));
+  MAG_LIST.forEach(MAG => MAG.drawTriangles(TRIANGLES, BACKGROUND_COLOR, WALL_COLOR));
   drawLightSource();
 }
 
@@ -387,21 +386,21 @@ function createShape() {
 }
 
 function startAnimation() {
-  clearInterval(renderInterval);
+  clearInterval(RENDER_INTERVAL);
   createPhotons();
-  renderInterval = setInterval(updateScreen, RENDER_INTERVAL_TIME);
+  RENDER_INTERVAL = setInterval(updateScreen, RENDER_INTERVAL_TIME);
 }
 
 function stopAnimation() {
-  clearInterval(renderInterval);
+  clearInterval(RENDER_INTERVAL);
 }
 
 // Creates phtons according to the number of light rays and the position of the light source
 function createPhotons() {
-  photons = [];
+  PHOTONS = [];
   for (let i = 0; i < NUMBER_LIGHT_RAYS; i++) {
     const angle = (i / NUMBER_LIGHT_RAYS) * 2 * Math.PI;
-    photons.push(new Photon(
+    PHOTONS.push(new Photon(
       lightSource.x + PHOTON_RADIUS * Math.cos(angle),
       lightSource.y + PHOTON_RADIUS * Math.sin(angle),
       angle,
@@ -416,8 +415,8 @@ function updateScreen() {
   rayTracedUpdatePositions();
   drawTriangles();
   drawPhotons();
-  if (currentlyRecording) {
-    video.add(CTX);
+  if (CURRENTLY_RECORDING) {
+    VIDEO.add(CTX);
     numCapturedFrames++;
     if (numCapturedFrames % 33 === 0) {
       const secs = numCapturedFrames / 33;
@@ -428,7 +427,7 @@ function updateScreen() {
 
 // Counts the number of active photons
 function updatePhotonCount() {
-  const activePhotonCount = photons.filter(photon => photon.active).length;
+  const activePhotonCount = PHOTONS.filter(photon => photon.active).length;
   document.getElementById('activePhotonCount').innerText = activePhotonCount;
 }
 
@@ -446,29 +445,29 @@ function getClosestCollision(photon) {
     return closestCollision;
 }
 function rayTracedUpdatePositions() {
-  for(let i = 0; i < photons.length; ++i) {
-    while(photons[i].vecDirRemaining.mag > 0.0001) {
-      //console.log("photons["+i+"].vecDirRemaining.mag =", photons[i].vecDirRemaining.mag);
-      let closestCollision = getClosestCollision(photons[i]);
+  for(let i = 0; i < PHOTONS.length; ++i) {
+    while(PHOTONS[i].vecDirRemaining.mag > 0.0001) {
+      //console.log("PHOTONS["+i+"].vecDirRemaining.mag =", PHOTONS[i].vecDirRemaining.mag);
+      let closestCollision = getClosestCollision(PHOTONS[i]);
       if(closestCollision == null) { // No bounce
         break;
       }
       if(closestCollision.onCorner == true) {
-        photons[i].deactivate(); // Deactivate photon that hits a corner
+        PHOTONS[i].deactivate(); // Deactivate photon that hits a corner
       } 
-      photons[i].bounceOffSegment(closestCollision); // Bounce off edge
+      PHOTONS[i].bounceOffSegment(closestCollision); // Bounce off edge
     }
   }
   // Move the photons.
-  for (var i = 0; i < photons.length; ++i) {
-    photons[i].updatePosition();
+  for (var i = 0; i < PHOTONS.length; ++i) {
+    PHOTONS[i].updatePosition();
   }
   // Update the active photon count.
   updatePhotonCount()
 }
 
 function drawPhotons() {
-  photons.forEach(photon => {
+  PHOTONS.forEach(photon => {
     const len = photon.contactPoints.length;
     for (let i = 0; i < len - 1; i++) {
       drawLine(
@@ -487,7 +486,7 @@ function drawPhotons() {
       photon.tailColor
     );
   });
-  photons.forEach(photon => {
+  PHOTONS.forEach(photon => {
     drawCircle(photon.x, photon.y, HEAD_SIZE, photon.headColor);
   });
 }
@@ -550,29 +549,29 @@ function drawBounds() {
 // Recording:
 
 function startRecording() {
-  if (currentlyRecording) {
+  if (CURRENTLY_RECORDING) {
     return;
   }
   if (!confirm('This feature only works on Firefox right now. Proceed?')) {
     return;
   }
-  currentlyRecording = true;
+  CURRENTLY_RECORDING = true;
 }
 
 function stopRecording() {
-  if (!currentlyRecording) {
+  if (!CURRENTLY_RECORDING) {
     return;
   }
-  currentlyRecording = false;
-  video.compile(false, function (output) {
-    recording.src = URL.createObjectURL(output);
-    downloadButton.href = recording.src;
+  CURRENTLY_RECORDING = false;
+  VIDEO.compile(false, function (output) {
+    RECORDING.src = URL.createObjectURL(output);
+    DOWNLOAD_BUTTON.href = RECORDING.src;
     displayStatus('Recording complete.');
   });
 }
 
 function displayStatus(text) {
-  statusElement.innerText = `Status: ${text}`;
+  STATUS_ELEMENT.innerText = `Status: ${text}`;
 }
 
 function startAnimationAndRecording() {
