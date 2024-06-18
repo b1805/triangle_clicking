@@ -300,7 +300,6 @@ function pruneRepeatedBounds() {
 
 function mergeLineSegments() {
   // Merge line segments if possible
-  let mergedBoundaries = [];
   let done = false;
   while (!done) {
     done = true;
