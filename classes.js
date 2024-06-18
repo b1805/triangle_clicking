@@ -57,14 +57,13 @@ class Magnifier {
   }
   // Draw a line from the main canvas onto the magnified canvas
   drawLine(x1, y1, x2, y2, color, width = 100) {
-    this.drawCenter();
     if(!this.calculate) return;
     // Map coordinates
     const pos1 = this.map(new Vector(x1, y1));
     const pos2 = this.map(new Vector(x2, y2));
     this.ctx.beginPath();
     this.ctx.strokeStyle = color;
-    this.ctx.lineWidth = Math.max(width,0.3);
+    this.ctx.lineWidth = Math.max(width,1);
     this.ctx.moveTo(pos1.x, pos1.y);
     this.ctx.lineTo(pos2.x, pos2.y);
     this.ctx.stroke();
@@ -73,12 +72,11 @@ class Magnifier {
     
   // Light source and photon head
   drawCircle(x, y, radius, color) {
-    this.drawCenter();
     if(!this.calculate) return;
     const pos = this.map(new Vector(x, y));
     this.ctx.beginPath();
     this.ctx.fillStyle = color; 
-    this.ctx.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
+    this.ctx.arc(pos.x, pos.y, Math.max(1.5*radius,1.5), 0, 2 * Math.PI);
     this.ctx.fill();
   }
   clearCanvas(BACKGROUND_COLOR) {
@@ -88,7 +86,6 @@ class Magnifier {
   }
   // Maps the trangle grid to the magnifier
   drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR) {
-    this.drawCenter();
     this.ctx.lineWidth = 0.5
 
     this.ctx.strokeStyle = WALL_COLOR;
@@ -110,6 +107,7 @@ class Magnifier {
       this.ctx.stroke(path);
       this.ctx.strokeStyle = WALL_COLOR;
     });
+    this.drawCenter();
   }
 }
 

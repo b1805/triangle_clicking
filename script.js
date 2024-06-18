@@ -39,7 +39,7 @@ var numCapturedFrames = 0;
 let lightSource = { x: 500, y: 400 };
 // For every mag canvas, we create a corresponding Magnifier which interacts with it
 let MAG_LIST = MAG_CANVAS_LIST.map(mag_canvas => 
-  new Magnifier([lightSource.x, lightSource.y], 10, mag_canvas.width, mag_canvas.getContext('2d', {willReadFrequently: true }))
+  new Magnifier([lightSource.x, lightSource.y], 8, mag_canvas.width, mag_canvas.getContext('2d', {willReadFrequently: true }))
 );
 
 // Displays the grid when you first open the program
