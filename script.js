@@ -38,12 +38,14 @@ var COORDS = [];
 let lightSource = { x: 500, y: 400 };
 let MAG = new Magnifier([lightSource.x, lightSource.y], 10, mag_canvas.width, mag_ctx);
 
+// Displays the grid when you first open the program
 function initialize() {
   createTriangleGrid();
-  canvas.addEventListener('click', selectTriangle);
-  canvas.addEventListener('contextmenu', setLightSource);
+  canvas.addEventListener('click', selectTriangle); // Left click for selecting the triangles
+  canvas.addEventListener('contextmenu', setLightSource); // Right click for moving the light source (and MAG box)
 }
 
+// Changes colors
 function applyColors() {
   WALL_COLOR = document.getElementById("wallColorInput").value;
   PHOTON_HEAD_COLOR = document.getElementById("photonHeadColorInput").value;
@@ -73,7 +75,7 @@ function turnMagOnOff() {
   }
 }
 
-
+// Turns the mouse coordinates on and off
 function changeMouseCoordsVisibility() {
   const mouseVisibilityCheckBox = document.getElementById("mouseVisibilityCheckBox");
   const mouse_coords = document.getElementById("mouse_coords");
@@ -84,6 +86,7 @@ function changeMouseCoordsVisibility() {
   }
 }
 
+// Changes the coordinates of the light source
 function changeLightSourceCoordinates() {
   lightSource["x"] = parseInt(document.getElementById("lightSourceXInput").value);
   lightSource["y"] = parseInt(document.getElementById("lightSourceYInput").value);
@@ -91,6 +94,7 @@ function changeLightSourceCoordinates() {
   updateScreen(); // Update canvas with new coordinates
 }
 
+// Changes the coordinates of the magnification box
 function changeMagBoxCoordinates() { 
   x = parseInt(document.getElementById("magBoxXInput").value);
   y = parseInt(document.getElementById("magBoxYInput").value);
@@ -98,7 +102,7 @@ function changeMagBoxCoordinates() {
   updateScreen(); // Update canvas with new coordinates
 }
 
-// The radius of a square is its side length
+// Changes the maginfiction by changing the radius (size) of the (small) mag box (The radius of a square is its side length)
 function changeMagBoxRadius() {
     r = parseInt(document.getElementById("magBoxRadiusInput").value);
     MAG.rescale(r);
@@ -116,13 +120,14 @@ function changeNumRays() {
   NUMBER_LIGHT_RAYS = parseInt(document.getElementById("numRaysInput").value);
   if (NUMBER_LIGHT_RAYS < 360) {
     //y=(630-x)/900
-    TAIL_SIZE = (630-NUMBER_LIGHT_RAYS)/900;
+    TAIL_SIZE = (630-NUMBER_LIGHT_RAYS)/900; // Decreases the thinkness of each light ray as the number of light rays increases
     HEAD_SIZE = 1.5*TAIL_SIZE;
     //console.log(TAIL_SIZE)
   }
-  else {
+  else { // between 360 and 36000
     //y=(0.7/log250(x))-0.35
-    TAIL_SIZE = (0.7/(log(250,NUMBER_LIGHT_RAYS)))-0.35;
+    TAIL_SIZE = (0.7/(log(250,NUMBER_LIGHT_RAYS)))-0.35; // Decreases the thinkness of each light ray as the number of light rays increases
+    HEAD_SIZE = 1.5*TAIL_SIZE;
     HEAD_SIZE = 2*TAIL_SIZE;
     //console.log(TAIL_SIZE)
   }
@@ -140,6 +145,7 @@ function changeSpeed2() {
   //console.log(SPEED_TIMES_TEN)
 }
 
+// Changes the number of Triangles in the grid (essentially the size of the grid)
 function changeNumberTriangles(){
   TRIANGLE_SIDE = parseInt(document.getElementById("triangleSideInput").value);
   triangles = [];
@@ -148,6 +154,7 @@ function changeNumberTriangles(){
   console.log(TRIANGLE_SIDE);
 }
 
+// Function to make the grid of triangles *needs more comments
 function createTriangleGrid() {
   const triangleSize = TRIANGLE_SIDE;
   for (let y = 0; y < canvas.height; y += triangleSize) {
@@ -193,6 +200,7 @@ function createTriangleGrid() {
   drawTriangles();
 }
 
+// Function to draw the triangles *needs more comments
 function drawTriangles() {
   ctx.lineWidth = 0.5
   
@@ -212,16 +220,17 @@ function drawTriangles() {
     ctx.strokeStyle = WALL_COLOR;
   });
 
-  
   MAG.drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR);
   drawMagBox(MAG, MAG_COLOR);
   drawLightSource();
 }
 
+// Draws the light source point
 function drawLightSource() {
   drawCircle(lightSource.x, lightSource.y, 2, LIGHT_SOURCE_COLOR);
 }
 
+// Function to let users select triangles by clicking them
 function selectTriangle(event) {
   if (event.button === 2) return;  // Ignore right-clicks
   const x = event.offsetX;
@@ -242,6 +251,7 @@ function selectTriangle(event) {
   drawTriangles();
 }
 
+// Sets the light source *needs more comments
 function setLightSource(event) {
   event.preventDefault();
   const x = event.offsetX;
@@ -251,6 +261,7 @@ function setLightSource(event) {
   createPhotons();
   drawTriangles();
 }
+
 // This function removes line segments that appear twice, since those are internal
 function pruneRepeatedBounds() {
   let existingBounds = new Array();
@@ -380,6 +391,7 @@ function stopAnimation() {
   clearInterval(renderInterval);
 }
 
+// Creates phtons according to the number of light rays and the position of the light source
 function createPhotons() {
   photons = [];
   for (let i = 0; i < NUMBER_LIGHT_RAYS; i++) {
@@ -409,6 +421,7 @@ function updateScreen() {
   }
 }
 
+// Counts the number of active photons
 function updatePhotonCount() {
   const activePhotonCount = photons.filter(photon => photon.active).length;
   document.getElementById('activePhotonCount').innerText = activePhotonCount;
