@@ -48,6 +48,7 @@ function initialize() {
   CANVAS.addEventListener('click', selectTriangle); // Left click for selecting the triangles
   CANVAS.addEventListener('contextmenu', setLightSource); // Right click for moving the light source (and MAG box)
   turnMagOnOff();
+  turnPartitionOnOff();
   drawLightSource();
 }
 
@@ -142,6 +143,33 @@ function turnMagOnOff() {
     magBoxYInput3.style.display = 'inline';
   }
   updateScreen();
+}
+
+function turnPartitionOnOff() {
+  const num = parseInt(document.getElementById("partitionOnOffInput").value);
+  if (num === 0) {
+    part.style.visibility = 'hidden';
+    partButton.style.visibility = 'hidden';
+    partX.style.visibility = 'hidden';
+    partY.style.visibility = 'hidden';
+    part1.style.visibility = 'hidden';
+    part2.style.visibility = 'hidden';
+    partBoxXInput1.style.display = 'none';
+    partBoxYInput1.style.display = 'none';
+    partBoxXInput2.style.display = 'none';
+    partBoxYInput2.style.display = 'none';
+  } else if (num === 1) {
+    part.style.visibility = 'visible';
+    partButton.style.visibility = 'visible';
+    partX.style.visibility = 'visible';
+    partY.style.visibility = 'visible';
+    part1.style.visibility = 'visible';
+    part2.style.visibility = 'visible';
+    partBoxXInput1.style.display = 'inline';
+    partBoxYInput1.style.display = 'inline';
+    partBoxXInput2.style.display = 'inline';
+    partBoxYInput2.style.display = 'inline';
+  }
 }
 
 // Turns the mouse coordinates on and off
