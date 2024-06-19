@@ -45,6 +45,12 @@ let MAG_LIST = MAG_CANVAS_LIST.map(mag_canvas =>
   new Magnifier([lightSource.x, lightSource.y], 8, mag_canvas.width, mag_canvas.getContext('2d', {willReadFrequently: true }))
 );
 
+//Dark Mode toggle
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+}
+
+
 // Displays the grid when you first open the program
 function initialize() {
   createTriangleGrid();
