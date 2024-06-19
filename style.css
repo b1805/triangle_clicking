@@ -106,6 +106,7 @@ input[type=checkbox] {
   left: 1020px;
   top: 1615px;
 }
+
 /*For Dark Mode Style*/
 body.dark-mode {
   background-color: #121212;
@@ -115,7 +116,7 @@ body.dark-mode .container {
   background-color: #1e1e1e;
 }
 body.dark-mode button {
-  background-color: #333333;
+  background-color: #bbbbff;
   color: #ffffff;
 }
 body.dark-mode button:hover {
@@ -130,6 +131,33 @@ body.dark-mode h2 {
 body.dark-mode label {
   color: #ffffff;
 }
+/*
+body.dark-mode #startAnimButton, 
+body.dark-mode #stopAnimButton, 
+body.dark-mode #startRecButton, 
+body.dark-mode #stopRecButton, 
+body.dark-mode #startAllButton {
+  background-color: lightgreen;
+}
+
+body.dark-mode #startAnimButton:hover, 
+body.dark-mode #stopAnimButton:hover, 
+body.dark-mode #startRecButton:hover, 
+body.dark-mode #stopRecButton:hover, 
+body.dark-mode #startAllButton:hover {
+  background-color: #bcdfb5;
+}
+
+body.dark-mode #createShapeButton, 
+body.dark-mode #advancedSpeedButton {
+  background-color: rgb(255, 158, 158);
+}
+
+body.dark-mode #createShapeButton:hover, 
+body.dark-mode #advancedSpeedButton:hover {
+  background-color: rgb(120, 86, 86);
+}
+*/
 
 /*For Dark Mode Pill: */
 /* The switch - the box around the slider */
