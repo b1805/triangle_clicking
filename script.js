@@ -1,7 +1,7 @@
 // These represent the main and magnifier canvases we draw on
 const CANVAS = document.getElementById('canvas'); // The main canvas
 const MAG_DIV_LIST = [document.getElementById('mag_viewer_1'), document.getElementById('mag_viewer_2'), document.getElementById('mag_viewer_3')]; // This includes the labels associated with each magnifier
-const MAG_CANVAS_LIST = [document.getElementById('mag_canvas_1'), document.getElementById('mag_canvas_2'), document.getElementById('mag_viewer_3')]; // This refers to just the magnifier canvas
+const MAG_CANVAS_LIST = [document.getElementById('mag_canvas_1'), document.getElementById('mag_canvas_2'), document.getElementById('mag_canvas_3')]; // This refers to just the magnifier canvas
 const CTX = CANVAS.getContext('2d', { willReadFrequently: true }); // Canvas contexts are used to draw on and read from
 
 // Style values
