@@ -1,7 +1,3 @@
-function toggleDarkMode() {
-  document.body.classList.toggle('dark-mode');
-}
-
 // These represent the main and magnifier canvases we draw on
 const CANVAS = document.getElementById('canvas'); // The main canvas
 const MAG_DIV_LIST = [document.getElementById('mag_viewer_1'), document.getElementById('mag_viewer_2'), document.getElementById('mag_viewer_3')]; // This includes the labels associated with each magnifier
@@ -48,6 +44,12 @@ let lightSource = { x: 500, y: 400 };
 let MAG_LIST = MAG_CANVAS_LIST.map(mag_canvas => 
   new Magnifier([lightSource.x, lightSource.y], 8, mag_canvas.width, mag_canvas.getContext('2d', {willReadFrequently: true }))
 );
+
+//Dark Mode toggle
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+}
+
 
 // Displays the grid when you first open the program
 function initialize() {
