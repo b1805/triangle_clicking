@@ -546,6 +546,7 @@ function updateScreen() {
   MAG_LIST.forEach(MAG => MAG.drawCenter());
   if (CURRENTLY_RECORDING) {
     VIDEO.add(CTX);
+    VIDEO.add(MAG_CANVAS_LIST[0]);
     numCapturedFrames++;
     if (numCapturedFrames % 33 === 0) {
       const secs = numCapturedFrames / 33;
