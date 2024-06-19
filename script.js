@@ -105,9 +105,12 @@ function changeLightSourceCoordinates() {
 
 // Changes the coordinates of the magnification box
 function changeMagBoxCoordinates() { 
-  x = parseInt(document.getElementById("magBoxXInput").value);
-  y = parseInt(document.getElementById("magBoxYInput").value);
-  MAG_LIST[0].moveMag(x,y);
+  x1 = parseInt(document.getElementById("magBoxXInput").value);
+  y1 = parseInt(document.getElementById("magBoxYInput").value);
+  MAG_LIST[0].moveMag(x1,y1);
+  x2 = parseInt(document.getElementById("magBoxXInput2").value);
+  y2 = parseInt(document.getElementById("magBoxYInput2").value);
+  MAG_LIST[1].moveMag(x2,y2);
   updateScreen(); // Update canvas with new coordinates
 }
 
