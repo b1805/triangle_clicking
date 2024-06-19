@@ -7,6 +7,8 @@ const CTX = CANVAS.getContext('2d', { willReadFrequently: true }); // Canvas con
 // Style values
 const BACKGROUND_COLOR = '#FFFFFF';
 let WALL_COLOR = '#FFA914';
+let PART_COLOR = '#FF0000';
+let SHOW_PART = false;
 let PHOTON_HEAD_COLOR = '#E1FF00';
 let PHOTON_TAIL_COLOR = '#00FFB3';
 let MAG_COLOR = '#0000FF';
@@ -25,6 +27,7 @@ let CORNER_EPS = 0.01; // Radius of the epsilon ball around each corner for coll
 let TRIANGLES = [];
 let SELECTED_TRIANGLES = [];
 let BOUNDARIES = [];
+let PARTITIONS = [new LineSegment(400, 400, 400, 300)]; // Hardcoded partitions
 let COORDS = [];
 var PHOTONS = [];
 var RENDER_INTERVAL;
@@ -439,10 +442,13 @@ function createShape() {
   const setCOORDS = new Set(COORDS.map(JSON.stringify));
   COORDS = Array.from(setCOORDS).map(JSON.parse);
 
+
+  if(SHOW_PART) PARTITIONS.forEach(lineSeg => BOUNDARIES.push(lineSeg));
   // Log the COORDS and Boundaries list
   console.log("COORDS Array:", COORDS);
   console.log("Boundaries Array:", BOUNDARIES);
   drawTriangles();
+  drawPartitions();
 }
 
 function startAnimation() {
@@ -476,6 +482,7 @@ function updateScreen() {
   rayTracedUpdatePositions();
   drawTriangles();
   drawPhotons();
+  drawPartitions();
   drawLightSource();
   MAG_LIST.forEach(MAG => drawMagBox(MAG, MAG_COLOR));
   MAG_LIST.forEach(MAG => MAG.drawCenter());
@@ -614,13 +621,18 @@ function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
 // Draws the boundriesm of the user selected shape
 function drawBounds() {
   // Takes all the lines from the BOUNDARIES array and draws a line at them
-  for (i in BOUNDARIES) {
-    drawLine(BOUNDARIES[i].x1, BOUNDARIES[i].y1, BOUNDARIES[i].x2, BOUNDARIES[i].y2, WALL_COLOR, 10);
-  }
+  BOUNDARIES.forEach(lineSeg => {
+    let isPartition = false;
+    PARTITIONS.forEach(part => {isPartition = (isPartition || part.equals(lineSeg))})
+    if(!isPartition) drawLine(lineSeg.x1, lineSeg.y1, lineSeg.x2, lineSeg.y2, WALL_COLOR, 10);
+  });
   // Takes all the points from the COORDS array and draws a circle at them
-  for (j in COORDS) {
-    drawCircle(COORDS[j][0], COORDS[j][1], 5, WALL_COLOR)
-  }
+  COORDS.forEach(coord => {drawCircle(coord[0], coord[1], 5, WALL_COLOR)});
+}
+
+function drawPartitions() {
+  if(!SHOW_PART) return;
+  PARTITIONS.forEach(part => drawLine(part.x1, part.y1, part.x2, part.y2, PART_COLOR, 3));
 }
 
 // Recording:
