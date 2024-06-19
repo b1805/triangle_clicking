@@ -93,6 +93,9 @@ input[type=checkbox] {
   position: fixed;
   margin-top: 5px;
 }
+#mag_viewer_1 {
+  top: 1075px
+}
 #mag_viewer_2 {
   top: 1320px
 }
