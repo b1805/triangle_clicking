@@ -98,9 +98,9 @@ SOFTWARE. -->
                 <label for="magOnOffInput">Number of Magnification Boxes
                 <select id="magOnOffInput">
                     <option value="0">0</option>
-                    <option selected value="1">1</option>
+                    <option value="1">1</option>
                     <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option selected value="3">3</option>
                 </select>
                 <button onclick="turnMagOnOff()">Apply</button></label>
               </div>
@@ -186,20 +186,26 @@ SOFTWARE. -->
             <p> </p>
             <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button></label>
             <h2>Magnification Box Coordinates</h2>
-            <div>
-                <label for="magBoxXInput">Magnification Box X Coordinate:
-                <input type="number" id="magBoxXInput" min="1" max="1000" value="500">
-                <input type="number" id="magBoxXInput2" min="1" max="1000" value="500">
-                <input type="number" id="magBoxXInput3" min="1" max="1000" value="500">
-                </label>
-            </div>
-            <div>
-                <label for="magBoxYInput">Magnification Box Y Coordinate:
-                <input type="number" id="magBoxYInput" min="1" max="1000" value="400">
-                <input type="number" id="magBoxYInput2" min="1" max="1000" value="400">
-                <input type="number" id="magBoxYInput3" min="1" max="1000" value="400">
-                </label>
-            </div>
+            <table>
+              <tr>
+                <th> </th>
+                <th id = mag1> Box 1</th>
+                <th id = mag2> Box 2</th>
+                <th id = mag3> Box 3</th>
+              </tr>
+              <tr>
+                <th>X: </th>
+                <td><input type="number" id="magBoxXInput1" min="1" max="1000" value="500"></td>
+                <td><input type="number" id="magBoxXInput2" min="1" max="1000" value="500"></td>
+                <td><input type="number" id="magBoxXInput3" min="1" max="1000" value="500"></td>
+              </tr>
+              <tr>
+                <th>Y: </th>
+                <td><input type="number" id="magBoxYInput1" min="1" max="1000" value="400"></td>
+                <td><input type="number" id="magBoxYInput2" min="1" max="1000" value="400"></td>
+                <td><input type="number" id="magBoxYInput3" min="1" max="1000" value="400"></td>
+              </tr>
+            </table>
             <p> </p>
             <button onclick="changeMagBoxCoordinates()">Apply Coordinates</button></label>
         </div>
@@ -208,7 +214,7 @@ SOFTWARE. -->
 <br/>
 <canvas id="canvas" width="1000" height="800" style="border: 1px solid black;" ></canvas>
 <div id="mag_viewer_1" class="magnifier">
-  <label for="mag_canvas_1">Magnification Box</label>
+  <label for="mag_canvas_1">Magnification Box 1</label>
   <span class="tooltiptext">You can drag this!</span>
   <canvas id="mag_canvas_1" width="200" height="200" style="border: 3px solid blue;"></canvas>
 </div>
