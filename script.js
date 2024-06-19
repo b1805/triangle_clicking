@@ -152,6 +152,7 @@ function turnMagOnOff() {
 function turnPartitionOnOff() {
   const num = parseInt(document.getElementById("partitionOnOffInput").value);
   if (num === 0) {
+    SHOW_PART = false;
     part.style.visibility = 'hidden';
     partButton.style.visibility = 'hidden';
     partX.style.visibility = 'hidden';
@@ -163,6 +164,7 @@ function turnPartitionOnOff() {
     partBoxXInput2.style.display = 'none';
     partBoxYInput2.style.display = 'none';
   } else if (num === 1) {
+    SHOW_PART = true;
     part.style.visibility = 'visible';
     partButton.style.visibility = 'visible';
     partX.style.visibility = 'visible';
@@ -174,6 +176,7 @@ function turnPartitionOnOff() {
     partBoxXInput2.style.display = 'inline';
     partBoxYInput2.style.display = 'inline';
   }
+  createShape();
 }
 
 // Turns the mouse coordinates on and off
