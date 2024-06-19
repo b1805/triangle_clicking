@@ -182,30 +182,30 @@ SOFTWARE. -->
                 <input type="number" id="lightSourceYInput" min="1" max="1000" value="400"></label>
             </div>
             <p> </p>
-            <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button></label>
-            <h2>Magnification Box Coordinates</h2>
+            <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button>
+            <h2 id="mag">Magnification Box Coordinates</h2>
             <table>
               <tr>
                 <th> </th>
-                <th id = mag1> Box 1</th>
-                <th id = mag2> Box 2</th>
-                <th id = mag3> Box 3</th>
+                <th id="mag1"> Box 1</th>
+                <th id="mag2"> Box 2</th>
+                <th id="mag3"> Box 3</th>
               </tr>
               <tr>
-                <th>X: </th>
+                <th id = "x">X: </th>
                 <td><input type="number" id="magBoxXInput1" min="1" max="1000" value="500"></td>
                 <td><input type="number" id="magBoxXInput2" min="1" max="1000" value="500"></td>
                 <td><input type="number" id="magBoxXInput3" min="1" max="1000" value="500"></td>
               </tr>
               <tr>
-                <th>Y: </th>
+                <th id = "y">Y: </th>
                 <td><input type="number" id="magBoxYInput1" min="1" max="1000" value="400"></td>
                 <td><input type="number" id="magBoxYInput2" min="1" max="1000" value="400"></td>
                 <td><input type="number" id="magBoxYInput3" min="1" max="1000" value="400"></td>
               </tr>
             </table>
             <p> </p>
-            <button onclick="changeMagBoxCoordinates()">Apply Coordinates</button></label>
+            <button id="magButton" onclick="changeMagBoxCoordinates()">Apply Coordinates</button>
         </div>
     </div>
 </div>
