@@ -82,6 +82,15 @@ SOFTWARE. -->
             </div>
             <p> </p>
             <div>
+              <label for="partitionsOnOffInput">Partitions
+              <select id="partitionsOnOffInput">
+                  <option selected value="0">Off</option>
+                  <option value="1">On</option>
+              </select>
+              <button onclick="turnPartitionsOnOff()">Apply</button></label>
+            </div>
+            <p> </p>
+            <div>
                 <label for="speedInput">Speed
                   <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
                 <button onclick="changeSpeed()">Apply</button></label>
@@ -206,6 +215,26 @@ SOFTWARE. -->
             </table>
             <p> </p>
             <button id="magButton" onclick="changeMagBoxCoordinates()">Apply Coordinates</button>
+            <h2 id="part">Partition Coordinates</h2>
+            <table>
+              <tr>
+                <th> </th>
+                <th id="part1"> Point 1</th>
+                <th id="part2"> Point 2</th>
+              </tr>
+              <tr>
+                <th id = "partX">X: </th>
+                <td><input type="number" id="partBoxXInput1" min="1" max="1000" value="500"></td>
+                <td><input type="number" id="partBoxXInput2" min="1" max="1000" value="500"></td>
+              </tr>
+              <tr>
+                <th id = "partY">Y: </th>
+                <td><input type="number" id="partBoxYInput1" min="1" max="1000" value="400"></td>
+                <td><input type="number" id="partBoxYInput2" min="1" max="1000" value="400"></td>
+              </tr>
+            </table>
+            <p> </p>
+            <button id="partButton" onclick="changePartitionCoordinates()">Apply Coordinates</button>
         </div>
     </div>
 </div>
