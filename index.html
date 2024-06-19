@@ -82,6 +82,15 @@ SOFTWARE. -->
             </div>
             <p> </p>
             <div>
+              <label for="partitionsOnOffInput">Partitions
+              <select id="partitionsOnOffInput">
+                  <option selected value="0">Off</option>
+                  <option value="1">On</option>
+              </select>
+              <button onclick="turnPartitionsOnOff()">Apply</button></label>
+            </div>
+            <p> </p>
+            <div>
                 <label for="speedInput">Speed
                   <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
                 <button onclick="changeSpeed()">Apply</button></label>
@@ -96,9 +105,9 @@ SOFTWARE. -->
                 <label for="magOnOffInput">Number of Magnification Boxes
                 <select id="magOnOffInput">
                     <option value="0">0</option>
-                    <option value="1">1</option>
+                    <option selected value="1">1</option>
                     <option value="2">2</option>
-                    <option selected value="3">3</option>
+                    <option value="3">3</option>
                 </select>
                 <button onclick="turnMagOnOff()">Apply</button></label>
               </div>
@@ -174,38 +183,58 @@ SOFTWARE. -->
             <button onclick="applyColors()">Apply Colours</button>
             <h2>Light Source Coordinates</h2>
             <div>
-                <label for="lightSourceXInput">Light Source X Coordinate:
+                <label for="lightSourceXInput">X: 
                 <input type="number" id="lightSourceXInput" min="1" max="1000" value="500"></label>
             </div>
             <div>
-                <label for="lightSourceYInput">Light Source Y Coordinate:
+                <label for="lightSourceYInput">Y: 
                 <input type="number" id="lightSourceYInput" min="1" max="1000" value="400"></label>
             </div>
             <p> </p>
-            <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button></label>
-            <h2>Magnification Box Coordinates</h2>
+            <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button>
+            <h2 id="mag">Magnification Box Coordinates</h2>
             <table>
               <tr>
                 <th> </th>
-                <th id = mag1> Box 1</th>
-                <th id = mag2> Box 2</th>
-                <th id = mag3> Box 3</th>
+                <th id="mag1"> Box 1</th>
+                <th id="mag2"> Box 2</th>
+                <th id="mag3"> Box 3</th>
               </tr>
               <tr>
-                <th>X: </th>
+                <th id = "x">X: </th>
                 <td><input type="number" id="magBoxXInput1" min="1" max="1000" value="500"></td>
                 <td><input type="number" id="magBoxXInput2" min="1" max="1000" value="500"></td>
                 <td><input type="number" id="magBoxXInput3" min="1" max="1000" value="500"></td>
               </tr>
               <tr>
-                <th>Y: </th>
+                <th id = "y">Y: </th>
                 <td><input type="number" id="magBoxYInput1" min="1" max="1000" value="400"></td>
                 <td><input type="number" id="magBoxYInput2" min="1" max="1000" value="400"></td>
                 <td><input type="number" id="magBoxYInput3" min="1" max="1000" value="400"></td>
               </tr>
             </table>
             <p> </p>
-            <button onclick="changeMagBoxCoordinates()">Apply Coordinates</button></label>
+            <button id="magButton" onclick="changeMagBoxCoordinates()">Apply Coordinates</button>
+            <h2 id="part">Partition Coordinates</h2>
+            <table>
+              <tr>
+                <th> </th>
+                <th id="part1"> Point 1</th>
+                <th id="part2"> Point 2</th>
+              </tr>
+              <tr>
+                <th id = "partX">X: </th>
+                <td><input type="number" id="partBoxXInput1" min="1" max="1000" value="500"></td>
+                <td><input type="number" id="partBoxXInput2" min="1" max="1000" value="500"></td>
+              </tr>
+              <tr>
+                <th id = "partY">Y: </th>
+                <td><input type="number" id="partBoxYInput1" min="1" max="1000" value="400"></td>
+                <td><input type="number" id="partBoxYInput2" min="1" max="1000" value="400"></td>
+              </tr>
+            </table>
+            <p> </p>
+            <button id="partButton" onclick="changePartitionCoordinates()">Apply Coordinates</button>
         </div>
     </div>
 </div>

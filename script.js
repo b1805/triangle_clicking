@@ -87,9 +87,13 @@ function turnMagOnOff() {
   }
   // Show or hide the magnification coordinates depending on the number of MAG box
   if (num === 0) {
-    mag1.style.visibility = 'hidden'
-    mag2.style.visibility = 'hidden'
-    mag3.style.visibility = 'hidden'
+    mag.style.visibility = 'hidden';
+    magButton.style.visibility = 'hidden';
+    x.style.visibility = 'hidden';
+    y.style.visibility = 'hidden';
+    mag1.style.visibility = 'hidden';
+    mag2.style.visibility = 'hidden';
+    mag3.style.visibility = 'hidden';
     magBoxXInput1.style.display = 'none';
     magBoxYInput1.style.display = 'none';
     magBoxXInput2.style.display = 'none';
@@ -97,9 +101,13 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 1) {
-    mag1.style.visibility = 'visible'
-    mag2.style.visibility = 'hidden'
-    mag3.style.visibility = 'hidden'
+    mag.style.visibility = 'visible';
+    magButton.style.visibility = 'visible';
+    x.style.visibility = 'visible';
+    y.style.visibility = 'visible';
+    mag1.style.visibility = 'visible';
+    mag2.style.visibility = 'hidden';
+    mag3.style.visibility = 'hidden';
     magBoxXInput1.style.display = 'inline';
     magBoxYInput1.style.display = 'inline';
     magBoxXInput2.style.display = 'none';
@@ -107,9 +115,13 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 2) {
-    mag1.style.visibility = 'visible'
-    mag2.style.visibility = 'visible'
-    mag3.style.visibility = 'hidden'
+    mag.style.visibility = 'visible';
+    magButton.style.visibility = 'visible';
+    x.style.visibility = 'visible';
+    y.style.visibility = 'visible';
+    mag1.style.visibility = 'visible';
+    mag2.style.visibility = 'visible';
+    mag3.style.visibility = 'hidden';
     magBoxXInput1.style.display = 'inline';
     magBoxYInput1.style.display = 'inline';
     magBoxXInput2.style.display = 'inline';
@@ -118,6 +130,10 @@ function turnMagOnOff() {
     magBoxYInput3.style.display = 'none';
   }
   else if (num === 3) {
+    mag.style.visibility = 'visible';
+    magButton.style.visibility = 'visible';
+    x.style.visibility = 'visible';
+    y.style.visibility = 'visible';
     mag1.style.visibility = 'visible'
     mag2.style.visibility = 'visible'
     mag3.style.visibility = 'visible'
