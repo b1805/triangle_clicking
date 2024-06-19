@@ -113,6 +113,7 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'inline';
     magBoxYInput3.style.display = 'inline';
   }
+  updateScreen();
 }
 
 // Turns the mouse coordinates on and off
