@@ -3,7 +3,7 @@ let offsetX = 0;
 let offsetY = 0;
 // Calculate offset to drag the magnification canvas
 MAG_DIV_LIST.forEach(mag_div => {
-    mag_div.ontouchstart = (event) => {
+    mag_div.onmousedown = (event) => {
       draggable = mag_div;
       console.log("Pointer Down");
       offsetX = event.offsetX;
@@ -12,13 +12,13 @@ MAG_DIV_LIST.forEach(mag_div => {
   }
 );
 // Stop dragging when mouse released
-document.ontouchend = () => {
+document.onmouseup = () => {
   console.log("Pointer Up");
   draggable = null;
 }
 
 // Change mag_canvas coords
-document.ontouchmove = (event) => {
+document.onmousemove = (event) => {
   let x = event.pageX - offsetX;
   let y = event.pageY - offsetY;
   if(draggable == null) return;
