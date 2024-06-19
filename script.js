@@ -14,7 +14,7 @@ let PHOTON_TAIL_COLOR = '#00FFB3';
 let MAG_COLOR = '#0000FF';
 let LIGHT_SOURCE_COLOR = '#FF0000';
 let MAG_POINT_COLOR = '#0000FF'
-let PHOTON_RADIUS = 10; // Distance away from source
+let PHOTON_RADIUS = 10/(Math.sqrt(2)); // Distance away from source
 
 let NUMBER_LIGHT_RAYS = 360;
 const RENDER_INTERVAL_TIME = 33;
@@ -226,7 +226,7 @@ function changeMagBoxRadius() {
     r = parseFloat(document.getElementById("magBoxRadiusInput").value);
     //console.log("r", r)
     MAG_LIST.forEach(MAG => MAG.rescale(r));
-    PHOTON_RADIUS = r;
+    PHOTON_RADIUS = r/(Math.sqrt(2));
     updateScreen();
 }
 
