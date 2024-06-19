@@ -96,9 +96,9 @@ SOFTWARE. -->
                 <label for="magOnOffInput">Number of Magnification Boxes
                 <select id="magOnOffInput">
                     <option value="0">0</option>
-                    <option value="1">1</option>
+                    <option selected value="1">1</option>
                     <option value="2">2</option>
-                    <option selected value="3">3</option>
+                    <option value="3">3</option>
                 </select>
                 <button onclick="turnMagOnOff()">Apply</button></label>
               </div>
@@ -174,11 +174,11 @@ SOFTWARE. -->
             <button onclick="applyColors()">Apply Colours</button>
             <h2>Light Source Coordinates</h2>
             <div>
-                <label for="lightSourceXInput">Light Source X Coordinate:
+                <label for="lightSourceXInput">X: 
                 <input type="number" id="lightSourceXInput" min="1" max="1000" value="500"></label>
             </div>
             <div>
-                <label for="lightSourceYInput">Light Source Y Coordinate:
+                <label for="lightSourceYInput">Y: 
                 <input type="number" id="lightSourceYInput" min="1" max="1000" value="400"></label>
             </div>
             <p> </p>
