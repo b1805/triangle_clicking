@@ -119,6 +119,9 @@ function changeMagBoxCoordinates() {
   x2 = parseInt(document.getElementById("magBoxXInput2").value);
   y2 = parseInt(document.getElementById("magBoxYInput2").value);
   MAG_LIST[1].moveMag(x2,y2);
+  x3 = parseInt(document.getElementById("magBoxXInput3").value);
+  y3 = parseInt(document.getElementById("magBoxYInput3").value);
+  MAG_LIST[2].moveMag(x3,y3);
   updateScreen(); // Update canvas with new coordinates
 }
 
