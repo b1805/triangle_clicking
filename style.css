@@ -40,7 +40,7 @@ body {
 h1 {
   font-size: 25px;
   font-family: cursive;
-  margin-bottom: 0px;
+  text-align: center;
   color: red;
 }
 h2 {
