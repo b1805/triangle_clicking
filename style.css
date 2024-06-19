@@ -94,11 +94,14 @@ input[type=checkbox] {
   margin-top: 5px;
 }
 #mag_viewer_1 {
-  top: 1075px
+  left: 1020px;
+  top: 1075px;
 }
 #mag_viewer_2 {
-  top: 1320px
+  left: 1020px;
+  top: 1320px;
 }
 #mag_viewer_3 {
-  top: 1565px
+  left: 1020px;
+  top: 1565px;
 }
