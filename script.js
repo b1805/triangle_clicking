@@ -88,16 +88,30 @@ function turnMagOnOff() {
     magBoxYInput.style.display = 'none';
     magBoxXInput2.style.display = 'none';
     magBoxYInput2.style.display = 'none';
+    magBoxXInput3.style.display = 'none';
+    magBoxYInput3.style.display = 'none';
   } else if (num === 1) {
     magBoxXInput.style.display = 'inline';
     magBoxYInput.style.display = 'inline';
     magBoxXInput2.style.display = 'none';
     magBoxYInput2.style.display = 'none';
+    magBoxXInput3.style.display = 'none';
+    magBoxYInput3.style.display = 'none';
   } else if (num === 2) {
     magBoxXInput.style.display = 'inline';
     magBoxYInput.style.display = 'inline';
     magBoxXInput2.style.display = 'inline';
     magBoxYInput2.style.display = 'inline';
+    magBoxXInput3.style.display = 'none';
+    magBoxYInput3.style.display = 'none';
+  }
+  else if (num === 3) {
+    magBoxXInput.style.display = 'inline';
+    magBoxYInput.style.display = 'inline';
+    magBoxXInput2.style.display = 'inline';
+    magBoxYInput2.style.display = 'inline';
+    magBoxXInput3.style.display = 'inline';
+    magBoxYInput3.style.display = 'inline';
   }
 }
 
