@@ -1,3 +1,7 @@
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+}
+
 // These represent the main and magnifier canvases we draw on
 const CANVAS = document.getElementById('canvas'); // The main canvas
 const MAG_DIV_LIST = [document.getElementById('mag_viewer_1'), document.getElementById('mag_viewer_2'), document.getElementById('mag_viewer_3')]; // This includes the labels associated with each magnifier
