@@ -82,13 +82,22 @@ function turnMagOnOff() {
       MAG_DIV_LIST[i].style.display = 'none';
     }
   }
-  // Show or hide the second magnification box
-  if (num === 2) {
-    magBoxXInput2.style.display = 'inline';
-    magBoxYInput2.style.display = 'inline';
-  } else {
+  // Show or hide the magnification coordinates depending on the number of MAG box
+  if (num === 0) {
+    magBoxXInput.style.display = 'none';
+    magBoxYInput.style.display = 'none';
     magBoxXInput2.style.display = 'none';
     magBoxYInput2.style.display = 'none';
+  } else if (num === 1) {
+    magBoxXInput.style.display = 'inline';
+    magBoxYInput.style.display = 'inline';
+    magBoxXInput2.style.display = 'none';
+    magBoxYInput2.style.display = 'none';
+  } else if (num === 2) {
+    magBoxXInput.style.display = 'inline';
+    magBoxYInput.style.display = 'inline';
+    magBoxXInput2.style.display = 'inline';
+    magBoxYInput2.style.display = 'inline';
   }
 }
 
