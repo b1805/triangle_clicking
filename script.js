@@ -8,7 +8,7 @@ const CTX = CANVAS.getContext('2d', { willReadFrequently: true }); // Canvas con
 const BACKGROUND_COLOR = '#FFFFFF';
 let WALL_COLOR = '#FFA914';
 let PART_COLOR = '#FF0000';
-let SHOW_PART = false;
+let SHOW_PART = true;
 let PHOTON_HEAD_COLOR = '#E1FF00';
 let PHOTON_TAIL_COLOR = '#00FFB3';
 let MAG_COLOR = '#0000FF';
@@ -52,6 +52,7 @@ function initialize() {
   CANVAS.addEventListener('contextmenu', setLightSource); // Right click for moving the light source (and MAG box)
   turnMagOnOff();
   drawLightSource();
+  changePartitionCoordinates();
 }
 
 // Changes colors
@@ -177,7 +178,16 @@ function changeMagBoxCoordinates() {
   x3 = parseInt(document.getElementById("magBoxXInput3").value);
   y3 = parseInt(document.getElementById("magBoxYInput3").value);
   MAG_LIST[2].moveMag(x3,y3);
-  updateScreen(); // Update canvas with new coordinates
+  drawTriangles(); // Update canvas with new coordinates
+}
+
+function changePartitionCoordinates() {
+  x1 = parseInt(document.getElementById("partBoxXInput1").value);
+  y1 = parseInt(document.getElementById("partBoxYInput1").value);
+  x2 = parseInt(document.getElementById("partBoxXInput2").value);
+  y2 = parseInt(document.getElementById("partBoxYInput2").value);
+  PARTITIONS = [new LineSegment(x1, y1, x2, y2)]
+  createShape(); // Update canvas with new coordinates
 }
 
 // Changes the maginfiction by changing the radius (size) of the (small) mag box (The radius of a square is its side length)
@@ -305,6 +315,7 @@ function drawTriangles() {
   });
   MAG_LIST.forEach(MAG => drawMagBox(MAG, MAG_COLOR));
   MAG_LIST.forEach(MAG => MAG.drawTriangles(TRIANGLES, BACKGROUND_COLOR, WALL_COLOR));
+  drawPartitions();
   drawLightSource();
 }
 
