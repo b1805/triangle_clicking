@@ -84,30 +84,42 @@ function turnMagOnOff() {
   }
   // Show or hide the magnification coordinates depending on the number of MAG box
   if (num === 0) {
-    magBoxXInput.style.display = 'none';
-    magBoxYInput.style.display = 'none';
+    mag1.style.visibility = 'hidden'
+    mag2.style.visibility = 'hidden'
+    mag3.style.visibility = 'hidden'
+    magBoxXInput1.style.display = 'none';
+    magBoxYInput1.style.display = 'none';
     magBoxXInput2.style.display = 'none';
     magBoxYInput2.style.display = 'none';
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 1) {
-    magBoxXInput.style.display = 'inline';
-    magBoxYInput.style.display = 'inline';
+    mag1.style.visibility = 'visible'
+    mag2.style.visibility = 'hidden'
+    mag3.style.visibility = 'hidden'
+    magBoxXInput1.style.display = 'inline';
+    magBoxYInput1.style.display = 'inline';
     magBoxXInput2.style.display = 'none';
     magBoxYInput2.style.display = 'none';
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 2) {
-    magBoxXInput.style.display = 'inline';
-    magBoxYInput.style.display = 'inline';
+    mag1.style.visibility = 'visible'
+    mag2.style.visibility = 'visible'
+    mag3.style.visibility = 'hidden'
+    magBoxXInput1.style.display = 'inline';
+    magBoxYInput1.style.display = 'inline';
     magBoxXInput2.style.display = 'inline';
     magBoxYInput2.style.display = 'inline';
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   }
   else if (num === 3) {
-    magBoxXInput.style.display = 'inline';
-    magBoxYInput.style.display = 'inline';
+    mag1.style.visibility = 'visible'
+    mag2.style.visibility = 'visible'
+    mag3.style.visibility = 'visible'
+    magBoxXInput1.style.display = 'inline';
+    magBoxYInput1.style.display = 'inline';
     magBoxXInput2.style.display = 'inline';
     magBoxYInput2.style.display = 'inline';
     magBoxXInput3.style.display = 'inline';
@@ -137,8 +149,8 @@ function changeLightSourceCoordinates() {
 
 // Changes the coordinates of the magnification box
 function changeMagBoxCoordinates() { 
-  x1 = parseInt(document.getElementById("magBoxXInput").value);
-  y1 = parseInt(document.getElementById("magBoxYInput").value);
+  x1 = parseInt(document.getElementById("magBoxXInput1").value);
+  y1 = parseInt(document.getElementById("magBoxYInput1").value);
   MAG_LIST[0].moveMag(x1,y1);
   x2 = parseInt(document.getElementById("magBoxXInput2").value);
   y2 = parseInt(document.getElementById("magBoxYInput2").value);

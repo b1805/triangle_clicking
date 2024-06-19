@@ -38,16 +38,20 @@ body {
   visibility: visible;
 }
 h1 {
-  font-size: 25px;
-  font-family: cursive;
-  text-align: center;
+  display: block;
+  margin-bottom: 0px;
+  font-weight: bold;
   color: red;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
 }
 h2 {
-  font-size: 20px;
-  font-family: cursive;
+  display: block;
   margin-bottom: 10px;
+  font-weight: bold;
   color: #1877f2;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
 }
 button {
   padding: 10px 20px;
@@ -93,9 +97,15 @@ input[type=checkbox] {
   position: fixed;
   margin-top: 5px;
 }
+#mag_viewer_1 {
+  left: 1020px;
+  top: 1075px;
+}
 #mag_viewer_2 {
-  top: 1320px
+  left: 1020px;
+  top: 1320px;
 }
 #mag_viewer_3 {
-  top: 1565px
+  left: 1020px;
+  top: 1565px;
 }

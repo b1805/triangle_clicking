@@ -2,18 +2,25 @@ let draggable = null;
 let offsetX = 0;
 let offsetY = 0;
 // Calculate offset to drag the magnification canvas
-MAG_DIV_LIST.forEach(mag_div => 
-  mag_div.onmousedown = (mouseEvent) => {
-    //console.log("mouseDown");
-    draggable = mag_div;
-    offsetX = mouseEvent.offsetX;
-    offsetY = mouseEvent.offsetY;
+MAG_DIV_LIST.forEach(mag_div => {
+    mag_div.onmousedown = (mouseEvent) => {
+      draggable = mag_div;
+      console.log("Mouse Down");
+      offsetX = mouseEvent.offsetX;
+      offsetY = mouseEvent.offsetY;
+    }
+    mag_div.ontouchstart = (touchEvent) => {
+      draggable = mag_div;
+      console.log("Touched");
+      offsetX = touchEvent.offsetX;
+      offsetY = touchEvent.offsetY;
+    }
   }
 );
 // Stop dragging when mouse released
-document.onmouseup = () => {
-  draggable = null;
-}
+document.onmouseup = () => draggable = null;
+document.ontouchstop = () => draggable = null;
+
 // Change mag_canvas coords
 document.onmousemove = (mouseEvent) => {
   let x = mouseEvent.pageX - offsetX;
@@ -21,8 +28,15 @@ document.onmousemove = (mouseEvent) => {
   if(draggable == null) return;
   draggable.style.left = x + 'px';
   draggable.style.top = y + 'px';
-
 }
+document.ontouchmove = (touchEvent) => {
+  let x = touchEvent.pageX - offsetX;
+  let y = touchEvent.pageY - offsetY;
+  if(draggable == null) return;
+  draggable.style.left = x + 'px';
+  draggable.style.top = y + 'px';
+}
+
 // show mouse coordinates
 canvas.onmousemove = (mouseEvent) => {
   const x_coord = document.getElementById("x_coord");
