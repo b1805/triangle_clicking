@@ -93,4 +93,9 @@ input[type=checkbox] {
   position: fixed;
   margin-top: 5px;
 }
-
+#mag_viewer_2 {
+  top: 1320px
+}
+#mag_viewer_3 {
+  top: 1565px
+}
