@@ -82,7 +82,7 @@ function turnMagOnOff() {
       MAG_DIV_LIST[i].style.display = 'none';
     }
   }
-  // Show or hide the second magnification box input and viewer
+  // Show or hide the second magnification box
   if (num === 2) {
     magBoxXInput2.style.display = 'inline';
     magBoxYInput2.style.display = 'inline';
