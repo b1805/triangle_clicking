@@ -98,6 +98,9 @@ function turnMagOnOff() {
   }
   // Show or hide the magnification coordinates depending on the number of MAG box
   if (num === 0) {
+    MAG_DOWNLOAD_BUTTON[0].style.visibility = 'hidden';
+    MAG_DOWNLOAD_BUTTON[1].style.visibility = 'hidden';
+    MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
     MAG_RECORDING[0].style.visibility = 'hidden';
     MAG_RECORDING[1].style.visibility = 'hidden';
     MAG_RECORDING[2].style.visibility = 'hidden';
@@ -115,6 +118,9 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 1) {
+    MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[1].style.visibility = 'hidden';
+    MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
     MAG_RECORDING[0].style.visibility = 'visible';
     MAG_RECORDING[1].style.visibility = 'hidden';
     MAG_RECORDING[2].style.visibility = 'hidden';
@@ -132,6 +138,9 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 2) {
+    MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[1].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
     MAG_RECORDING[0].style.visibility = 'visible';
     MAG_RECORDING[1].style.visibility = 'visible';
     MAG_RECORDING[2].style.visibility = 'hidden';
@@ -150,6 +159,9 @@ function turnMagOnOff() {
     magBoxYInput3.style.display = 'none';
   }
   else if (num === 3) {
+    MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[1].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[2].style.visibility = 'visible';
     MAG_RECORDING[0].style.visibility = 'visible';
     MAG_RECORDING[1].style.visibility = 'visible';
     MAG_RECORDING[2].style.visibility = 'visible';
