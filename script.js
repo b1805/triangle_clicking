@@ -36,7 +36,7 @@ let VIDEO = new Whammy.Video(33);
 let MAG_VIDEO = [new Whammy.Video(33), new Whammy.Video(33), new Whammy.Video(33)];
 var CURRENTLY_RECORDING = false;
 var RECORDING = document.getElementById('recording');
-let MAG_RECORDING = [document.getElementById('recordingM1'), document.getElementById('recordingM3'), document.getElementById('recordingM3')]
+let MAG_RECORDING = [document.getElementById('recordingM1'), document.getElementById('recordingM2'), document.getElementById('recordingM3')]
 var DOWNLOAD_BUTTON = document.getElementById('downloadButton');
 var STATUS_ELEMENT = document.getElementById('status');
 var numCapturedFrames = 0;
@@ -97,6 +97,9 @@ function turnMagOnOff() {
   }
   // Show or hide the magnification coordinates depending on the number of MAG box
   if (num === 0) {
+    MAG_RECORDING[0].style.visibility = 'hidden';
+    MAG_RECORDING[1].style.visibility = 'hidden';
+    MAG_RECORDING[2].style.visibility = 'hidden';
     mag.style.visibility = 'hidden';
     magButton.style.visibility = 'hidden';
     x.style.visibility = 'hidden';
@@ -111,6 +114,9 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 1) {
+    MAG_RECORDING[0].style.visibility = 'visible';
+    MAG_RECORDING[1].style.visibility = 'hidden';
+    MAG_RECORDING[2].style.visibility = 'hidden';
     mag.style.visibility = 'visible';
     magButton.style.visibility = 'visible';
     x.style.visibility = 'visible';
@@ -125,6 +131,9 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 2) {
+    MAG_RECORDING[0].style.visibility = 'visible';
+    MAG_RECORDING[1].style.visibility = 'visible';
+    MAG_RECORDING[2].style.visibility = 'hidden';
     mag.style.visibility = 'visible';
     magButton.style.visibility = 'visible';
     x.style.visibility = 'visible';
@@ -140,6 +149,9 @@ function turnMagOnOff() {
     magBoxYInput3.style.display = 'none';
   }
   else if (num === 3) {
+    MAG_RECORDING[0].style.visibility = 'visible';
+    MAG_RECORDING[1].style.visibility = 'visible';
+    MAG_RECORDING[2].style.visibility = 'visible';
     mag.style.visibility = 'visible';
     magButton.style.visibility = 'visible';
     x.style.visibility = 'visible';
@@ -556,7 +568,7 @@ function updateScreen() {
   MAG_LIST.forEach(MAG => MAG.drawCenter());
   if (CURRENTLY_RECORDING) {
     VIDEO.add(CTX);
-    for(int i = 0; i < MAG_LIST.length; ++i) {
+    for(let i = 0; i < MAG_LIST.length; ++i) {
       if(MAG_LIST[i].calculate) {
         MAG_VIDEO[i].add(MAG_LIST[i].ctx);
       }
