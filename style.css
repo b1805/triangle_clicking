@@ -153,6 +153,11 @@ body.dark-mode #createShapeButton:hover,
 body.dark-mode #advancedSpeedButton:hover {
   background-color: rgb(255, 158, 158);
 }
+body.dark-mode #mouse_coords {
+  background-color: black;
+  position: fixed;
+  margin-top: 5px;
+}
 
 /*For Dark Mode Pill: */
 /* The switch - the box around the slider */
