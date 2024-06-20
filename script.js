@@ -36,8 +36,9 @@ let VIDEO = new Whammy.Video(33);
 let MAG_VIDEO = [new Whammy.Video(33), new Whammy.Video(33), new Whammy.Video(33)];
 var CURRENTLY_RECORDING = false;
 var RECORDING = document.getElementById('recording');
-let MAG_RECORDING = [document.getElementById('recordingM1'), document.getElementById('recordingM2'), document.getElementById('recordingM3')]
+let MAG_RECORDING = [document.getElementById('recordingM1'), document.getElementById('recordingM2'), document.getElementById('recordingM3')];
 var DOWNLOAD_BUTTON = document.getElementById('downloadButton');
+let MAG_DOWNLOAD_BUTTON = [document.getElementById('downloadButtonM1'), document.getElementById('downloadButtonM2'), document.getElementById('downloadButtonM3')];
 var STATUS_ELEMENT = document.getElementById('status');
 var numCapturedFrames = 0;
 
@@ -746,6 +747,7 @@ function stopRecording() {
   for(let i = 0; i < MAG_VIDEO.length; ++i) {
     MAG_VIDEO[i].compile(false, function (output) {
       MAG_RECORDING[i].src = URL.createObjectURL(output);
+      MAG_DOWNLOAD_BUTTON[i].href = MAG_RECORDING[i].src;
       displayStatus('Recording complete.');
     });
 
