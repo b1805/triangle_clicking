@@ -131,7 +131,6 @@ body.dark-mode h2 {
 body.dark-mode label {
   color: #ffffff;
 }
-
 body.dark-mode #startAnimButton, 
 body.dark-mode #stopAnimButton, 
 body.dark-mode #startRecButton, 
@@ -139,7 +138,6 @@ body.dark-mode #stopRecButton,
 body.dark-mode #startAllButton {
   background-color: rgb(81, 255, 81);
 }
-
 body.dark-mode #startAnimButton:hover, 
 body.dark-mode #stopAnimButton:hover, 
 body.dark-mode #startRecButton:hover, 
@@ -147,17 +145,14 @@ body.dark-mode #stopRecButton:hover,
 body.dark-mode #startAllButton:hover {
   background-color: #a3ff91;
 }
-
 body.dark-mode #createShapeButton, 
 body.dark-mode #advancedSpeedButton {
   background-color: #ff5555;
 }
-
 body.dark-mode #createShapeButton:hover, 
 body.dark-mode #advancedSpeedButton:hover {
   background-color: rgb(255, 158, 158);
 }
-
 
 /*For Dark Mode Pill: */
 /* The switch - the box around the slider */
