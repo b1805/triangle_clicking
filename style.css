@@ -109,35 +109,35 @@ input[type=checkbox] {
 
 /*For Dark Mode Style*/
 body.dark-mode {
-  background-color: #121212;
+  background-color: #140c14;
   color: #ffffff;
 }
 body.dark-mode .container {
-  background-color: #1e1e1e;
+  background-color: #463144;
 }
 body.dark-mode button {
-  background-color: #bbbbff;
-  color: #ffffff;
+  background-color: #DE8FE0;
+  color: #463144;
 }
 body.dark-mode button:hover {
-  background-color: #555555;
+  background-color: #D8A6D9;
 }
 body.dark-mode h1 {
   color: #ff5555;
 }
 body.dark-mode h2 {
-  color: #bbbbff;
+  color: #DE8FE0;
 }
 body.dark-mode label {
   color: #ffffff;
 }
-/*
+
 body.dark-mode #startAnimButton, 
 body.dark-mode #stopAnimButton, 
 body.dark-mode #startRecButton, 
 body.dark-mode #stopRecButton, 
 body.dark-mode #startAllButton {
-  background-color: lightgreen;
+  background-color: rgb(81, 255, 81);
 }
 
 body.dark-mode #startAnimButton:hover, 
@@ -145,19 +145,19 @@ body.dark-mode #stopAnimButton:hover,
 body.dark-mode #startRecButton:hover, 
 body.dark-mode #stopRecButton:hover, 
 body.dark-mode #startAllButton:hover {
-  background-color: #bcdfb5;
+  background-color: #a3ff91;
 }
 
 body.dark-mode #createShapeButton, 
 body.dark-mode #advancedSpeedButton {
-  background-color: rgb(255, 158, 158);
+  background-color: #ff5555;
 }
 
 body.dark-mode #createShapeButton:hover, 
 body.dark-mode #advancedSpeedButton:hover {
-  background-color: rgb(120, 86, 86);
+  background-color: rgb(255, 158, 158);
 }
-*/
+
 
 /*For Dark Mode Pill: */
 /* The switch - the box around the slider */
