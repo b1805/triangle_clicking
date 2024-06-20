@@ -688,7 +688,7 @@ function drawBounds() {
   BOUNDARIES.forEach(lineSeg => {
     let isPartition = false;
     PARTITIONS.forEach(part => {isPartition = (isPartition || part.equals(lineSeg))})
-    if(!isPartition) drawLine(lineSeg.x1, lineSeg.y1, lineSeg.x2, lineSeg.y2, WALL_COLOR, 10);
+    if(!(isPartition && SHOW_PART)) drawLine(lineSeg.x1, lineSeg.y1, lineSeg.x2, lineSeg.y2, WALL_COLOR, 10);
   });
   // Takes all the points from the COORDS array and draws a circle at them
   COORDS.forEach(coord => {drawCircle(coord[0], coord[1], 5, WALL_COLOR)});
