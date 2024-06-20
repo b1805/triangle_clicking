@@ -242,7 +242,8 @@ class Photon {
     }
   }
 
-  // Raycast the photon forward to see if it will collide, or rather intersect, with a line segment this frame
+  
+  // Raycast the photon forward to see if it will intersect with a line segment this frame
   checkCollision(line) {
     //console.log("Photon coords: x =", this.x, "y =", this.y);
     //console.log("checking for intersection with ");
@@ -263,18 +264,39 @@ class Photon {
     const p = new Vector(this.x, this.y); // Position Vector of photon
     const v = this.vecDirRemaining; // Direction Vector of photon
 
+    const aSUBp = a.sub(p);
+
+    // We treat line segments of length 0 as points.
+    if(b.mag == 0) {
+      const proj = aSUBp.projOnto(v);
+      const ortho = aSUBp.sub(proj);
+      const s = proj.mag;
+      const t = ortho.mag; // Distance point is from the line that is the trajectory of the photon
+      if(s < 0 - edge_eps || s > 1 + edge_eps) {
+          return null;
+      }
+      if(Math.abs(t) > CORNER_EPS) {
+          return null;
+      }
+      return {
+          l : line,
+          intersection : a,
+          photonScalar : s,
+          lineScalar : t,
+          onCorner : true 
+      }
+    }
+
     const vCROSSb = v.cross(b); 
     //console.log("vCROSSb =",vCROSSb);
     if(0 - edge_eps <= vCROSSb && vCROSSb <= 0 + edge_eps) {
         return null;
     }
-    const aSUBp = a.sub(p);
     const s = aSUBp.cross(b) / vCROSSb;  
     const t = aSUBp.cross(v) / vCROSSb;  
     //console.log("s =", s);
     //console.log("t =", t);
     if(s < 0 - edge_eps || s > 1 + edge_eps) {
-        
         return null;
     }
     if(t <= 0 - edge_eps || t >= 1 + edge_eps) {

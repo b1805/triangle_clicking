@@ -697,6 +697,8 @@ function drawBounds() {
 function drawPartitions() {
   if(!SHOW_PART) return;
   PARTITIONS.forEach(part => drawLine(part.x1, part.y1, part.x2, part.y2, PART_COLOR, 3));
+  PARTITIONS.forEach(part => drawCircle(part.x1, part.y1, 1.5, PART_COLOR));
+  PARTITIONS.forEach(part => drawCircle(part.x2, part.y2, 1.5, PART_COLOR));
 }
 
 // Recording:
