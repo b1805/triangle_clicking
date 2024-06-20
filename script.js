@@ -32,9 +32,11 @@ let COORDS = [];
 var PHOTONS = [];
 var RENDER_INTERVAL;
 
-var VIDEO = new Whammy.Video(33);
+let VIDEO = new Whammy.Video(33);
+let MAG_VIDEO = [new Whammy.Video(33), new Whammy.Video(33), new Whammy.Video(33)];
 var CURRENTLY_RECORDING = false;
 var RECORDING = document.getElementById('recording');
+let MAG_RECORDING = [document.getElementById('recordingM1'), document.getElementById('recordingM3'), document.getElementById('recordingM3')]
 var DOWNLOAD_BUTTON = document.getElementById('downloadButton');
 var STATUS_ELEMENT = document.getElementById('status');
 var numCapturedFrames = 0;
@@ -554,6 +556,11 @@ function updateScreen() {
   MAG_LIST.forEach(MAG => MAG.drawCenter());
   if (CURRENTLY_RECORDING) {
     VIDEO.add(CTX);
+    for(int i = 0; i < MAG_LIST.length; ++i) {
+      if(MAG_LIST[i].calculate) {
+        MAG_VIDEO[i].add(MAG_LIST[i].ctx);
+      }
+    }
     numCapturedFrames++;
     if (numCapturedFrames % 33 === 0) {
       const secs = numCapturedFrames / 33;
