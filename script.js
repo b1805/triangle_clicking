@@ -40,7 +40,7 @@ let MAG_RECORDING = [document.getElementById('recordingM1'), document.getElement
 var DOWNLOAD_BUTTON = document.getElementById('downloadButton');
 let MAG_DOWNLOAD_BUTTON = [document.getElementById('downloadButtonM1'), document.getElementById('downloadButtonM2'), document.getElementById('downloadButtonM3')];
 var STATUS_ELEMENT = document.getElementById('status');
-var numCapturedFrames = 0;
+var NUM_CAPTURED_FRAMES = 0;
 
 let lightSource = { x: 500, y: 400 };
 // For every mag canvas, we create a corresponding Magnifier which interacts with it
@@ -574,9 +574,9 @@ function updateScreen() {
         MAG_VIDEO[i].add(MAG_LIST[i].ctx);
       }
     }
-    numCapturedFrames++;
-    if (numCapturedFrames % 33 === 0) {
-      const secs = numCapturedFrames / 33;
+    NUM_CAPTURED_FRAMES++;
+    if (NUM_CAPTURED_FRAMES % 33 === 0) {
+      const secs = NUM_CAPTURED_FRAMES / 33;
       displayStatus(`Recording: captured ${secs} second(s) of film so far...`);
     }
   }
@@ -725,6 +725,9 @@ function drawPartitions() {
 
 // Recording:
 function startRecording() {
+  VIDEO = new Whammy.Video(33);
+  MAG_VIDEO = [new Whammy.Video(33), new Whammy.Video(33), new Whammy.Video(33)];
+  NUM_CAPTURED_FRAMES = 0;
   if (CURRENTLY_RECORDING) {
     return;
   }
