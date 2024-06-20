@@ -736,6 +736,7 @@ function drawBounds() {
   COORDS.forEach(coord => {drawCircle(coord[0], coord[1], 5, WALL_COLOR)});
 }
 
+// Draws the partitions
 function drawPartitions() {
   if(!SHOW_PART) return;
   PARTITIONS.forEach(part => drawLine(part.x1, part.y1, part.x2, part.y2, PART_COLOR, 3));
