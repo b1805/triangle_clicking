@@ -201,11 +201,11 @@ body.dark-mode #mouse_coords {
 }
 
 input:checked + .slider2 {
-  background-color: #2196F3;
+  background-color: #DE8FE0;
 }
 
 input:focus + .slider2 {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #DE8FE0;
 }
 
 input:checked + .slider2:before {
