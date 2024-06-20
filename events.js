@@ -11,6 +11,7 @@ MAG_DIV_LIST.forEach(mag_div => {
     }
   }
 );
+
 // Stop dragging when mouse released
 document.onmouseup = () => {
   console.log("Pointer Up");
@@ -42,6 +43,7 @@ canvas.onmousemove = (mouseEvent) => {
   mouse_coords.style.left = mouseEvent.clientX + 'px';
   mouse_coords.style.bottom = (window.innerHeight + 17.5 - mouseEvent.clientY) + 'px';
 }
+
 // Hide coords when mouse leaves canvas
 canvas.onmouseleave = () => {
   const mouse_coords = document.getElementById("mouse_coords");
