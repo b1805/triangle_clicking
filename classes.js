@@ -40,11 +40,11 @@ class Magnifier {
       [this.mag[0] + this.magSide / 2, this.mag[1] - this.magSide / 2],
     ];
   }
+
   // Map a position vector to the magnified virtual canvas
   map(pos) {
     return pos.mult(this.scale).add(this.translation);
   }
-
 
   // Mark the center of the magnification box.
   drawCenter(color = MAG_POINT_COLOR, radius = 3) {
@@ -55,6 +55,7 @@ class Magnifier {
     this.ctx.fill();
 
   }
+
   // Draw a line from the main canvas onto the magnified canvas
   drawLine(x1, y1, x2, y2, color, width = 100) {
     if(!this.calculate) return;
@@ -79,15 +80,16 @@ class Magnifier {
     this.ctx.arc(pos.x, pos.y, Math.max(1.5*radius,1.5), 0, 2 * Math.PI);
     this.ctx.fill();
   }
+
   clearCanvas(BACKGROUND_COLOR) {
     this.ctx.clearRect(0, 0, this.magViewSide, this.magViewSide);
     this.ctx.fillStyle = BACKGROUND_COLOR;
     this.ctx.fillRect(0, 0, this.magViewSide, this.magViewSide);
   }
+
   // Maps the trangle grid to the magnifier
   drawTriangles(triangles, BACKGROUND_COLOR, WALL_COLOR) {
     this.ctx.lineWidth = 0.5
-
     this.ctx.strokeStyle = WALL_COLOR;
     triangles.forEach(triangle => {
       // Mat the coordinates of the vertices in the original grid to the magnifier
@@ -162,7 +164,6 @@ class Vector {
 }
 
 // Represents a line segment in 2D space
-//
 class LineSegment {
   constructor(x1, y1, x2, y2) {
     this.x1 = x1;
@@ -176,6 +177,7 @@ class LineSegment {
     this.normal = this.normal.mult(this.normal.norm);
     this.lastBounce = -1; // ID of the last reflected wall.
   }
+
   equals(line2) {
     if(line2 == null) {
       return false;
@@ -184,6 +186,7 @@ class LineSegment {
     let two = this.x1 == line2.x2 && this.x2 == line2.x1 && this.y1 == line2.y2 && this.y2 == line2.y1;
     return (one || two);
   }
+
   merge(line2) {
     if(this.equals(line2) || (this.dy * line2.dx != line2.dy * this.dx)) {
       return false
@@ -242,7 +245,6 @@ class Photon {
     }
   }
 
-  
   // Raycast the photon forward to see if it will intersect with a line segment this frame
   checkCollision(line) {
     //console.log("Photon coords: x =", this.x, "y =", this.y);
@@ -263,7 +265,6 @@ class Photon {
     const b = new Vector(line.dx, line.dy); // Direction Vector of line segment (a + b is the other endpoint)
     const p = new Vector(this.x, this.y); // Position Vector of photon
     const v = this.vecDirRemaining; // Direction Vector of photon
-
     const aSUBp = a.sub(p);
 
     // We treat line segments of length 0 as points.
@@ -313,7 +314,6 @@ class Photon {
         lineScalar : t,
         onCorner : oc
     }
-
   }
 
   // Recalculates the direction of the photon based on the normal vector to a

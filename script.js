@@ -27,7 +27,7 @@ let CORNER_EPS = 0.01; // Radius of the epsilon ball around each corner for coll
 let TRIANGLES = [];
 let SELECTED_TRIANGLES = [];
 let BOUNDARIES = [];
-let PARTITIONS = [new LineSegment(400, 400, 400, 300)]; // Hardcoded partitions
+let PARTITIONS = [];
 let COORDS = [];
 var PHOTONS = [];
 var RENDER_INTERVAL;
@@ -52,7 +52,6 @@ let MAG_LIST = MAG_CANVAS_LIST.map(mag_canvas =>
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
 }
-
 
 // Displays the grid when you first open the program
 function initialize() {
@@ -83,7 +82,11 @@ function changeEpsilon() {
   console.log(CORNER_EPS);
 }
 
-// Turns the mag box on and off
+// Orginally intended functionailty: Turns the mag box on and off
+//
+// Current functionailty: Show or hide the magnification boxes, 
+// magnification coordinates and magnification recording boxes 
+// depending on the number of magnification boxes
 function turnMagOnOff() {
   const num = parseInt(document.getElementById("magOnOffInput").value);
   for(let i in MAG_LIST) {
@@ -96,8 +99,12 @@ function turnMagOnOff() {
       MAG_DIV_LIST[i].style.display = 'none';
     }
   }
-  // Show or hide the magnification coordinates depending on the number of MAG box
+  // Show or hide the magnification boxes, magnification coordinates and
+  // magnification recording boxes depending on the number of magnification boxes
   if (num === 0) {
+    MAG_DOWNLOAD_BUTTON[0].style.visibility = 'hidden';
+    MAG_DOWNLOAD_BUTTON[1].style.visibility = 'hidden';
+    MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
     MAG_RECORDING[0].style.visibility = 'hidden';
     MAG_RECORDING[1].style.visibility = 'hidden';
     MAG_RECORDING[2].style.visibility = 'hidden';
@@ -115,6 +122,9 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 1) {
+    MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[1].style.visibility = 'hidden';
+    MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
     MAG_RECORDING[0].style.visibility = 'visible';
     MAG_RECORDING[1].style.visibility = 'hidden';
     MAG_RECORDING[2].style.visibility = 'hidden';
@@ -132,6 +142,9 @@ function turnMagOnOff() {
     magBoxXInput3.style.display = 'none';
     magBoxYInput3.style.display = 'none';
   } else if (num === 2) {
+    MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[1].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
     MAG_RECORDING[0].style.visibility = 'visible';
     MAG_RECORDING[1].style.visibility = 'visible';
     MAG_RECORDING[2].style.visibility = 'hidden';
@@ -150,6 +163,9 @@ function turnMagOnOff() {
     magBoxYInput3.style.display = 'none';
   }
   else if (num === 3) {
+    MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[1].style.visibility = 'visible';
+    MAG_DOWNLOAD_BUTTON[2].style.visibility = 'visible';
     MAG_RECORDING[0].style.visibility = 'visible';
     MAG_RECORDING[1].style.visibility = 'visible';
     MAG_RECORDING[2].style.visibility = 'visible';
@@ -170,10 +186,12 @@ function turnMagOnOff() {
   updateScreen();
 }
 
+//Turns Partition/Post on and off
 function turnPartitionOnOff() {
   const num = parseInt(document.getElementById("partitionOnOffInput").value);
   if (num === 0) {
-    SHOW_PART = false;
+    SHOW_PART = false; //Turns Partition/Post off
+    // Hides the partition coordinates table:
     partNote.style.visibility = 'hidden';
     part.style.visibility = 'hidden';
     partButton.style.visibility = 'hidden';
@@ -186,7 +204,8 @@ function turnPartitionOnOff() {
     partBoxXInput2.style.display = 'none';
     partBoxYInput2.style.display = 'none';
   } else if (num === 1) {
-    SHOW_PART = true;
+    SHOW_PART = true; //Turns Partition/Post on
+    // Shows the partition coordinates table:
     partNote.style.visibility = 'visible';
     part.style.visibility = 'visible';
     partButton.style.visibility = 'visible';
@@ -199,7 +218,7 @@ function turnPartitionOnOff() {
     partBoxXInput2.style.display = 'inline';
     partBoxYInput2.style.display = 'inline';
   }
-  createShape();
+  createShape(); // Update canvas with new coordinates
 }
 
 // Turns the mouse coordinates on and off
@@ -235,6 +254,7 @@ function changeMagBoxCoordinates() {
   drawTriangles(); // Update canvas with new coordinates
 }
 
+// Changes the coordinates of Partition/Post
 function changePartitionCoordinates() {
   x1 = parseInt(document.getElementById("partBoxXInput1").value);
   y1 = parseInt(document.getElementById("partBoxYInput1").value);
@@ -716,6 +736,7 @@ function drawBounds() {
   COORDS.forEach(coord => {drawCircle(coord[0], coord[1], 5, WALL_COLOR)});
 }
 
+// Draws the partitions
 function drawPartitions() {
   if(!SHOW_PART) return;
   PARTITIONS.forEach(part => drawLine(part.x1, part.y1, part.x2, part.y2, PART_COLOR, 3));
