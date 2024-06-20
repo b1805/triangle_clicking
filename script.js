@@ -731,6 +731,13 @@ function stopRecording() {
     DOWNLOAD_BUTTON.href = RECORDING.src;
     displayStatus('Recording complete.');
   });
+  for(let i = 0; i < MAG_VIDEO.length; ++i) {
+    MAG_VIDEO[i].compile(false, function (output) {
+      MAG_RECORDING[i].src = URL.createObjectURL(output);
+      displayStatus('Recording complete.');
+    });
+
+  }
 }
 
 // Recording Status
