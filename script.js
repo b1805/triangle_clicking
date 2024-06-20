@@ -159,6 +159,7 @@ function turnPartitionOnOff() {
   const num = parseInt(document.getElementById("partitionOnOffInput").value);
   if (num === 0) {
     SHOW_PART = false;
+    partNote.style.visibility = 'hidden';
     part.style.visibility = 'hidden';
     partButton.style.visibility = 'hidden';
     partX.style.visibility = 'hidden';
@@ -171,6 +172,7 @@ function turnPartitionOnOff() {
     partBoxYInput2.style.display = 'none';
   } else if (num === 1) {
     SHOW_PART = true;
+    partNote.style.visibility = 'visible';
     part.style.visibility = 'visible';
     partButton.style.visibility = 'visible';
     partX.style.visibility = 'visible';

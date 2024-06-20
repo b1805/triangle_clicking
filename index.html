@@ -90,7 +90,7 @@ SOFTWARE. -->
             </div>
             <p> </p>
             <div>
-              <label for="partitionOnOffInput">Enable Partition
+              <label for="partitionOnOffInput">Enable Partition/Post
               <select id="partitionOnOffInput">
                   <option selected value="0">Off</option>
                   <option value="1">On</option>
@@ -223,7 +223,7 @@ SOFTWARE. -->
             </table>
             <p> </p>
             <button id="magButton" onclick="changeMagBoxCoordinates()">Apply Coordinates</button>
-            <h2 id="part">Partition Coordinates</h2>
+            <h2 id="part">Partition/Post Coordinates</h2>
             <table>
               <tr>
                 <th> </th>
@@ -241,7 +241,7 @@ SOFTWARE. -->
                 <td><input type="number" id="partBoxYInput2" min="1" max="1000" value="500"></td>
               </tr>
             </table>
-            <p> </p>
+            <p id = "partNote"><b>Note: To make a post, simply make points 1 and 2 same.</b></p>
             <button id="partButton" onclick="changePartitionCoordinates()">Apply Coordinates</button>
         </div>
     </div>
