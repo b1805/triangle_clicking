@@ -128,10 +128,10 @@ class Magnifier {
         this.ctx.strokeStyle = 'black';
         this.ctx.fill(path);
       }
-      if(BACKGROUND_COLOR == "#000000") this.ctx.globalAlpha = 0.0;
+      if(BACKGROUND_COLOR == "#000000") this.ctx.globalAlpha = 0.0; // To remove the grid lines while recording
       this.ctx.stroke(path);
       this.ctx.strokeStyle = WALL_COLOR;
-      this.ctx.globalAlpha = 1;
+      this.ctx.globalAlpha = 1; // Change it to default after done
     });
     this.drawCenter();
   }

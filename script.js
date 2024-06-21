@@ -418,10 +418,10 @@ function drawTriangles() {
       CTX.strokeStyle = 'black';
       CTX.fill(triangle.path);
     }
-    if(BACKGROUND_COLOR == "#000000") CTX.globalAlpha = 0.0;
+    if(BACKGROUND_COLOR == "#000000") CTX.globalAlpha = 0.0; // To remove the grid lines while recording
     CTX.stroke(triangle.path);
     CTX.strokeStyle = WALL_COLOR;
-    CTX.globalAlpha = 1;
+    CTX.globalAlpha = 1; // Change it to default after done
   });
   MAG_LIST.forEach(MAG => drawMagBox(MAG, MAG_COLOR));
   MAG_LIST.forEach(MAG => MAG.drawTriangles(TRIANGLES, BACKGROUND_COLOR, WALL_COLOR));
