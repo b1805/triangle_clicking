@@ -27,7 +27,7 @@ const MAG_CANVAS_LIST = [document.getElementById('mag_canvas_1'), document.getEl
 const CTX = CANVAS.getContext('2d', { willReadFrequently: true }); // Canvas contexts are used to draw on and read from
 
 // Style values
-const BACKGROUND_COLOR = '#FFFFFF';
+let BACKGROUND_COLOR = '#FFFFFF';
 let WALL_COLOR = '#FFA914';
 let PART_COLOR = '#FF0000';
 let SHOW_PART = true;
@@ -102,6 +102,18 @@ function applyColors() {
 function changeEpsilon() {
   CORNER_EPS = parseFloat(document.getElementById("epsilonInput").value);
   console.log(CORNER_EPS);
+}
+
+// Get rid of the grid lines and make the background black
+function blackbackground() {
+  bool = document.getElementById("backgroundInput").value;
+  if (bool == 1) {
+  BACKGROUND_COLOR = "#000000";
+  }
+  else if (bool == 0) {
+    BACKGROUND_COLOR = "#FFFFFF";
+  }
+  updateScreen();
 }
 
 // Orginally intended functionailty: Turns the mag box on and off
@@ -406,8 +418,10 @@ function drawTriangles() {
       CTX.strokeStyle = 'black';
       CTX.fill(triangle.path);
     }
+    if(BACKGROUND_COLOR == "#000000") CTX.globalAlpha = 0.0;
     CTX.stroke(triangle.path);
     CTX.strokeStyle = WALL_COLOR;
+    CTX.globalAlpha = 1;
   });
   MAG_LIST.forEach(MAG => drawMagBox(MAG, MAG_COLOR));
   MAG_LIST.forEach(MAG => MAG.drawTriangles(TRIANGLES, BACKGROUND_COLOR, WALL_COLOR));
@@ -466,7 +480,7 @@ function pruneRepeatedBounds() {
     }
     existingBounds.push(lineSeg);
   });
-  console.log("Exisiting Bounds:", existingBounds);
+  console.log("Existing Bounds:", existingBounds);
   console.log("Internal Bounds:", internalBounds);
   let goodBounds = new Array();
   BOUNDARIES.forEach(lineSeg => {

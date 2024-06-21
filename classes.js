@@ -99,7 +99,7 @@ class Magnifier {
     const pos = this.map(new Vector(x, y));
     this.ctx.beginPath();
     this.ctx.fillStyle = color; 
-    this.ctx.arc(pos.x, pos.y, Math.max(1.5*radius,1.5), 0, 2 * Math.PI);
+    this.ctx.arc(pos.x, pos.y, Math.max(radius,1.5), 0, 2 * Math.PI);
     this.ctx.fill();
   }
 
@@ -128,8 +128,10 @@ class Magnifier {
         this.ctx.strokeStyle = 'black';
         this.ctx.fill(path);
       }
+      if(BACKGROUND_COLOR == "#000000") this.ctx.globalAlpha = 0.0;
       this.ctx.stroke(path);
       this.ctx.strokeStyle = WALL_COLOR;
+      this.ctx.globalAlpha = 1;
     });
     this.drawCenter();
   }

@@ -273,6 +273,14 @@ SOFTWARE. -->
   <h2 id="recordingHeader">Recording</h2>
   </div>
   <div>
+    <label for="backgroundInput">Remove Background for Recording
+      <select id="backgroundInput">
+          <option selected value="0">Off</option>
+          <option value="1">On</option>
+    </select>
+    <button onclick="blackbackground()">Apply</button></label>
+  </div>
+  <div>
     <button id="startRecButton" onclick="startRecording()">Start Recording</button>
     <button id="stopRecButton" onclick="stopRecording()">Stop Recording</button>
     <button id="startAllButton" onclick="startAnimationAndRecording()">Start Animation and Recording</button>

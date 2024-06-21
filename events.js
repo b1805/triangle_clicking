@@ -27,7 +27,6 @@ let offsetY = 0;
 MAG_DIV_LIST.forEach(mag_div => {
     mag_div.onmousedown = (event) => {
       draggable = mag_div;
-      console.log("Pointer Down");
       offsetX = event.offsetX;
       offsetY = event.offsetY;
     }
@@ -36,7 +35,6 @@ MAG_DIV_LIST.forEach(mag_div => {
 
 // Stop dragging when mouse released
 document.onmouseup = () => {
-  console.log("Pointer Up");
   draggable = null;
 }
 
