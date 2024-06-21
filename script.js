@@ -101,7 +101,7 @@ function applyColors() {
 // Changes Epsilon Value
 function changeEpsilon() {
   CORNER_EPS = parseFloat(document.getElementById("epsilonInput").value);
-  console.log(CORNER_EPS);
+  //console.log(CORNER_EPS);
 }
 
 // Get rid of the grid lines and make the background black
