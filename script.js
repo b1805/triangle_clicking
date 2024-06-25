@@ -84,6 +84,9 @@ function initialize() {
   turnPartitionOnOff();
   drawLightSource();
   changePartitionCoordinates();
+  document.getElementById('saveButton').addEventListener('click', saveShape);
+  document.getElementById('loadButton').addEventListener('click', () => document.getElementById('loadInput').click());
+  document.getElementById('loadInput').addEventListener('change', loadShape);
 }
 
 // Changes colors
@@ -351,6 +354,53 @@ function changeNumberTriangles(){
   console.log(TRIANGLE_SIDE);
 }
 
+// Function to save selected triangles to a file
+function saveShape() {
+  const shapes = SELECTED_TRIANGLES.map(triangle => {
+      return {
+          point1: triangle.point1,
+          point2: triangle.point2,
+          point3: triangle.point3
+      };
+  });
+  const data = JSON.stringify(shapes);
+  const blob = new Blob([data], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'shapes.txt';
+  a.click();
+}
+
+// Function to load selected triangles from a file
+function loadShape(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+      const content = e.target.result;
+      const shapes = JSON.parse(content);
+
+      SELECTED_TRIANGLES = shapes.map(shape => {
+          const triangle = new Path2D();
+          triangle.moveTo(shape.point1.x, shape.point1.y);
+          triangle.lineTo(shape.point2.x, shape.point2.y);
+          triangle.lineTo(shape.point3.x, shape.point3.y);
+          triangle.closePath();
+          return {
+              path: triangle,
+              selected: true,
+              point1: shape.point1,
+              point2: shape.point2,
+              point3: shape.point3
+          };
+      });
+
+      createShape();
+  };
+  reader.readAsText(file);
+}
+
 // Function to make the grid of triangles
 function createTriangleGrid() {
   const triangleSize = TRIANGLE_SIDE;
@@ -413,7 +463,7 @@ function drawTriangles() {
   // then we draw the triangles, and lastly we draw the mag box
   drawBounds();
   TRIANGLES.forEach(triangle => {
-    if (triangle.selected) {
+    if (SELECTED_TRIANGLES.includes(triangle)) {
       CTX.fillStyle = 'black';
       CTX.strokeStyle = 'black';
       CTX.fill(triangle.path);
