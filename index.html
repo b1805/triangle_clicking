@@ -150,10 +150,14 @@ SOFTWARE. -->
               <label>Active Photons: <span id="activePhotonCount">0</span></label>
             </div>
             <div>
-              <h2>Save & Load Shape</h2>
+              <h2>Save & Load</h2>
               <button id="saveButton" onclick="saveShape()">Save Shape</button>
               <button id="loadButton" onclick="loadShape(document.getElementById('loadInput').files[0])">Load Shape</button>
               <input type="file" id="loadInput">
+              <p> </p>
+              <button id="saveSettingsButton" onclick="saveSettings()">Save Settings</button>
+              <button id="loadSettingsButton" onclick="loadSettings(document.getElementById('loadSettingsInput').files[0])">Load Settings</button>
+              <input type="file" id="loadSettingsInput">
             </div>
             <p> </p>
             <h2>Animation</h2>

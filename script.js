@@ -396,6 +396,14 @@ function loadShape(file) {
   reader.readAsText(file);
 }
 
+// Function to save selected settings (globals values) to a file
+function saveSettings() {
+}
+
+// Function to load selected settings (globals values) from a file
+function loadSettings(file) {
+}
+
 // Function to make the grid of triangles
 function createTriangleGrid() {
   const triangleSize = TRIANGLE_SIDE;
