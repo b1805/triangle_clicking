@@ -362,15 +362,21 @@ function saveShape() {
   });
   const data = JSON.stringify(shapes);
   const blob = new Blob([data], { type: 'text/plain' });
+
+  // Prompt the user to enter a filename
+  let filename = prompt("Enter the filename:", "shape.txt");
+  if (filename === null || filename.trim() === "") {
+    filename = "shape.txt"; // Default filename if user cancels or enters an empty name
+  }
+
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'shapes.txt';
+  a.download = filename;
   a.click();
 }
 
 // Function to load selected triangles from a file
 function loadShape(file) {
-  //const file = event.target.files[0];
   if (!file) return;
 
   const reader = new FileReader();
