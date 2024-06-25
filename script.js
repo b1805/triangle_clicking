@@ -398,10 +398,69 @@ function loadShape(file) {
 
 // Function to save selected settings (globals values) to a file
 function saveSettings() {
+  const settings = {
+    TRIANGLE_SIDE: TRIANGLE_SIDE,
+    NUMBER_LIGHT_RAYS: NUMBER_LIGHT_RAYS,
+    CORNER_EPS: CORNER_EPS,
+    //mousecoords
+    //partitions
+    SPEED_TIMES_TEN: SPEED_TIMES_TEN,
+    //magboxnum
+    //magnification
+    WALL_COLOR: WALL_COLOR,
+    PHOTON_HEAD_COLOR: PHOTON_HEAD_COLOR,
+    PHOTON_TAIL_COLOR: PHOTON_TAIL_COLOR,
+    MAG_COLOR: MAG_COLOR,
+    LIGHT_SOURCE_COLOR: LIGHT_SOURCE_COLOR,
+    MAG_POINT_COLOR: MAG_POINT_COLOR,
+    //lightsourcecoords
+    //magboxcoords
+    //partitioncoords
+  };
+  const data = JSON.stringify(settings);
+  const blob = new Blob([data], { type: 'text/plain' });
+
+  // Prompt the user to enter a filename
+  let filename = prompt("Enter the filename:", "setting.txt");
+  if (filename === null || filename.trim() === "") {
+    filename = "setting.txt"; // Default filename if user cancels or enters an empty name
+  }
+
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
 }
 
 // Function to load selected settings (globals values) from a file
 function loadSettings(file) {
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+      const content = e.target.result;
+      const setting = JSON.parse(content);
+
+      TRIANGLE_SIDE = setting.TRIANGLE_SIDE;
+      NUMBER_LIGHT_RAYS = setting.NUMBER_LIGHT_RAYS;
+      CORNER_EPS = setting.CORNER_EPS;
+      //mousecoords
+      //partitions
+      SPEED_TIMES_TEN = setting.SPEED_TIMES_TEN;
+      //magboxnum
+      //magnification
+      WALL_COLOR = setting.WALL_COLOR;
+      PHOTON_HEAD_COLOR = setting.PHOTON_HEAD_COLOR;
+      PHOTON_TAIL_COLOR = setting.PHOTON_TAIL_COLOR;
+      MAG_COLOR = setting.MAG_COLOR;
+      LIGHT_SOURCE_COLOR = setting.LIGHT_SOURCE_COLOR;
+      MAG_POINT_COLOR = setting.MAG_POINT_COLOR;
+      //lightsourcecoords
+      //magboxcoords
+      //partitioncoords
+  };
+  updateScreen();
+  reader.readAsText(file);
 }
 
 // Function to make the grid of triangles
