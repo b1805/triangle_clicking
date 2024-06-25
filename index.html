@@ -149,6 +149,12 @@ SOFTWARE. -->
               <h2>Photon Counter</h2>
               <label>Active Photons: <span id="activePhotonCount">0</span></label>
             </div>
+            <div>
+              <h2>Save & Load Shape</h2>
+              <button id="saveButton" onclick="saveShape()">Save Shape</button>
+              <button id="loadButton" onclick="document.getElementById('loadInput').click()">Load Shape</button>
+              <input type="file" id="loadInput" onchange="loadShape(event)">
+            </div>
             <p> </p>
             <h2>Animation</h2>
             <label>Note: Select Triangles using left mouse click, 

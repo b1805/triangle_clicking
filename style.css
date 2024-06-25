@@ -92,18 +92,18 @@ label {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
 }
-#startAnimButton, #stopAnimButton, #startRecButton, #stopRecButton, #startAllButton {
+#startAnimButton, #stopAnimButton, #startRecButton, #stopRecButton, #startAllButton, #saveButton {
   background-color: #42b72a;
   margin-top: 10px;
 }
-#startAnimButton:hover, #stopAnimButton:hover, #startRecButton:hover, #stopRecButton:hover, #startAllButton:hover {
+#startAnimButton:hover, #stopAnimButton:hover, #startRecButton:hover, #stopRecButton:hover, #startAllButton:hover, #saveButton:hover {
   background-color: #339a1e;
 }
-#createShapeButton, #advancedSpeedButton {
+#createShapeButton, #advancedSpeedButton, #loadButton {
   background-color: rgb(253, 60, 60);
   margin-top: 10px;
 }
-#createShapeButton:hover, #advancedSpeedButton:hover {
+#createShapeButton:hover, #advancedSpeedButton:hover, #loadButton:hover {
   background-color: darkred;
   margin-top: 10px;
 }
@@ -118,15 +118,15 @@ input[type=checkbox] {
 }
 #mag_viewer_1 {
   left: 1020px;
-  top: 1125px;
+  top: 1190px;
 }
 #mag_viewer_2 {
   left: 1020px;
-  top: 1370px;
+  top: 1435px;
 }
 #mag_viewer_3 {
   left: 1020px;
-  top: 1615px;
+  top: 1680px;
 }
 
 /*For Dark Mode Style*/
@@ -157,22 +157,26 @@ body.dark-mode #startAnimButton,
 body.dark-mode #stopAnimButton, 
 body.dark-mode #startRecButton, 
 body.dark-mode #stopRecButton, 
-body.dark-mode #startAllButton {
+body.dark-mode #startAllButton,
+body.dark-mode #saveButton {
   background-color: rgb(81, 255, 81);
 }
 body.dark-mode #startAnimButton:hover, 
 body.dark-mode #stopAnimButton:hover, 
 body.dark-mode #startRecButton:hover, 
 body.dark-mode #stopRecButton:hover, 
-body.dark-mode #startAllButton:hover {
+body.dark-mode #startAllButton:hover,
+body.dark-mode #saveButton:hover {
   background-color: #a3ff91;
 }
 body.dark-mode #createShapeButton, 
-body.dark-mode #advancedSpeedButton {
+body.dark-mode #advancedSpeedButton,
+body.dark-mode #loadButton {
   background-color: #ff5555;
 }
 body.dark-mode #createShapeButton:hover, 
-body.dark-mode #advancedSpeedButton:hover {
+body.dark-mode #advancedSpeedButton:hover,
+body.dark-mode #loadButton:hover {
   background-color: rgb(255, 158, 158);
 }
 body.dark-mode #mouse_coords {
