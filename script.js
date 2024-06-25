@@ -84,9 +84,6 @@ function initialize() {
   turnPartitionOnOff();
   drawLightSource();
   changePartitionCoordinates();
-  document.getElementById('saveButton').addEventListener('click', saveShape);
-  document.getElementById('loadButton').addEventListener('click', () => document.getElementById('loadInput').click());
-  document.getElementById('loadInput').addEventListener('change', loadShape);
 }
 
 // Changes colors
@@ -351,7 +348,7 @@ function changeNumberTriangles(){
   TRIANGLES = [];
   SELECTED_TRIANGLES = [];
   createTriangleGrid();
-  console.log(TRIANGLE_SIDE);
+  //console.log(TRIANGLE_SIDE);
 }
 
 // Function to save selected triangles to a file
@@ -372,8 +369,8 @@ function saveShape() {
 }
 
 // Function to load selected triangles from a file
-function loadShape(event) {
-  const file = event.target.files[0];
+function loadShape(file) {
+  //const file = event.target.files[0];
   if (!file) return;
 
   const reader = new FileReader();
@@ -382,21 +379,13 @@ function loadShape(event) {
       const shapes = JSON.parse(content);
 
       SELECTED_TRIANGLES = shapes.map(shape => {
-          const triangle = new Path2D();
-          triangle.moveTo(shape.point1.x, shape.point1.y);
-          triangle.lineTo(shape.point2.x, shape.point2.y);
-          triangle.lineTo(shape.point3.x, shape.point3.y);
-          triangle.closePath();
-          return {
-              path: triangle,
-              selected: true,
-              point1: shape.point1,
-              point2: shape.point2,
-              point3: shape.point3
-          };
+        // Itrates through the grid and select the triangles in the loaded file
+          const triangle = TRIANGLES.find((sTriangle) => (sTriangle.point1.x == shape.point1.x && sTriangle.point1.y == shape.point1.y && sTriangle.point2.x == shape.point2.x && sTriangle.point2.y == shape.point2.y && sTriangle.point3.x == shape.point3.x && sTriangle.point3.y == shape.point3.y))
+          triangle.selected = true;
+          return triangle;
       });
-
       createShape();
+      drawTriangles();
   };
   reader.readAsText(file);
 }

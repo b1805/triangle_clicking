@@ -152,8 +152,8 @@ SOFTWARE. -->
             <div>
               <h2>Save & Load Shape</h2>
               <button id="saveButton" onclick="saveShape()">Save Shape</button>
-              <button id="loadButton" onclick="document.getElementById('loadInput').click()">Load Shape</button>
-              <input type="file" id="loadInput" onchange="loadShape(event)">
+              <button id="loadButton" onclick="loadShape(document.getElementById('loadInput').files[0])">Load Shape</button>
+              <input type="file" id="loadInput">
             </div>
             <p> </p>
             <h2>Animation</h2>
