@@ -406,6 +406,7 @@ function saveSettings() {
     PART_BOOL: parseInt(document.getElementById("partitionOnOffInput").value),
     SPEED_TIMES_TEN: SPEED_TIMES_TEN,
     MAG_NUM: parseInt(document.getElementById("magOnOffInput").value),
+    MAG_RADIUS: parseFloat(document.getElementById("magBoxRadiusInput").value),
     WALL_COLOR: WALL_COLOR,
     PHOTON_HEAD_COLOR: PHOTON_HEAD_COLOR,
     PHOTON_TAIL_COLOR: PHOTON_TAIL_COLOR,
@@ -597,6 +598,11 @@ function loadSettings(file) {
         magBoxYInput3.style.display = 'inline';
       }
       document.getElementById("magOnOffInput").value = mag_num;
+
+      r = setting.MAG_RADIUS;
+      MAG_LIST.forEach(MAG => MAG.rescale(r));
+      PHOTON_RADIUS = r/(Math.sqrt(2));
+      document.getElementById("magBoxRadiusInput").value = r;
 
       WALL_COLOR = setting.WALL_COLOR;
       document.getElementById("wallColorInput").value = WALL_COLOR;
