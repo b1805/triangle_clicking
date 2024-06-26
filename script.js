@@ -412,9 +412,17 @@ function saveSettings() {
     MAG_COLOR: MAG_COLOR,
     LIGHT_SOURCE_COLOR: LIGHT_SOURCE_COLOR,
     MAG_POINT_COLOR: MAG_POINT_COLOR,
-    lightSource: lightSource
-    //magboxcoords
-    //partitioncoords
+    lightSource: lightSource,
+    mag_x1: parseInt(document.getElementById("magBoxXInput1").value),
+    mag_y1: parseInt(document.getElementById("magBoxYInput1").value),
+    mag_x2: parseInt(document.getElementById("magBoxXInput2").value),
+    mag_y2: parseInt(document.getElementById("magBoxYInput2").value),
+    mag_x3: parseInt(document.getElementById("magBoxXInput3").value),
+    mag_y3: parseInt(document.getElementById("magBoxYInput3").value),
+    part_x1: parseInt(document.getElementById("partBoxXInput1").value),
+    part_y1: parseInt(document.getElementById("partBoxYInput1").value),
+    part_x2: parseInt(document.getElementById("partBoxXInput2").value),
+    part_y2: parseInt(document.getElementById("partBoxYInput2").value)
   };
   const data = JSON.stringify(settings);
   const blob = new Blob([data], { type: 'text/plain' });
@@ -611,8 +619,35 @@ function loadSettings(file) {
       lightSource = setting.lightSource;
       document.getElementById("lightSourceXInput").value = lightSource.x;
       document.getElementById("lightSourceYInput").value = lightSource.y;
-      //magboxcoords
-      //partitioncoords
+      
+      x1 = setting.mag_x1;
+      y1 = setting.mag_y1;
+      MAG_LIST[0].moveMag(x1,y1);
+      x2 = setting.mag_x2;
+      y2 = setting.mag_y2;
+      MAG_LIST[1].moveMag(x2,y2);
+      x3 = setting.mag_x3;
+      y3 = setting.mag_y3;
+      MAG_LIST[2].moveMag(x3,y3);
+      drawTriangles(); // Update canvas with new coordinates
+      document.getElementById("magBoxXInput1").value = x1;
+      document.getElementById("magBoxXInput1").value = x2;
+      document.getElementById("magBoxXInput3").value = x3;
+      document.getElementById("magBoxYInput1").value = y1;
+      document.getElementById("magBoxYInput1").value = y2;
+      document.getElementById("magBoxYInput3").value = y3;
+
+      part_x1 = setting.part_x1;
+      part_y1 = setting.part_y1;
+      part_x2 = setting.part_x2;
+      part_y2 = setting.part_y2;
+      PARTITIONS = [new LineSegment(part_x1, part_y1, part_x2, part_y2)]
+      createShape(); // Update canvas with new coordinates
+      document.getElementById("partBoxXInput1").value = part_x1;
+      document.getElementById("partBoxXInput2").value = part_x2;
+      document.getElementById("partBoxYInput1").value = part_y1;
+      document.getElementById("partBoxYInput2").value = part_y2;
+
       TRIANGLES = [];
       SELECTED_TRIANGLES = [];
       createTriangleGrid();
