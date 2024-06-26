@@ -402,18 +402,17 @@ function saveSettings() {
     TRIANGLE_SIDE: TRIANGLE_SIDE,
     NUMBER_LIGHT_RAYS: NUMBER_LIGHT_RAYS,
     CORNER_EPS: CORNER_EPS,
-    //mousecoords
-    //partitions
+    mouseVisibilityCheckBox: mouseVisibilityCheckBox,
+    PART_BOOL: parseInt(document.getElementById("partitionOnOffInput").value),
     SPEED_TIMES_TEN: SPEED_TIMES_TEN,
-    //magboxnum
-    //magnification
+    MAG_NUM: parseInt(document.getElementById("magOnOffInput").value),
     WALL_COLOR: WALL_COLOR,
     PHOTON_HEAD_COLOR: PHOTON_HEAD_COLOR,
     PHOTON_TAIL_COLOR: PHOTON_TAIL_COLOR,
     MAG_COLOR: MAG_COLOR,
     LIGHT_SOURCE_COLOR: LIGHT_SOURCE_COLOR,
     MAG_POINT_COLOR: MAG_POINT_COLOR,
-    //lightsourcecoords
+    lightSource: lightSource
     //magboxcoords
     //partitioncoords
   };
@@ -442,24 +441,183 @@ function loadSettings(file) {
       const setting = JSON.parse(content);
 
       TRIANGLE_SIDE = setting.TRIANGLE_SIDE;
+      document.getElementById("triangleSideInput").value = TRIANGLE_SIDE;
+      
       NUMBER_LIGHT_RAYS = setting.NUMBER_LIGHT_RAYS;
+      document.getElementById("numRaysInput").value = NUMBER_LIGHT_RAYS;
+      
       CORNER_EPS = setting.CORNER_EPS;
-      //mousecoords
-      //partitions
+      document.getElementById("epsilonInput").value = CORNER_EPS;
+      
+      mouseVisibilityCheckBox = setting.mouseVisibilityCheckBox;
+      if(mouseVisibilityCheckBox.checked) {
+        mouse_coords.style.display = "inline";
+      } else {
+        mouse_coords.style.display = "none";
+      }
+      document.getElementById("mouseVisibilityCheckBox").checked = mouseVisibilityCheckBox.checked;
+      
+      const part_num = setting.PART_BOOL;
+      if (part_num === 0) {
+        SHOW_PART = false; //Turns Partition/Post off
+        // Hides the partition coordinates table:
+        partNote.style.visibility = 'hidden';
+        part.style.visibility = 'hidden';
+        partButton.style.visibility = 'hidden';
+        partX.style.visibility = 'hidden';
+        partY.style.visibility = 'hidden';
+        part1.style.visibility = 'hidden';
+        part2.style.visibility = 'hidden';
+        partBoxXInput1.style.display = 'none';
+        partBoxYInput1.style.display = 'none';
+        partBoxXInput2.style.display = 'none';
+        partBoxYInput2.style.display = 'none';
+      } else if (part_num === 1) {
+        SHOW_PART = true; //Turns Partition/Post on
+        // Shows the partition coordinates table:
+        partNote.style.visibility = 'visible';
+        part.style.visibility = 'visible';
+        partButton.style.visibility = 'visible';
+        partX.style.visibility = 'visible';
+        partY.style.visibility = 'visible';
+        part1.style.visibility = 'visible';
+        part2.style.visibility = 'visible';
+        partBoxXInput1.style.display = 'inline';
+        partBoxYInput1.style.display = 'inline';
+        partBoxXInput2.style.display = 'inline';
+        partBoxYInput2.style.display = 'inline';
+      }
+      createShape(); // Update canvas with new coordinates
+      document.getElementById("partitionOnOffInput").value = part_num;
+
       SPEED_TIMES_TEN = setting.SPEED_TIMES_TEN;
-      //magboxnum
-      //magnification
+      document.getElementById("speedInput").value = SPEED_TIMES_TEN;
+
+      const mag_num = setting.MAG_NUM
+      for(let i in MAG_LIST) {
+        if(i < mag_num) {
+          MAG_LIST[i].calculate = true;
+          MAG_DIV_LIST[i].style.display = 'inline';
+          drawMagBox(MAG_LIST[i], MAG_COLOR);
+        } else {
+          MAG_LIST[i].calculate = false;
+          MAG_DIV_LIST[i].style.display = 'none';
+        }
+      }
+      // Show or hide the magnification boxes, magnification coordinates and
+      // magnification recording boxes depending on the number of magnification boxes
+      if (mag_num === 0) {
+        MAG_DOWNLOAD_BUTTON[0].style.visibility = 'hidden';
+        MAG_DOWNLOAD_BUTTON[1].style.visibility = 'hidden';
+        MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
+        MAG_RECORDING[0].style.visibility = 'hidden';
+        MAG_RECORDING[1].style.visibility = 'hidden';
+        MAG_RECORDING[2].style.visibility = 'hidden';
+        mag.style.visibility = 'hidden';
+        magButton.style.visibility = 'hidden';
+        x.style.visibility = 'hidden';
+        y.style.visibility = 'hidden';
+        mag1.style.visibility = 'hidden';
+        mag2.style.visibility = 'hidden';
+        mag3.style.visibility = 'hidden';
+        magBoxXInput1.style.display = 'none';
+        magBoxYInput1.style.display = 'none';
+        magBoxXInput2.style.display = 'none';
+        magBoxYInput2.style.display = 'none';
+        magBoxXInput3.style.display = 'none';
+        magBoxYInput3.style.display = 'none';
+      } else if (mag_num === 1) {
+        MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+        MAG_DOWNLOAD_BUTTON[1].style.visibility = 'hidden';
+        MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
+        MAG_RECORDING[0].style.visibility = 'visible';
+        MAG_RECORDING[1].style.visibility = 'hidden';
+        MAG_RECORDING[2].style.visibility = 'hidden';
+        mag.style.visibility = 'visible';
+        magButton.style.visibility = 'visible';
+        x.style.visibility = 'visible';
+        y.style.visibility = 'visible';
+        mag1.style.visibility = 'visible';
+        mag2.style.visibility = 'hidden';
+        mag3.style.visibility = 'hidden';
+        magBoxXInput1.style.display = 'inline';
+        magBoxYInput1.style.display = 'inline';
+        magBoxXInput2.style.display = 'none';
+        magBoxYInput2.style.display = 'none';
+        magBoxXInput3.style.display = 'none';
+        magBoxYInput3.style.display = 'none';
+      } else if (mag_num === 2) {
+        MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+        MAG_DOWNLOAD_BUTTON[1].style.visibility = 'visible';
+        MAG_DOWNLOAD_BUTTON[2].style.visibility = 'hidden';
+        MAG_RECORDING[0].style.visibility = 'visible';
+        MAG_RECORDING[1].style.visibility = 'visible';
+        MAG_RECORDING[2].style.visibility = 'hidden';
+        mag.style.visibility = 'visible';
+        magButton.style.visibility = 'visible';
+        x.style.visibility = 'visible';
+        y.style.visibility = 'visible';
+        mag1.style.visibility = 'visible';
+        mag2.style.visibility = 'visible';
+        mag3.style.visibility = 'hidden';
+        magBoxXInput1.style.display = 'inline';
+        magBoxYInput1.style.display = 'inline';
+        magBoxXInput2.style.display = 'inline';
+        magBoxYInput2.style.display = 'inline';
+        magBoxXInput3.style.display = 'none';
+        magBoxYInput3.style.display = 'none';
+      }
+      else if (mag_num === 3) {
+        MAG_DOWNLOAD_BUTTON[0].style.visibility = 'visible';
+        MAG_DOWNLOAD_BUTTON[1].style.visibility = 'visible';
+        MAG_DOWNLOAD_BUTTON[2].style.visibility = 'visible';
+        MAG_RECORDING[0].style.visibility = 'visible';
+        MAG_RECORDING[1].style.visibility = 'visible';
+        MAG_RECORDING[2].style.visibility = 'visible';
+        mag.style.visibility = 'visible';
+        magButton.style.visibility = 'visible';
+        x.style.visibility = 'visible';
+        y.style.visibility = 'visible';
+        mag1.style.visibility = 'visible'
+        mag2.style.visibility = 'visible'
+        mag3.style.visibility = 'visible'
+        magBoxXInput1.style.display = 'inline';
+        magBoxYInput1.style.display = 'inline';
+        magBoxXInput2.style.display = 'inline';
+        magBoxYInput2.style.display = 'inline';
+        magBoxXInput3.style.display = 'inline';
+        magBoxYInput3.style.display = 'inline';
+      }
+      document.getElementById("magOnOffInput").value = mag_num;
+
       WALL_COLOR = setting.WALL_COLOR;
+      document.getElementById("wallColorInput").value = WALL_COLOR;
+
       PHOTON_HEAD_COLOR = setting.PHOTON_HEAD_COLOR;
+      document.getElementById("photonHeadColorInput").value = PHOTON_HEAD_COLOR;
+
       PHOTON_TAIL_COLOR = setting.PHOTON_TAIL_COLOR;
+      document.getElementById("photonTailColorInput").value = PHOTON_TAIL_COLOR;
+
       MAG_COLOR = setting.MAG_COLOR;
+      document.getElementById("magnifierColorInput").value = MAG_COLOR;
+
       LIGHT_SOURCE_COLOR = setting.LIGHT_SOURCE_COLOR;
+      document.getElementById("lightSourceColorInput").value = LIGHT_SOURCE_COLOR;
+
       MAG_POINT_COLOR = setting.MAG_POINT_COLOR;
-      //lightsourcecoords
+      document.getElementById("magnifierPointColorInput").value = MAG_POINT_COLOR;
+      
+      lightSource = setting.lightSource;
+      document.getElementById("lightSourceXInput").value = lightSource.x;
+      document.getElementById("lightSourceYInput").value = lightSource.y;
       //magboxcoords
       //partitioncoords
+      TRIANGLES = [];
+      SELECTED_TRIANGLES = [];
+      createTriangleGrid();
+      updateScreen();
   };
-  updateScreen();
   reader.readAsText(file);
 }
 
