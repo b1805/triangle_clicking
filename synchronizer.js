@@ -71,7 +71,7 @@ function saveShape() {
       TRIANGLE_SIDE: TRIANGLE_SIDE,
       NUMBER_LIGHT_RAYS: NUMBER_LIGHT_RAYS,
       CORNER_EPS: CORNER_EPS,
-      mouseVisibilityCheckBox: mouseVisibilityCheckBox,
+      MOUSE_VISIBILITY_BOOL: mouseVisibilityCheckBox.checked,
       PART_BOOL: parseInt(document.getElementById("partitionOnOffInput").value),
       SPEED_TIMES_TEN: SPEED_TIMES_TEN,
       MAG_NUM: parseInt(document.getElementById("magOnOffInput").value),
@@ -127,13 +127,13 @@ function saveShape() {
         CORNER_EPS = setting.CORNER_EPS;
         document.getElementById("epsilonInput").value = CORNER_EPS;
         
-        mouseVisibilityCheckBox = setting.mouseVisibilityCheckBox;
-        if(mouseVisibilityCheckBox.checked) {
+        MOUSE_VISIBILITY_BOOL = setting.MOUSE_VISIBILITY_BOOL;
+        if(MOUSE_VISIBILITY_BOOL) {
           mouse_coords.style.display = "inline";
         } else {
           mouse_coords.style.display = "none";
         }
-        document.getElementById("mouseVisibilityCheckBox").checked = mouseVisibilityCheckBox.checked;
+        document.getElementById("mouseVisibilityCheckBox").checked = MOUSE_VISIBILITY_BOOL;
         
         const part_num = setting.PART_BOOL;
         if (part_num === 0) {
