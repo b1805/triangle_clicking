@@ -61,13 +61,10 @@ body {
 }
 h1 {
   margin-top: 0;
-  font-size: 30px;
-  font-family: 'Lucida Handwriting', cursive;
+  font-size: 25px;
+  font-family: cursive;
   text-align: left;
   color: red;
-  background-color: lightgoldenrodyellow;
-  padding: 20px;
-  border-radius: 10px;
 }
 h2 {
   font-size: 20px;
@@ -169,7 +166,6 @@ body.dark-mode button:hover {
 }
 body.dark-mode h1 {
   color: #ff5555;
-  background-color: #463144;
 }
 body.dark-mode h2 {
   color: #DE8FE0;
