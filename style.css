@@ -186,7 +186,7 @@ body.dark-mode #startRecButton:hover,
 body.dark-mode #stopRecButton:hover, 
 body.dark-mode #startAllButton:hover,
 body.dark-mode #saveButton:hover,
-#saveSettingsButton:hover {
+body.dark-mode #saveSettingsButton:hover {
   background-color: #a3ff91;
 }
 body.dark-mode #createShapeButton, 
