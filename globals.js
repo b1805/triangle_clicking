@@ -41,8 +41,10 @@ let PHOTON_RADIUS = 10/(Math.sqrt(2)); // Distance away from source
 let NUMBER_LIGHT_RAYS = 360;
 const RENDER_INTERVAL_TIME = 33;
 let SPEED_TIMES_TEN = 5;
-let HEAD_SIZE = 0.6;
-let TAIL_SIZE = 0.3;
+let HEAD_SIZE = 1.25;
+let TAIL_SIZE = 0.45;
+let MAG_HEAD_SIZE = 2.50;
+let MAG_TAIL_SIZE = 0.90;
 let TRIANGLE_SIDE = 100;
 let CORNER_EPS = 0.01; // Radius of the epsilon ball around each corner for collision detection
 

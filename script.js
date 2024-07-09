@@ -270,19 +270,25 @@ function log(b, n) {
 // Function to change number of light rays
 function changeNumRays() {
   NUMBER_LIGHT_RAYS = parseInt(document.getElementById("numRaysInput").value);
-  if (NUMBER_LIGHT_RAYS < 360) {
+  //if (NUMBER_LIGHT_RAYS < 360) {
     //y=(630-x)/900
-    TAIL_SIZE = (630-NUMBER_LIGHT_RAYS)/900; // Decreases the thinkness of each light ray as the number of light rays increases
-    HEAD_SIZE = 1.5*TAIL_SIZE;
+    //TAIL_SIZE = (630-NUMBER_LIGHT_RAYS)/900; // Decreases the thinkness of each light ray as the number of light rays increases
+    //HEAD_SIZE = 1.5*TAIL_SIZE;
     //console.log(TAIL_SIZE)
-  }
-  else { // between 360 and 36000
+  //}
+  //else { // between 360 and 36000
     //y=(0.7/log250(x))-0.35
-    TAIL_SIZE = (0.7/(log(250,NUMBER_LIGHT_RAYS)))-0.35; // Decreases the thinkness of each light ray as the number of light rays increases
-    HEAD_SIZE = 1.5*TAIL_SIZE;
-    HEAD_SIZE = 2*TAIL_SIZE;
+    //TAIL_SIZE = (0.7/(log(250,NUMBER_LIGHT_RAYS)))-0.35; // Decreases the thinkness of each light ray as the number of light rays increase
+    //HEAD_SIZE = 2*TAIL_SIZE;
     //console.log(TAIL_SIZE)
-  }
+  //}
+}
+
+function changeThickness() {
+  HEAD_SIZE = parseFloat(document.getElementById("headSizeInput").value);
+  TAIL_SIZE = parseFloat(document.getElementById("tailSizeInput").value);
+  MAG_HEAD_SIZE = parseFloat(document.getElementById("magHeadSizeInput").value);
+  MAG_TAIL_SIZE = parseFloat(document.getElementById("magTailSizeInput").value);
 }
 
 // Function to change rendering speed
@@ -294,6 +300,8 @@ function changeSpeed() {
 // Advanced Function to change rendering speed to 1000
 function changeSpeed2() {
   SPEED_TIMES_TEN = 1000;
+  var speedInput = document.getElementById("speedInput");
+  speedInput.value = 1000;
   //console.log(SPEED_TIMES_TEN)
 }
 
@@ -386,7 +394,7 @@ function drawTriangles() {
 
 // Draws the light source point
 function drawLightSource() {
-  drawCircle(lightSource.x, lightSource.y, 2, LIGHT_SOURCE_COLOR);
+  drawCircle(lightSource.x, lightSource.y, 2, 2, LIGHT_SOURCE_COLOR);
 }
 
 // Function to let users select triangles by clicking them
@@ -661,12 +669,12 @@ function drawPhotons() {
     );
   });
   PHOTONS.forEach(photon => {
-    drawCircle(photon.x, photon.y, HEAD_SIZE, photon.headColor);
+    drawCircle(photon.x, photon.y, HEAD_SIZE, MAG_HEAD_SIZE, photon.headColor);
   });
 }
 
-function drawCircle(x, y, radius, color) {
-  MAG_LIST.forEach(MAG => MAG.drawCircle(x, y, radius, color));
+function drawCircle(x, y, radius, magRadius, color) {
+  MAG_LIST.forEach(MAG => MAG.drawCircle(x, y, magRadius, color));
   CTX.beginPath();
   CTX.fillStyle = color; 
   CTX.arc(x, y, radius, 0, 2 * Math.PI);
@@ -724,15 +732,15 @@ function drawBounds() {
     if(!(isPartition && SHOW_PART)) drawLine(lineSeg.x1, lineSeg.y1, lineSeg.x2, lineSeg.y2, WALL_COLOR, 10);
   });
   // Takes all the points from the COORDS array and draws a circle at them
-  COORDS.forEach(coord => {drawCircle(coord[0], coord[1], 5, WALL_COLOR)});
+  COORDS.forEach(coord => {drawCircle(coord[0], coord[1], 5, 5, WALL_COLOR)});
 }
 
 // Draws the partitions
 function drawPartitions() {
   if(!SHOW_PART) return;
   PARTITIONS.forEach(part => drawLine(part.x1, part.y1, part.x2, part.y2, PART_COLOR, 3));
-  PARTITIONS.forEach(part => drawCircle(part.x1, part.y1, 1.5, PART_COLOR));
-  PARTITIONS.forEach(part => drawCircle(part.x2, part.y2, 1.5, PART_COLOR));
+  PARTITIONS.forEach(part => drawCircle(part.x1, part.y1, 1.5, 1.5, PART_COLOR));
+  PARTITIONS.forEach(part => drawCircle(part.x2, part.y2, 1.5, 1.5, PART_COLOR));
 }
 
 // Recording:
