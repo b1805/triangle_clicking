@@ -302,13 +302,18 @@ function changeSpeed2() {
   SPEED_TIMES_TEN = 1000;
   document.getElementById("speedInput").value = 1000;
   document.getElementById("speedInput").classList.add("red_slider");
+  document.getElementById("speedValue").textContent = 1000; // Update the displayed value
   //console.log(SPEED_TIMES_TEN)
 }
 
 // Add an event listener to the slider to reset the color on input change
 document.getElementById("speedInput").addEventListener('input', function() {
   this.classList.remove("red_slider");
+  document.getElementById("speedValue").textContent = this.value; // Update the displayed value
 });
+
+// Initialize the displayed value on page load
+document.getElementById("speedValue").textContent = document.getElementById("speedInput").value;
 
 // Changes the number of Triangles in the grid (essentially the size of the grid)
 function changeNumberTriangles(){
