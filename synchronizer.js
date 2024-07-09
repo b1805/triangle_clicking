@@ -82,6 +82,10 @@ function saveShape() {
       MAG_COLOR: MAG_COLOR,
       LIGHT_SOURCE_COLOR: LIGHT_SOURCE_COLOR,
       MAG_POINT_COLOR: MAG_POINT_COLOR,
+      HEAD_SIZE: HEAD_SIZE,
+      TAIL_SIZE: TAIL_SIZE,
+      MAG_HEAD_SIZE: MAG_HEAD_SIZE,
+      MAG_TAIL_SIZE: MAG_TAIL_SIZE,
       lightSource: lightSource,
       mag_x1: parseInt(document.getElementById("magBoxXInput1").value),
       mag_y1: parseInt(document.getElementById("magBoxYInput1").value),
@@ -290,6 +294,18 @@ function saveShape() {
   
         MAG_POINT_COLOR = setting.MAG_POINT_COLOR;
         document.getElementById("magnifierPointColorInput").value = MAG_POINT_COLOR;
+
+        HEAD_SIZE = setting.HEAD_SIZE;
+        document.getElementById("headSizeInput").value = HEAD_SIZE;
+      
+        TAIL_SIZE = setting.TAIL_SIZE;
+        document.getElementById("tailSizeInput").value = TAIL_SIZE;
+      
+        MAG_HEAD_SIZE = setting.MAG_HEAD_SIZE;
+        document.getElementById("magHeadSizeInput").value = MAG_HEAD_SIZE;
+      
+        MAG_TAIL_SIZE = srtting.MAG_TAIL_SIZE;
+        document.getElementById("magTailSizeInput").value = MAG_TAIL_SIZE;
         
         lightSource = setting.lightSource;
         document.getElementById("lightSourceXInput").value = lightSource.x;
