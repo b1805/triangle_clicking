@@ -300,10 +300,15 @@ function changeSpeed() {
 // Advanced Function to change rendering speed to 1000
 function changeSpeed2() {
   SPEED_TIMES_TEN = 1000;
-  var speedInput = document.getElementById("speedInput");
-  speedInput.value = 1000;
+  document.getElementById("speedInput").value = 1000;
+  document.getElementById("speedInput").classList.add("red_slider");
   //console.log(SPEED_TIMES_TEN)
 }
+
+// Add an event listener to the slider to reset the color on input change
+document.getElementById("speedInput").addEventListener('input', function() {
+  this.classList.remove("red_slider");
+});
 
 // Changes the number of Triangles in the grid (essentially the size of the grid)
 function changeNumberTriangles(){

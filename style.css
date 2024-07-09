@@ -148,6 +148,9 @@ input[type=checkbox] {
   left: 1020px;
   top: 1790px;
 }
+.red_slider {
+  accent-color: red;
+}
 
 /*For Dark Mode Style*/
 body.dark-mode {
