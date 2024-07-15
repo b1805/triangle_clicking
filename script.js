@@ -722,8 +722,8 @@ function drawMagBox(magnifier, color) {
   CTX.fill();
 }
 
-function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
-  MAG_LIST.forEach(MAG => MAG.drawLine(x1, y1, x2, y2, color, width));
+function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE, magWidth = MAG_TAIL_SIZE) {
+  MAG_LIST.forEach(MAG => MAG.drawLine(x1, y1, x2, y2, color, magWidth));
   CTX.beginPath();
   CTX.strokeStyle = color;
   CTX.lineWidth = width;
@@ -733,13 +733,13 @@ function drawLine(x1, y1, x2, y2, color, width = TAIL_SIZE) {
   CTX.lineWidth = 0.5;
 }
 
-// Draws the boundriesm of the user selected shape
+// Draws the boundries of the user selected shape
 function drawBounds() {
   // Takes all the lines from the BOUNDARIES array and draws a line at them
   BOUNDARIES.forEach(lineSeg => {
     let isPartition = false;
     PARTITIONS.forEach(part => {isPartition = (isPartition || part.equals(lineSeg))})
-    if(!(isPartition && SHOW_PART)) drawLine(lineSeg.x1, lineSeg.y1, lineSeg.x2, lineSeg.y2, WALL_COLOR, 10);
+    if(!(isPartition && SHOW_PART)) drawLine(lineSeg.x1, lineSeg.y1, lineSeg.x2, lineSeg.y2, WALL_COLOR, 10, 10);
   });
   // Takes all the points from the COORDS array and draws a circle at them
   COORDS.forEach(coord => {drawCircle(coord[0], coord[1], 5, 5, WALL_COLOR)});

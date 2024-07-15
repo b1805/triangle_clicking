@@ -79,14 +79,14 @@ class Magnifier {
   }
 
   // Draw a line from the main canvas onto the magnified canvas
-  drawLine(x1, y1, x2, y2, color, width = 100) {
+  drawLine(x1, y1, x2, y2, color, width) {
     if(!this.calculate) return;
     // Map coordinates
     const pos1 = this.map(new Vector(x1, y1));
     const pos2 = this.map(new Vector(x2, y2));
     this.ctx.beginPath();
     this.ctx.strokeStyle = color;
-    this.ctx.lineWidth = MAG_TAIL_SIZE;
+    this.ctx.lineWidth = width;
     this.ctx.moveTo(pos1.x, pos1.y);
     this.ctx.lineTo(pos2.x, pos2.y);
     this.ctx.stroke();

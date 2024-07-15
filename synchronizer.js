@@ -304,7 +304,7 @@ function saveShape() {
         MAG_HEAD_SIZE = setting.MAG_HEAD_SIZE;
         document.getElementById("magHeadSizeInput").value = MAG_HEAD_SIZE;
       
-        MAG_TAIL_SIZE = srtting.MAG_TAIL_SIZE;
+        MAG_TAIL_SIZE = setting.MAG_TAIL_SIZE;
         document.getElementById("magTailSizeInput").value = MAG_TAIL_SIZE;
         
         lightSource = setting.lightSource;
