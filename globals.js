@@ -38,6 +38,7 @@ let MAG_POINT_COLOR = '#0000FF'
 
 let SHOW_PART = true;
 let PHOTON_RADIUS = 10/(Math.sqrt(2)); // Distance away from source
+let ANGLE = 0;
 let NUMBER_LIGHT_RAYS = 360;
 const RENDER_INTERVAL_TIME = 33;
 let SPEED_TIMES_TEN = 5;
@@ -69,3 +70,8 @@ var NUM_CAPTURED_FRAMES = 0;
 let SCREEN_ZOOM = 0.97 * (window.innerWidth / 1850);
 
 let lightSource = { x: 500, y: 400 };
+
+const angleDiv = document.getElementById('angleDiv');
+const rayDiv = document.getElementById('rayDiv');
+const angleRadio = document.getElementById('customAngle');
+const rayRadio = document.getElementById('multipleRay');

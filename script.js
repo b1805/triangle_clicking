@@ -33,9 +33,24 @@ function setZoom() {
 }
 setZoom();
 
-//Dark Mode toggle
+// Dark Mode toggle
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
+}
+
+// Version toggle
+function toggleVersion() {
+  if (angleRadio.checked) {
+    angleDiv.style.display = 'block';
+    rayDiv.style.display = 'none';
+    addPhotonButton.style.display = 'block';
+    addPhotonButton2.style.display = 'block';
+  } else {
+    angleDiv.style.display = 'none';
+    rayDiv.style.display = 'block';
+    addPhotonButton.style.display = 'none';
+    addPhotonButton2.style.display = 'none';
+  }
 }
 
 // Displays the grid when you first open the program
@@ -273,6 +288,11 @@ function changeMagBoxRadius() {
 //log function
 function log(b, n) {
   return Math.log(n) / Math.log(b);
+}
+
+// Function to change the angle
+function changeAngle() {
+  ANGLE = parseFloat(document.getElementById("angleInput").value);
 }
 
 // Function to change number of light rays
@@ -571,7 +591,11 @@ function createShape() {
 
 function startAnimation() {
   clearInterval(RENDER_INTERVAL);
-  createPhotons();
+  if (angleRadio.checked) {
+    createPhotons2();
+  } else {
+    createPhotons();
+  }
   RENDER_INTERVAL = setInterval(updateScreen, RENDER_INTERVAL_TIME);
 }
 
@@ -593,6 +617,54 @@ function createPhotons() {
       PHOTON_TAIL_COLOR
     ));
   }
+}
+
+// Creates photons for the angle version
+function createPhotons2() {
+  PHOTONS = [];
+  PHOTONS.push(new Photon(
+      lightSource.x + PHOTON_RADIUS * Math.cos(Math.PI * (-ANGLE / 180)), 
+      lightSource.y + PHOTON_RADIUS * Math.sin(Math.PI * (-ANGLE / 180)), 
+      Math.PI * (-ANGLE / 180), 
+      (SPEED_TIMES_TEN/10),
+      PHOTON_HEAD_COLOR, 
+      PHOTON_TAIL_COLOR)
+      );
+}
+
+// Adds new photon
+function addPhoton() {
+  var newPhoton = new Photon(
+    lightSource.x + PHOTON_RADIUS * Math.cos(Math.PI * (-ANGLE / 180)), 
+    lightSource.y + PHOTON_RADIUS * Math.sin(Math.PI * (-ANGLE / 180)), 
+    Math.PI * (-ANGLE / 180), 
+    (SPEED_TIMES_TEN/10),
+    PHOTON_HEAD_COLOR, 
+    PHOTON_TAIL_COLOR);
+
+  PHOTONS.push(newPhoton);
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+// Adds new photon with random colour
+function addPhoton2() {
+  var newPhoton = new Photon(
+    lightSource.x + PHOTON_RADIUS * Math.cos(Math.PI * (-ANGLE / 180)), 
+    lightSource.y + PHOTON_RADIUS * Math.sin(Math.PI * (-ANGLE / 180)), 
+    Math.PI * (-ANGLE / 180), 
+    (SPEED_TIMES_TEN/10),
+    getRandomColor(), 
+    getRandomColor());
+
+  PHOTONS.push(newPhoton);
 }
 
 // Updates the screen

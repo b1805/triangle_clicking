@@ -51,6 +51,10 @@ SOFTWARE. -->
   <div class="container">
     <div class="flex-container">
         <div class="flex-item">
+          <h2>
+            <input type="radio" name="version" id="multipleRay" checked onchange="toggleVersion()"> RAY VERSION
+            <input type="radio" name="version" id="customAngle" onchange="toggleVersion()"> ANGLE VERSION
+          </h2>
             <h2>Controls</h2>
             <div>
               <label for="triangleSideInput">Grid Size
@@ -62,10 +66,15 @@ SOFTWARE. -->
               </select>
               <button onclick="changeNumberTriangles()">Apply</button></label>
             </div>
-            <div>
+            <div id="rayDiv">
               <label for="numRaysInput">Light Rays (1 to 36000)
               <input type="number" id="numRaysInput" min="1" max="36000" value="360">
               <button onclick="changeNumRays()">Apply</button></label>
+            </div>
+            <div id="angleDiv" style="display: none;">
+              <label for="angleInput">Angle (0 to 360)
+              <input type="number" id="angleInput" min="0" max="360" step="1" value="0">
+              <button onclick="changeAngle()">Apply</button></label>
             </div>
             <div>
               <label for="epsilonInput">Epsilon Value: 
@@ -98,7 +107,11 @@ SOFTWARE. -->
               </select>
               <button onclick="turnPartitionOnOff()">Apply</button></label>
             </div>
-            <p> </p>
+            <label></label>
+            <div>
+              <label>Active Photons: <span id="activePhotonCount">0</span></label>
+            </div>
+            <label></label>
             <div>
                 <label for="speedInput">Speed
                   <input type="range" min="1" max="100" value="5" class="slider" id="speedInput">
@@ -147,11 +160,6 @@ SOFTWARE. -->
             </select>
             <button onclick="changeMagBoxRadius()">Apply</button></label>
             </div>
-            <div>
-              <h2>Photon Counter</h2>
-              <label>Active Photons: <span id="activePhotonCount">0</span></label>
-            </div>
-            <p> </p>
             <h2>Animation</h2>
             <!--<label>Note: Select Triangles using left mouse click, 
               right click changes the location (coordinates) of the
@@ -162,6 +170,10 @@ SOFTWARE. -->
             <button id="createShapeButton" onclick="createShape()">Create Shape</button>
             <label></label>
             <button id="startAnimButton" onclick="startAnimation()">Start Animation</button>
+            <label></label>
+            <button style="display: none;" id="addPhotonButton" onclick="addPhoton2()">Add Photon with Random Colour</button>
+            <label></label>
+            <button style="display: none;" id="addPhotonButton2" onclick="addPhoton()">Add Photon with Selected Colour</button>
             <label></label>
             <button id="stopAnimButton" onclick="stopAnimation()">Stop Animation</button>
         </div>
@@ -203,11 +215,11 @@ SOFTWARE. -->
             <div>
               <h2>Save & Load</h2>
               <!--<label>Note: If you're loading both Settings and Shape, load Settings first before loading the Shape.</label>-->
-              <label><button id="saveSettingsButton" onclick="saveSettings()">Save Settings</button>
-              <button id="loadSettingsButton" onclick="loadSettings(document.getElementById('loadSettingsInput').files[0])">Load Settings</button>
+              <label><button id="loadSettingsButton" onclick="loadSettings(document.getElementById('loadSettingsInput').files[0])">Load Settings</button>
+              <button id="saveSettingsButton" onclick="saveSettings()">Save Settings</button>
               <input type="file" id="loadSettingsInput"></label>
-              <label><button id="saveButton" onclick="saveShape()">Save Shape</button>
-              <button id="loadButton" onclick="loadShape(document.getElementById('loadInput').files[0])">Load Shape</button>
+              <label><button id="loadButton" onclick="loadShape(document.getElementById('loadInput').files[0])">Load Shape</button>
+              <button id="saveButton" onclick="saveShape()">Save Shape</button>
               <input type="file" id="loadInput"></label>
             </div>
             <h2>Photon Thickness</h2>

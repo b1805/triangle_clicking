@@ -20,6 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
+// Add an event listener to resize the zoom when the window is resized
+window.addEventListener('resize', setZoom);
+
 let draggable = null;
 let offsetX = 0;
 let offsetY = 0;
