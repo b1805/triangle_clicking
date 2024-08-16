@@ -25,6 +25,14 @@ let MAG_LIST = MAG_CANVAS_LIST.map(mag_canvas =>
   new Magnifier([lightSource.x, lightSource.y], 8, mag_canvas.width, mag_canvas.getContext('2d', {willReadFrequently: true }))
 );
 
+//Screen Zoom
+function setZoom() {
+  SCREEN_ZOOM = 0.97 * (window.innerWidth / 1850);
+  document.body.style.transform = `scale(${SCREEN_ZOOM})`;
+  document.body.style.transformOrigin = "0 0"; // Set the origin to top-left
+}
+setZoom();
+
 //Dark Mode toggle
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
@@ -122,8 +130,8 @@ function turnMagOnOff() {
     x.style.visibility = 'visible';
     y.style.visibility = 'visible';
     mag1.style.visibility = 'visible';
-    mag2.style.visibility = 'hidden';
-    mag3.style.visibility = 'hidden';
+    mag2.style.display = 'none';
+    mag3.style.display = 'none';
     magBoxXInput1.style.display = 'inline';
     magBoxYInput1.style.display = 'inline';
     magBoxXInput2.style.display = 'none';
@@ -143,7 +151,7 @@ function turnMagOnOff() {
     y.style.visibility = 'visible';
     mag1.style.visibility = 'visible';
     mag2.style.visibility = 'visible';
-    mag3.style.visibility = 'hidden';
+    mag3.style.display = 'none';
     magBoxXInput1.style.display = 'inline';
     magBoxYInput1.style.display = 'inline';
     magBoxXInput2.style.display = 'inline';
@@ -181,7 +189,7 @@ function turnPartitionOnOff() {
   if (num === 0) {
     SHOW_PART = false; //Turns Partition/Post off
     // Hides the partition coordinates table:
-    partNote.style.visibility = 'hidden';
+    //partNote.style.visibility = 'hidden';
     part.style.visibility = 'hidden';
     partButton.style.visibility = 'hidden';
     partX.style.visibility = 'hidden';
@@ -195,7 +203,7 @@ function turnPartitionOnOff() {
   } else if (num === 1) {
     SHOW_PART = true; //Turns Partition/Post on
     // Shows the partition coordinates table:
-    partNote.style.visibility = 'visible';
+    //partNote.style.visibility = 'visible';
     part.style.visibility = 'visible';
     partButton.style.visibility = 'visible';
     partX.style.visibility = 'visible';

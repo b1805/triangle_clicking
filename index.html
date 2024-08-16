@@ -38,7 +38,8 @@ SOFTWARE. -->
         </label>
       </div>
     </div>
-    <label>This program lets you create your own Un-illuminable Rooms! 
+  </div>
+    <!--<label>This program lets you create your own Un-illuminable Rooms! 
            Simply select the right angle isosceles triangles you like 
            and click create shape. You can also have various options to 
            customize, including the location and zoom of your magnification 
@@ -46,14 +47,13 @@ SOFTWARE. -->
            precision, colours, size of the triangle grid, etc. Lets discover 
            new Un-illuminable Rooms together! </label>
     <p> </p>
-    <label>~ Bhavya Jain, Austin Lu</label>
-  </div>
+    <label>~ Bhavya Jain, Austin Lu</label>-->
   <div class="container">
     <div class="flex-container">
         <div class="flex-item">
             <h2>Controls</h2>
             <div>
-              <label for="triangleSideInput">Number of Triangles in the Grid (Grid Size)
+              <label for="triangleSideInput">Grid Size
               <select id="triangleSideInput">
                   <option value="200">Less</option>
                   <option selected value="100">Default</option>
@@ -62,7 +62,7 @@ SOFTWARE. -->
               <button onclick="changeNumberTriangles()">Apply</button></label>
             </div>
             <div>
-              <label for="numRaysInput">Number of Light Rays (1 to 36000)
+              <label for="numRaysInput">Light Rays (1 to 36000)
               <input type="number" id="numRaysInput" min="1" max="36000" value="360">
               <button onclick="changeNumRays()">Apply</button></label>
             </div>
@@ -111,7 +111,7 @@ SOFTWARE. -->
             <div>
               <h2>Magnification Box Controls</h2>
               <div>
-                <label for="magOnOffInput">Number of Magnification Boxes
+                <label for="magOnOffInput">Magnification Boxes
                 <select id="magOnOffInput">
                     <option value="0">0</option>
                     <option selected value="1">1</option>
@@ -120,7 +120,7 @@ SOFTWARE. -->
                 </select>
                 <button onclick="turnMagOnOff()">Apply</button></label>
               </div>
-              <label for="magBoxRadiusInput">Amount of Magnification: 
+              <label for="magBoxRadiusInput">Magnification: 
               <select id="magBoxRadiusInput">
                 <option value="0.0002">(1 Million)x</option>
                 <option value="0.002">100000x</option>
@@ -150,28 +150,28 @@ SOFTWARE. -->
               <h2>Photon Counter</h2>
               <label>Active Photons: <span id="activePhotonCount">0</span></label>
             </div>
-            <div>
-              <h2>Save & Load</h2>
-              <label>Note: If you're loading both Settings and Shape, load Settings first before loading the Shape.</label>
-              <label><button id="saveSettingsButton" onclick="saveSettings()">Save Settings</button>
-              <button id="loadSettingsButton" onclick="loadSettings(document.getElementById('loadSettingsInput').files[0])">Load Settings</button>
-              <input type="file" id="loadSettingsInput"></label>
-              <label><button id="saveButton" onclick="saveShape()">Save Shape</button>
-              <button id="loadButton" onclick="loadShape(document.getElementById('loadInput').files[0])">Load Shape</button>
-              <input type="file" id="loadInput"></label>
-            </div>
             <p> </p>
             <h2>Animation</h2>
-            <label>Note: Select Triangles using left mouse click, 
+            <!--<label>Note: Select Triangles using left mouse click, 
               right click changes the location (coordinates) of the
               light source and the (small) magnification box. You can 
               individually change their coordinates using the controls 
               on the right. You can move the big magnification box by 
-              dragging it! Click Create Shape and Start Animation when you're done!</label>
+              dragging it! Click Create Shape and Start Animation when you're done!</label>-->
             <button id="createShapeButton" onclick="createShape()">Create Shape</button>
+            <label></label>
             <button id="startAnimButton" onclick="startAnimation()">Start Animation</button>
+            <label></label>
             <button id="stopAnimButton" onclick="stopAnimation()">Stop Animation</button>
         </div>
+<div class="flex-item">
+<br/>
+<canvas id="canvas" width="1000" height="800" style="border: 1px solid black;" ></canvas>
+<div id="mouse_coords">
+    <span id="x_coord">Y</span>
+    <span id="y_coord">X</span>
+</div>
+</div>
         <div class="flex-item">
             <h2>Colours</h2>
             <div>
@@ -198,8 +198,17 @@ SOFTWARE. -->
               <label for="magnifierPointColorInput">Magnified Point Colour
               <input type="color" id="magnifierPointColorInput" value="#0000FF"></label>
             </div>
-            <p> </p>
             <button onclick="applyColors()">Apply Colours</button>
+            <div>
+              <h2>Save & Load</h2>
+              <!--<label>Note: If you're loading both Settings and Shape, load Settings first before loading the Shape.</label>-->
+              <label><button id="saveSettingsButton" onclick="saveSettings()">Save Settings</button>
+              <button id="loadSettingsButton" onclick="loadSettings(document.getElementById('loadSettingsInput').files[0])">Load Settings</button>
+              <input type="file" id="loadSettingsInput"></label>
+              <label><button id="saveButton" onclick="saveShape()">Save Shape</button>
+              <button id="loadButton" onclick="loadShape(document.getElementById('loadInput').files[0])">Load Shape</button>
+              <input type="file" id="loadInput"></label>
+            </div>
             <h2>Photon Thickness</h2>
               <table>
                 <tr>
@@ -211,6 +220,7 @@ SOFTWARE. -->
                   <th>Head: </th>
                   <td><input type="number" id="headSizeInput" min="0.01" max="10.00" value="1.25" step="0.01"></td>
                   <td><input type="number" id="magHeadSizeInput" min="0.01" max="10.00" value="2.50" step="0.01"></td>
+                  <td rowspan="2"><button id="thicknessButton" onclick="changeThickness()">Apply</button></td>
                 </tr>
                 <tr>
                   <th>Tail: </th>
@@ -218,19 +228,18 @@ SOFTWARE. -->
                   <td><input type="number" id="magTailSizeInput" min="0.01" max="10.00" value="0.90" step="0.01"></td>
                 </tr>
               </table>
-              <p> </p>
-              <button id="thicknessButton" onclick="changeThickness()">Apply Thickness</button>
             <h2>Light Source Coordinates</h2>
-            <div>
-                <label for="lightSourceXInput">X: 
-                <input type="number" id="lightSourceXInput" min="1" max="1000" value="500"></label>
-            </div>
-            <div>
-                <label for="lightSourceYInput">Y: 
-                <input type="number" id="lightSourceYInput" min="1" max="1000" value="400"></label>
-            </div>
-            <p> </p>
-            <button onclick="changeLightSourceCoordinates()">Apply Coordinates</button>
+              <table>
+                <tr>
+                  <th for="lightSourceXInput">X: </th>
+                  <td><input type="number" id="lightSourceXInput" min="1" max="1000" value="500"></td>
+                  <td rowspan="2"><button onclick="changeLightSourceCoordinates()">Apply</button></td>
+                </tr>
+                <tr>
+                  <th for="lightSourceYInput">Y: </th>
+                  <td><input type="number" id="lightSourceYInput" min="1" max="1000" value="400"></td>
+                </tr>
+              </table>
             <h2 id="mag">Magnification Box Coordinates</h2>
             <table>
               <tr>
@@ -244,6 +253,7 @@ SOFTWARE. -->
                 <td><input type="number" id="magBoxXInput1" min="1" max="1000" value="500"></td>
                 <td><input type="number" id="magBoxXInput2" min="1" max="1000" value="500"></td>
                 <td><input type="number" id="magBoxXInput3" min="1" max="1000" value="500"></td>
+                <td rowspan="2"><button id="magButton" onclick="changeMagBoxCoordinates()">Apply</button></td>
               </tr>
               <tr>
                 <th id = "y">Y: </th>
@@ -252,8 +262,6 @@ SOFTWARE. -->
                 <td><input type="number" id="magBoxYInput3" min="1" max="1000" value="400"></td>
               </tr>
             </table>
-            <p> </p>
-            <button id="magButton" onclick="changeMagBoxCoordinates()">Apply Coordinates</button>
             <h2 id="part">Partition/Post Coordinates</h2>
             <table>
               <tr>
@@ -265,6 +273,8 @@ SOFTWARE. -->
                 <th id = "partX">X: </th>
                 <td><input type="number" id="partBoxXInput1" min="1" max="1000" value="500"></td>
                 <td><input type="number" id="partBoxXInput2" min="1" max="1000" value="500"></td>
+                <td rowspan="2"><button id="partButton" onclick="changePartitionCoordinates()">Apply</button></td>
+                <!--<td rowspan="2"><p id = "partNote"><b>Note: To make a post, simply make points 1 and 2 same.</p></td>-->
               </tr>
               <tr>
                 <th id = "partY">Y: </th>
@@ -272,33 +282,34 @@ SOFTWARE. -->
                 <td><input type="number" id="partBoxYInput2" min="1" max="1000" value="500"></td>
               </tr>
             </table>
-            <p id = "partNote"><b>Note: To make a post, simply make points 1 and 2 same.</b></p>
-            <button id="partButton" onclick="changePartitionCoordinates()">Apply Coordinates</button>
+          </div>
         </div>
     </div>
-</div>
-<br/>
-<canvas id="canvas" width="1000" height="800" style="border: 1px solid black;" ></canvas>
-<div id="mag_viewer_1" class="magnifier">
-  <label for="mag_canvas_1">Magnification Box 1</label>
-  <span class="tooltiptext">You can drag this!</span>
-  <canvas id="mag_canvas_1" width="200" height="200" style="border: 3px solid blue;"></canvas>
-</div>
-<div id="mag_viewer_2" class="magnifier">
-  <label for="mag_canvas_2">Magnification Box 2</label>
-  <span class="tooltiptext">You can drag this!</span>
-  <canvas id="mag_canvas_2" width="200" height="200" style="border: 3px solid blue;"></canvas>
-</div>
-<div id="mag_viewer_3" class="magnifier">
-  <label for="mag_canvas_3">Magnification Box 3</label>
-  <span class="tooltiptext">You can drag this!</span>
-  <canvas id="mag_canvas_3" width="200" height="200" style="border: 3px solid blue;"></canvas>
-</div>
-<div id="mouse_coords">
-    <span id="x_coord">Y</span>
-    <span id="y_coord">X</span>
-</div>
-</div>
+  <div class = "container" id = "magFolder">
+    <div class="flex-container">
+      <div class="flex-item">
+        <div id="mag_viewer_1" class="magnifier">
+          <label for="mag_canvas_1">Magnification Box 1</label>
+          <span class="tooltiptext">You can drag this!</span>
+          <canvas id="mag_canvas_1" width="200" height="200" style="border: 3px solid blue;"></canvas>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div id="mag_viewer_2" class="magnifier">
+          <label for="mag_canvas_2">Magnification Box 2</label>
+          <span class="tooltiptext">You can drag this!</span>
+          <canvas id="mag_canvas_2" width="200" height="200" style="border: 3px solid blue;"></canvas>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div id="mag_viewer_3" class="magnifier">
+          <label for="mag_canvas_3">Magnification Box 3</label>
+          <span class="tooltiptext">You can drag this!</span>
+          <canvas id="mag_canvas_3" width="200" height="200" style="border: 3px solid blue;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 <div class="container">
   <div class="flex-container">
   <h2 id="recordingHeader">Recording</h2>

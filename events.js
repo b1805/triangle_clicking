@@ -40,8 +40,8 @@ document.onmouseup = () => {
 
 // Change mag_canvas coords
 document.onmousemove = (event) => {
-  let x = event.pageX - offsetX;
-  let y = event.pageY - offsetY;
+  let x = event.pageX/SCREEN_ZOOM - offsetX;
+  let y = event.pageY/SCREEN_ZOOM - offsetY;
   if(draggable == null) return;
   draggable.style.left = x + 'px';
   draggable.style.top = y + 'px';
@@ -60,8 +60,8 @@ canvas.onmousemove = (mouseEvent) => {
   x_coord.innerHTML = "X: " + Math.max(Math.floor(mouseEvent.offsetX),0);
   y_coord.innerHTML = "Y: " + Math.max(Math.floor(mouseEvent.offsetY),0);
   //mouse_coords.style.position = "fixed";
-  mouse_coords.style.left = mouseEvent.clientX + 'px';
-  mouse_coords.style.bottom = (window.innerHeight + 17.5 - mouseEvent.clientY) + 'px';
+  mouse_coords.style.left = mouseEvent.clientX/SCREEN_ZOOM + 'px';
+  mouse_coords.style.top = ((-50/SCREEN_ZOOM) + mouseEvent.pageY/SCREEN_ZOOM) + 'px';
 }
 
 // Hide coords when mouse leaves canvas

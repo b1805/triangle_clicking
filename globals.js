@@ -66,4 +66,6 @@ let MAG_DOWNLOAD_BUTTON = [document.getElementById('downloadButtonM1'), document
 var STATUS_ELEMENT = document.getElementById('status');
 var NUM_CAPTURED_FRAMES = 0;
 
+let SCREEN_ZOOM = 0.97 * (window.innerWidth / 1850);
+
 let lightSource = { x: 500, y: 400 };
