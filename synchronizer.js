@@ -69,6 +69,7 @@ function saveShape() {
   function saveSettings() {
     const settings = {
       TRIANGLE_SIDE: TRIANGLE_SIDE,
+      ANGLE: ANGLE,
       NUMBER_LIGHT_RAYS: NUMBER_LIGHT_RAYS,
       CORNER_EPS: CORNER_EPS,
       MOUSE_VISIBILITY_BOOL: mouseVisibilityCheckBox.checked,
@@ -127,6 +128,9 @@ function saveShape() {
         
         NUMBER_LIGHT_RAYS = setting.NUMBER_LIGHT_RAYS;
         document.getElementById("numRaysInput").value = NUMBER_LIGHT_RAYS;
+
+        ANGLE = setting.ANGLE;
+        document.getElementById("angleInput").value = ANGLE;
         
         CORNER_EPS = setting.CORNER_EPS;
         document.getElementById("epsilonInput").value = CORNER_EPS;
@@ -143,7 +147,7 @@ function saveShape() {
         if (part_num === 0) {
           SHOW_PART = false; //Turns Partition/Post off
           // Hides the partition coordinates table:
-          partNote.style.visibility = 'hidden';
+          //partNote.style.visibility = 'hidden';
           part.style.visibility = 'hidden';
           partButton.style.visibility = 'hidden';
           partX.style.visibility = 'hidden';
@@ -157,7 +161,7 @@ function saveShape() {
         } else if (part_num === 1) {
           SHOW_PART = true; //Turns Partition/Post on
           // Shows the partition coordinates table:
-          partNote.style.visibility = 'visible';
+          //partNote.style.visibility = 'visible';
           part.style.visibility = 'visible';
           partButton.style.visibility = 'visible';
           partX.style.visibility = 'visible';
