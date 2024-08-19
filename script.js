@@ -327,7 +327,7 @@ function changeSpeed() {
 
 // Advanced Function to change rendering speed to 5000
 function changeSpeed2() {
-  SPEED_TIMES_TEN = 5000; 
+  SPEED_TIMES_TEN = 5000;
   document.getElementById("speedInput").value = 5000;
   document.getElementById("speedInput").classList.add("red_slider");
   document.getElementById("speedValue").textContent = 5000; // Update the displayed value
