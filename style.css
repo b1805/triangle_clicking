@@ -24,6 +24,9 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f0f2f5;
 }
+input[type="number"] {
+  width: 60px;
+}
 .triangle {
   cursor: pointer;
 }
